@@ -1,5 +1,5 @@
 const { AkairoClient, CommandHandler } = require("discord-akairo");
-const { token, owner} = require("./config.json");
+const { token, owner } = require("./config.json");
 
 class Client extends AkairoClient{
     constructor(){
@@ -11,7 +11,8 @@ class Client extends AkairoClient{
 
         this.commandHandler = new CommandHandler(this, {
             directory: "./commands/",
-            prefix: "slabbot "
+            prefix: "slabbot ",
+            defaultCooldown: 1000
         });
 
         this.commandHandler.loadAll();

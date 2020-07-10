@@ -1,4 +1,4 @@
-// a classic.
+// a classic command that every bot uses. shamelessly stolen from the guide.
 
 const { Command } = require("discord-akairo");
 

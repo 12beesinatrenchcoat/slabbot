@@ -1,4 +1,4 @@
-// commands about slabbot - its stats and all that.\
+// commands about slabbot.
 
 const { Command } = require("discord-akairo");
 
