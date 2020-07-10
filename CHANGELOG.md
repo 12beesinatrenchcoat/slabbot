@@ -3,11 +3,11 @@
 
 ## ~~table of~~ contents
 
-[upcoming (unreleased)](#upcoming (unreleased))
+[upcoming (unreleased)](https://github.com/AndyThePie/slabbot/blob/master/CHANGELOG.md#upcoming-unreleased)
 
-[1.0.0](#1.0.0), in development...
+[1.0.0](https://github.com/AndyThePie/slabbot/blob/master/CHANGELOG.md#100), in development...
 
-[0.1.0-indev / this is so sad play despacito](https://github.com/AndyThePie/slabbot/blob/master/CHANGELOG.md#010), released 9 july 2020
+[0.1.0-indev / this is so sad play despacito](https://github.com/AndyThePie/slabbot/blob/master/CHANGELOG.md#010-indev--this-is-so-sad-play-despacito), released 9 july 2020
 
 ## upcoming (unreleased)
 ...
