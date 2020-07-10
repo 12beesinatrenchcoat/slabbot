@@ -1,7 +1,13 @@
 # slabbot changelog!
-[ = ' x ' = ] :clock3:
+[ = ' x ' = ] :clock3:in terms of versioning numbers, first number increases whenever i feel like it, second number increases when there's just a few new features or something, last number is just patches and bugfixes.
 
-in terms of versioning numbers, first number increases whenever i feel like it, second number increases when there's just a few new features or something, last number is just patches and bugfixes.
+## ~~table of~~ contents
+
+[upcoming (unreleased)](#upcoming (unreleased))
+
+[1.0.0](#1.0.0), in development...
+
+[0.1.0-indev / this is so sad play despacito](#0.1.0-indev / this is so sad play despacito), released 9 july 2020
 
 ## upcoming (unreleased)
 ...
@@ -9,9 +15,12 @@ in terms of versioning numbers, first number increases whenever i feel like it, 
 ## 1.0.0
 coming soon.
 
-## 0.1.0
-commit `tba` / 9 Jul 2020
-what's that? a wild **slabbot** attacks!
+## 0.1.0-indev / this is so sad play despacito
+**9 Jul 2020** / [commit `cc84c74e18ff1ccb72b956ad25d4bc7db8fd8076`](https://github.com/AndyThePie/slabbot/commit/cc84c74e18ff1ccb72b956ad25d4bc7db8fd8076) / [release](https://github.com/AndyThePie/slabbot/releases/tag/v0.1.0-indev)
+
+![slabbot attacks!](./images/slabbot-0.1.0.png)
+
+> what's that? a wild **slabbot** attacks!
 
 another new discord bot. originally going to be a fork of [despacitoBot;](https://github.com/AndyThePie/despacitoBot-semicolon) but I disliked the old codebase too much. so here's this. built from the ground up using the [Akairo](https://discord-akairo.github.io/) framework for [discord.js](https://discord.js.org).
 the bot is far from done, but... i wanted to get *something* done. so... here's something.
