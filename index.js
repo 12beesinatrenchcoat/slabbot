@@ -1,4 +1,4 @@
-const { AkairoClient, CommandHandler } = require("discord-akairo");
+const { AkairoClient, CommandHandler,ListenerHandler } = require("discord-akairo");
 const { token, owner } = require("./config.json");
 
 class Client extends AkairoClient{
@@ -12,20 +12,27 @@ class Client extends AkairoClient{
         this.commandHandler = new CommandHandler(this, {
             directory: "./commands/",
             prefix: "slabbot ",
-            defaultCooldown: 1000
+            defaultCooldown: 2000
+        });
+
+        this.listenerHandler = new ListenerHandler(this, {
+            directory: "./listeners"
         });
 
         this.commandHandler.loadAll();
+        this.commandHandler.useListenerHandler(this.listenerHandler);
+
+        this.listenerHandler.setEmitters({
+            commandHandler: this.commandHandler,
+            listenerHandler: this.listenerHandler
+        });
+        this.listenerHandler.loadAll();
     }
 }
 
 
 
 const client = new Client();
-
-client.once("ready", () => {
-    console.log("slabbot is ready! [ = ' x ' = ]");
-});
 
 client.on("error", () => {
     console.log("sonmething went wrong... [ = ; x ; = ]")

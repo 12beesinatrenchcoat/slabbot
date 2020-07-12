@@ -72,7 +72,9 @@ class Despacito extends Command{
     constructor(){
         super("getDespacito",{
             aliases: ["despacito"],
-            regex: /this is so sad play despacito/gi
+            regex: /this is so sad play despacito/gi,
+            cooldown: 8000,
+            ratelimit: 2
         });
     }
 
