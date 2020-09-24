@@ -8,12 +8,23 @@
 [1.0.0](https://github.com/AndyThePie/slabbot/blob/master/CHANGELOG.md#100), in development...
 
 [0.1.0-indev / this is so sad play despacito](https://github.com/AndyThePie/slabbot/blob/master/CHANGELOG.md#010-indev--this-is-so-sad-play-despacito), released 9 july 2020
+ - [0.1.1-indev / wait, it's all despacito?]()
 
 ## upcoming (unreleased)
 ...
 
 ## 1.0.0
-coming soon.
+coming soon. or never.
+
+## 0.1.1-indev / wait, it's all despacito?
+**24 Sep 2020** / [commit `tba`]()
+
+wait, it's all despacito? it sure is.
+
+### + additions +
++ added ("Despacitohou" by Princess Sylvysprit)[https://youtu.be/bMCkrXaXFCM] to `this is so sad play despacito`.
+
+that's... it.
 
 ## 0.1.0-indev / this is so sad play despacito
 **9 Jul 2020** / [commit `cc84c74e18ff1ccb72b956ad25d4bc7db8fd8076`](https://github.com/AndyThePie/slabbot/commit/cc84c74e18ff1ccb72b956ad25d4bc7db8fd8076) / [release](https://github.com/AndyThePie/slabbot/releases/tag/v0.1.0-indev)

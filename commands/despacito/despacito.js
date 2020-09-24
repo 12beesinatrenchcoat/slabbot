@@ -32,7 +32,8 @@ const videoArray = [
     new Video("Despatrousle","the song that might play when you date a skeleton",creator["maki ligon"],"4N26Lb95tF8",false),
     new Video("Touhoucito","i don't know enough about touhou to make a good joke here... uhh...\nZUN's gonna need more beer?",creator["maki ligon"],"yD9PCvE-kDg",false),
     new Video("Desplatcito","woomy",creator["maki ligon"],"K_2KOPxwrFY",false),
-    new Video("Hentaicito","lewd >_<",creator.DaymanOurSavior,"Vn25uTGgYho",true)
+    new Video("Hentaicito","lewd >_<",creator.DaymanOurSavior,"Vn25uTGgYho",true),
+    new Video("Despacitouhou","ゆ・っく・り・と!",creator["Princess Sylvyspirit"],"bMCkrXaXFCM",false)
 ]
 
 // gets a random item from the videoArray
