@@ -1,33 +1,43 @@
 # slabbot changelog!
-[ = ' x ' = ] :clock3:in terms of versioning numbers, first number increases whenever i feel like it, second number increases when there's just a few new features or something, last number is just patches and bugfixes.
+[ = ' x ' = ] :clock3:in terms of versioning numbers, the first number increases on some major milestone, the second number increases on a new feature/command, and the last number increments on any bug-fixes or any other minor things.
 
 ## ~~table of~~ contents
 
 [upcoming (unreleased)](https://github.com/AndyThePie/slabbot/blob/master/CHANGELOG.md#upcoming-unreleased)
 
-[1.0.0](https://github.com/AndyThePie/slabbot/blob/master/CHANGELOG.md#100), in development...
-
-[0.1.0-indev / this is so sad play despacito](https://github.com/AndyThePie/slabbot/blob/master/CHANGELOG.md#010-indev--this-is-so-sad-play-despacito), released 9 july 2020
- - [0.1.1-indev / wait, it's all despacito?]()
-
-## upcoming (unreleased)
 ...
 
-## 1.0.0
-coming soon. or never.
+[0.1.1-indev "wait, it's all despacito?"](##0.1.1-indev), released 24 september 2020
 
-## 0.1.1-indev / wait, it's all despacito?
-**24 Sep 2020** / [commit `tba`]()
+[0.1.0-indev "this is so sad play despacito"](##0.1.0-indev), released 9 july 2020
 
-wait, it's all despacito? it sure is.
+## upcoming (unreleased)
+...shh...
+
+## 0.1.1-indev
+
+> wait, it's all despacito?
+
+**24 Sep 2020** / commit 1cf341e87db451b733d187dc1b155755e2fc52e5
+
+Just a few small additions... because I can. I haven't practiced code in a long time, hopefully this brings me back ^^
 
 ### + additions +
-+ added ("Despacitohou" by Princess Sylvysprit)[https://youtu.be/bMCkrXaXFCM] to `this is so sad play despacito`.
++ added ["Despacitouhou" by Princess Sylvysprit](https://youtu.be/bMCkrXaXFCM) to `this is so sad play despacito`.
++ added the ability to choose a specific video from the `this is so sad play despacito`-list.
+  + basically, typing a number after the command will return video with that position in the list. something like that.
 
-that's... it.
+### dev stuff
+- refactored `despacito.js` a bit
+  - holy moly that was disgusting to look at. hopefully this verson will be slightly less bad.
 
-## 0.1.0-indev / this is so sad play despacito
-**9 Jul 2020** / [commit `cc84c74e18ff1ccb72b956ad25d4bc7db8fd8076`](https://github.com/AndyThePie/slabbot/commit/cc84c74e18ff1ccb72b956ad25d4bc7db8fd8076) / [release](https://github.com/AndyThePie/slabbot/releases/tag/v0.1.0-indev)
+that's... it. pretty small, huh?
+
+## 0.1.0-indev
+
+> this is so sad play despacito
+
+**9 Jul 2020** / commit cc84c74e18ff1ccb72b956ad25d4bc7db8fd8076
 
 ![slabbot attacks!](./images/slabbot-0.1.0.png)
 
@@ -51,4 +61,6 @@ yeah, that's about it.
 - [ ] categorize commands, maybe
 - [ ] create some owner-related commands for rebooting / shutdown / reloading / etc
 - [ ] a website or something
-- [ ] sql stuff to track command usage
+- [ ] ~~sql~~ mongodb stuff to track command usage
+
+> future @AndyThePie here! not using sql, gonna be using mongodb + mongoose. why?... that's a question.
