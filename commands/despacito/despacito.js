@@ -36,34 +36,37 @@ const videoArray = [
     new Video("Despacitouhou","ゆ・っく・り・と!",creator["Princess Sylvyspirit"],"bMCkrXaXFCM",false)
 ]
 
-// gets a random item from the videoArray
-function getRandom(){
-    let itemNum = Math.floor(Math.random() * videoArray.length);
-    let item = videoArray[itemNum];
-    return {item,itemNum};
-}
+// makes an embed
+function despacitoEmbed(message, videoArrayPos){
 
-// makes an embed out of getRandom
-function despacitoEmbed(message){
+    if (videoArrayPos > videoArray.length || videoArrayPos < 0){
+        let embed = new MessageEmbed()
+            .setColor("#FF0000")
+            .setTitle("error: that video... doesn't exist")
+            .setDescription(`use a number from 0 to ${videoArray.length-1} - or no number for something random. \nyou input \`${videoArrayPos}\`, which is an out of bounds value.`)
 
-    let randomItem = getRandom();
+        return embed;
+    }
 
-    while(message.channel.nsfw === false && randomItem.item.nsfw === true){
-        randomItem = getRandom();
+    let video = videoArray[videoArrayPos];
+
+    while(message.channel.nsfw === false && video.nsfw === true){
+        videoArrayPos = Math.floor(Math.random() * videoArray.length);
         console.log("lewd! >_<");
     }
 
-    let creator = randomItem.item.creator;
-    let item = randomItem.item;
-
     let embed = new MessageEmbed()
         .setColor("#FF0000")
-        .setTitle(item.title)
-        .setDescription(item.description)
-        .setURL("https://youtu.be/" + item.id)
-        .setThumbnail(`https://img.youtube.com/vi/${item.id}/sddefault.jpg`)
-        .setAuthor(creator.name,creator.icon,`https://youtube.com/channel/${creator.id}`)
-        .setFooter(`[${randomItem.itemNum} / ${videoArray.length-1}]`)
+        .setTitle(video.title)
+        .setDescription(video.description)
+        .setURL("https://youtu.be/" + video.id)
+        .setThumbnail(`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`)
+        .setAuthor(
+            video.creator.name,
+            video.creator.icon,
+            `https://youtube.com/channel/${video.creator.id}`
+        )
+        .setFooter(`[${videoArrayPos} / ${videoArray.length-1}]`)
 
     return embed;
 }
@@ -71,17 +74,24 @@ function despacitoEmbed(message){
 // what's actually executed when the command is called.
 class Despacito extends Command{
     constructor(){
-        super("getDespacito",{
+        super("randomDespacito",{
             aliases: ["despacito"],
             regex: /this is so sad play despacito/gi,
             cooldown: 8000,
-            ratelimit: 2
+            ratelimit: 2,
+            args: [
+                {
+                    id: 'videoArrayPos',
+                    type: 'number',
+                    default: Math.floor(Math.random() * videoArray.length)
+                }
+            ]
         });
     }
 
-    exec(message){
-        let embed = despacitoEmbed(message);
-        return message.channel.send(`i hope this cheers you up, <@${message.author.id}>!`,embed);
+    exec(message, args){
+        let embed = despacitoEmbed(message, args.videoArrayPos);
+        return message.channel.send(`i hope this cheers you up, <@${message.author.id}>!`, embed);
     }
 }
 
