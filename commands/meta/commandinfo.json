@@ -1,18 +1,18 @@
 {
     "about": {
         "content":"tells you some random unimportant information about slabbot. that's about it.",
-        "usage":"`slabbot about`. that's it."
+        "usage":"`sl about`. that's it."
     },
     "despacito": {
         "content":"gets *luis fonsi - despacito ft. daddy yankee*. and a few other related videos.\n see also: https://www.youtube.com/playlist?list=PLchhjXy0uG8pfrYkYFwG_IwnoR0PozqJs",
-        "usage":"use `slabbot despacito <optional number for specific video>`\nyou can also type exactly: `this is so sad play despacito`"
+        "usage":"use `sl despacito <optional number for specific video>`\nyou can also type exactly: `this is so sad play despacito`"
     },
     "help": {
         "content":"gets you a list of commands, or explains what the command does.",
-        "usage":"you're using it right now, genius. `slabbot help <optional command>`"
+        "usage":"you're using it right now, genius. `sl help <optional command>`"
     },
     "ping":{
         "content":"> pong!\nreturns ping from bot to discord. s'bout it.",
-        "usage":"`slabbot ping`"
+        "usage":"`sl ping`"
     }
 }

@@ -11,7 +11,7 @@ class Client extends AkairoClient{
 
         this.commandHandler = new CommandHandler(this, {
             directory: "./commands/",
-            prefix: "slabbot ",
+            prefix: "sl ",
             defaultCooldown: 2000
         });
 

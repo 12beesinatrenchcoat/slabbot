@@ -25,7 +25,7 @@ class SlabbotHelp extends Command {
         if(!command){
             const embed = new MessageEmbed()
                 .setTitle("a list of commands")
-                .setDescription("a list of things i can do. [ = ' x ' = ]\nuse `slabbot help <command> for more information on each command.")
+                .setDescription("a list of things i can do. [ = ' x ' = ]\nuse `sl help <command> for more information on each command.")
             for (const category of this.handler.categories.values()) {
                 embed.addField(
                     `${category}`,
