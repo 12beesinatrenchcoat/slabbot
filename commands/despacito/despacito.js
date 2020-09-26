@@ -74,7 +74,7 @@ function despacitoEmbed(message, videoArrayPos){
 // what's actually executed when the command is called.
 class Despacito extends Command{
     constructor(){
-        super("randomDespacito",{
+        super("despacito",{
             aliases: ["despacito"],
             regex: /this is so sad play despacito/gi,
             cooldown: 8000,
