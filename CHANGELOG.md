@@ -18,7 +18,7 @@
 
 > wait, it's all despacito?
 
-**24 Sep 2020** / commit https://github.com/AndyThePie/slabbot/commit/1cf341e87db451b733d187dc1b155755e2fc52e5
+**24 Sep 2020** / commit [`1cf341e`](https://github.com/AndyThePie/slabbot/commit/1cf341e87db451b733d187dc1b155755e2fc52e5)
 
 Just a few small additions... because I can. I haven't practiced code in a long time, hopefully this brings me back ^^
 
@@ -43,7 +43,7 @@ that's... it. pretty small, huh?
 
 > this is so sad play despacito
 
-**9 Jul 2020** / commit https://github.com/AndyThePie/slabbot/commit/cc84c74e18ff1ccb72b956ad25d4bc7db8fd8076
+**9 Jul 2020** / commit [`cc84c74`](https://github.com/AndyThePie/slabbot/commit/cc84c74e18ff1ccb72b956ad25d4bc7db8fd8076)
 
 ![slabbot attacks!](./images/slabbot-0.1.0.png)
 
