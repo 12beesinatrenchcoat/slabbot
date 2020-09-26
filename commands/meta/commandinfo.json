@@ -3,6 +3,10 @@
         "content":"tells you some random unimportant information about slabbot. that's about it.",
         "usage":"`sl about`. that's it."
     },
+    "decide": {
+        "content":"give me a few items, and i'll randomly decide from one of them!",
+        "usage":"`sl choose <a bunch of items, separated by commas>"
+    },
     "despacito": {
         "content":"gets *luis fonsi - despacito ft. daddy yankee*. and a few other related videos.\n see also: https://www.youtube.com/playlist?list=PLchhjXy0uG8pfrYkYFwG_IwnoR0PozqJs",
         "usage":"use `sl despacito <optional number for specific video>`\nyou can also type exactly: `this is so sad play despacito`"
