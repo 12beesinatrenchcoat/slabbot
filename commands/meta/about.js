@@ -1,11 +1,14 @@
-// commands about slabbot.
+// about slabbot.
 
 const { Command } = require("discord-akairo");
+const info = require("./commandinfo.json");
 
 class SlabbotAbout extends Command{
     constructor(){
         super("about", {
-            aliases: ["about"]
+            aliases: ["about"],
+            category: "meta",
+            description: info.about
         });
     }
 

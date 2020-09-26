@@ -5,6 +5,8 @@ const { Command } = require("discord-akairo");
 const { MessageEmbed } = require("discord.js");
 const creator = require("./creatorlist.json");
 
+const info = require("../meta/commandinfo.json");
+
 // fields: title, descritpion, creator, id, nsfw
 class Video{
     constructor(title,description,creator,id,nsfw){
@@ -77,12 +79,14 @@ class Despacito extends Command{
         super("despacito",{
             aliases: ["despacito"],
             regex: /this is so sad play despacito/gi,
+            category: "dead memes",
+            description: info.despacito,
             cooldown: 8000,
             ratelimit: 2,
             args: [
                 {
-                    id: 'videoArrayPos',
-                    type: 'number',
+                    id: "videoArrayPos",
+                    type: "number",
                     default: Math.floor(Math.random() * videoArray.length)
                 }
             ]
