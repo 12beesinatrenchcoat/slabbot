@@ -1,5 +1,4 @@
 // this is so sad play despacito
-// additional notes: originally from despacitoBot; - rewritten and all nice and all that. 
 
 const { Command } = require("discord-akairo");
 const { MessageEmbed } = require("discord.js");
@@ -87,14 +86,18 @@ class Despacito extends Command{
                 {
                     id: "videoArrayPos",
                     type: "number",
-                    default: Math.floor(Math.random() * videoArray.length)
+                    default: ""
                 }
             ]
         });
     }
 
-    exec(message, args){
-        let embed = despacitoEmbed(message, args.videoArrayPos);
+    exec(message, {videoArrayPos}){
+        if(!videoArrayPos) {
+            videoArrayPos = Math.floor(Math.random() * videoArray.length);
+        }
+
+        const embed = despacitoEmbed(message, videoArrayPos);
         return message.channel.send(`i hope this cheers you up, <@${message.author.id}>!`, embed);
     }
 }
