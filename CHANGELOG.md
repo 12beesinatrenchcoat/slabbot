@@ -7,9 +7,9 @@
 
 ...
 
-[0.1.1-indev "wait, it's all despacito?"](##0.1.1-indev), released 24 september 2020
+[0.1.1-indev "wait, it's all despacito?"](#011-indev), released 24 september 2020
 
-[0.1.0-indev "this is so sad play despacito"](##0.1.0-indev), released 9 july 2020
+[0.1.0-indev "this is so sad play despacito"](#010-indev), released 9 july 2020
 
 ## upcoming (unreleased)
 ...shh...
@@ -18,16 +18,22 @@
 
 > wait, it's all despacito?
 
-**24 Sep 2020** / commit 1cf341e87db451b733d187dc1b155755e2fc52e5
+**24 Sep 2020** / commit https://github.com/AndyThePie/slabbot/commit/1cf341e87db451b733d187dc1b155755e2fc52e5
 
 Just a few small additions... because I can. I haven't practiced code in a long time, hopefully this brings me back ^^
 
 ### + additions +
 + added ["Despacitouhou" by Princess Sylvysprit](https://youtu.be/bMCkrXaXFCM) to `this is so sad play despacito`.
++ added ["Hentaicito" by DaymanIsOurSavior](https://youtu.be/Vn25uTGgYho) to `this is so sad play despacito`.
+  + added `nsfw` property to videos in the array.
++ added cooldowns. default is 2000ms per command, `this is so sad play despacito` has a cooldown of 8000ms / 2 uses.
 + added the ability to choose a specific video from the `this is so sad play despacito`-list.
   + basically, typing a number after the command will return video with that position in the list. something like that.
+  
+### ~ other changes ~
+- changed the `about` text by like one word
 
-### dev stuff
+### > code stuff <
 - refactored `despacito.js` a bit
   - holy moly that was disgusting to look at. hopefully this verson will be slightly less bad.
 
@@ -37,7 +43,7 @@ that's... it. pretty small, huh?
 
 > this is so sad play despacito
 
-**9 Jul 2020** / commit cc84c74e18ff1ccb72b956ad25d4bc7db8fd8076
+**9 Jul 2020** / commit https://github.com/AndyThePie/slabbot/commit/cc84c74e18ff1ccb72b956ad25d4bc7db8fd8076
 
 ![slabbot attacks!](./images/slabbot-0.1.0.png)
 
