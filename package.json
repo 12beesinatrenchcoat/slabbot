@@ -18,9 +18,7 @@
   "homepage": "https://github.com/AndyThePie/slabbot#readme",
   "dependencies": {
     "discord-akairo": "^8.1.0",
-    "discord.js": "^12.3.1",
-    "sequelize": "^6.3.5",
-    "sqlite": "^4.0.14"
+    "discord.js": "^12.3.1"
   },
   "devDependencies": {
     "eslint": "^7.9.0"

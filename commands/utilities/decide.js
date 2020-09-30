@@ -1,7 +1,7 @@
 // give slabbot some things, and they'll choose one.
 
 const { Command } = require("discord-akairo");
-const info = require("../meta/commandinfo.json")
+const info = require("../meta/commandinfo.json");
 
 class Decide extends Command {
     constructor() {
@@ -24,9 +24,9 @@ class Decide extends Command {
         }
 
         const items = args.items.split(",");
-        const picked = items[Math.floor(Math.random() * items.length)]
-        return message.reply(`I choose ${picked}!`)
+        const picked = items[Math.floor(Math.random() * items.length)];
+        return message.reply(`I choose ${picked}!`);
     }
 }
 
-module.exports = Decide
+module.exports = Decide;

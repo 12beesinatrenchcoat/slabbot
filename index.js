@@ -6,12 +6,12 @@ class Client extends AkairoClient{
         super({
             ownerID: owner
         },{
-            disableMentions: 'everyone'
+            disableMentions: "everyone"
         });
 
         this.commandHandler = new CommandHandler(this, {
             directory: "./commands/",
-            prefix: "sl ",
+            prefix: ["sl ","slabbot "],
             defaultCooldown: 2000
         });
 
@@ -35,7 +35,7 @@ class Client extends AkairoClient{
 const client = new Client();
 
 client.on("error", () => {
-    console.log("sonmething went wrong... [ = ; x ; = ]")
+    console.log("sonmething went wrong... [ = ; x ; = ]");
 });
 
 client.login(token);
