@@ -20,7 +20,7 @@
 
 > introducing spaghetti edition: now with 5000% more spaghetti!
 
-**30 Sep 2020** / commit tba
+**30 Sep 2020** / commit [`9a77213`](https://github.com/AndyThePie/slabbot/commit/9a77213a6628f04f44e29011c5b43681b48efc33)
 
 A lot of very minor back-end things. And also a new command. And more Despacito.
 ...I should have named this one "wait, it's all despacito?" huh...
