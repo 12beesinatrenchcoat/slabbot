@@ -6,7 +6,6 @@ const { MessageEmbed } = require("discord.js");
 const creator = require("./creatorlist.json");
 const info = require("../meta/commandinfo.json");
 
-// fields: title, descritpion, creator, id, nsfw
 class Video{
     constructor(title, description, creator, id, nsfw = false, thumbOverride = ""){
         this.title = title;
@@ -76,8 +75,8 @@ class Despacito extends Command{
             regex: /this is so sad play despacito/gi,
             category: "dead memes",
             description: info.despacito,
-            // cooldown: 8000,
-            // ratelimit: 2,
+            cooldown: 8000,
+            ratelimit: 2,
             args: [
                 {
                     id: "videoArrayPos",
@@ -114,7 +113,7 @@ class Despacito extends Command{
         if(message.channel.nsfw === false && video.nsfw === true){
             const embed = new MessageEmbed()
                 .setColor("#FF0000")
-                .setDescription(`you attempted to send a video in position \`${videoArrayPos}\`, which is marked nsfw. the video wasn't sent because this channel is a non-nsfw channel.`)
+                .setDescription(`you attempted to send a video in position \`${videoArrayPos}\`, which is marked nsfw. \nthe video wasn't sent because this channel is a non-nsfw channel.`)
                 .setTitle("error: lewd! >_<");
         
             return message.channel.send(`that's lewd, <@${message.author.id}>! >_<`,embed);
