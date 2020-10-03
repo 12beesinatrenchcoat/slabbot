@@ -42,11 +42,31 @@ const videoArray = [
     new Video("Despacito Chipmunks","Remember the good old days of *\"Alvin and the Chipmunks\"* remixes? Yeah, me neither.",creator.MewChip,"jEOPp4iV1WQ",),
     new Video("Despacito (Cello Cover)","honestly this one's just good",creator["2CELLOS"],"D9LrEXF3USs", ),
     new Video("Kiryu Coco - Despacito","so this is what vtuber hell looks like\n(this is a reuploaded clip.)",creator["Kiryu Coco"],"9x9Vp2IcUy8",false,"http://i3.ytimg.com/vi/9x9Vp2IcUy8/hqdefault.jpg"),
-    new Video("Despacito +NC","Rule #4295 of the internet: There is no song without a nightcore version.",creator["Nightcore Wolfie"],"hWtJO6m9PxA",)
+    new Video("Despacito +NC","Rule #4295 of the internet: There is no song without a nightcore version.",creator["Nightcore Wolfie"],"hWtJO6m9PxA",),
+    new Video("Despacito (Camellia Remix WIPver.)","SOMEBODY SCREEEEAAAAM\n(reupload. original tweet here: https://twitter.com/cametek/status/1018358547745083392)",creator.Camellia,"6MZULvpISnU")
 ];
 
-// makes an embed
+async function makeEmbed(video, videoArrayPos){
 
+    const embed = new MessageEmbed()
+    .setColor("#FF0000")
+    .setTitle(video.title)
+    .setDescription(video.description)
+    .setURL("https://youtu.be/" + video.id)
+    .setAuthor(
+        video.creator.name,
+        video.creator.icon,
+        `https://youtube.com/channel/${video.creator.id}`
+    )
+    .setFooter(`pos ${videoArrayPos} / ${videoArray.length-1}`);
+    if(!video.thumbOverride){
+        embed.setThumbnail(`https://i3.ytimg.com/vi/${video.id}/maxresdefault.jpg`)
+    } else {
+        embed.setThumbnail(video.thumbOverride);
+    }
+
+    return embed
+}
 
 // what's actually executed when the command is called.
 class Despacito extends Command{
@@ -56,8 +76,8 @@ class Despacito extends Command{
             regex: /this is so sad play despacito/gi,
             category: "dead memes",
             description: info.despacito,
-            cooldown: 8000,
-            ratelimit: 2,
+            // cooldown: 8000,
+            // ratelimit: 2,
             args: [
                 {
                     id: "videoArrayPos",
@@ -68,7 +88,7 @@ class Despacito extends Command{
         });
     }
 
-    exec(message, {videoArrayPos}){
+    async exec(message, {videoArrayPos}){
 
         if(!videoArrayPos) {
             videoArrayPos = Math.floor(Math.random() * videoArray.length);
@@ -87,9 +107,9 @@ class Despacito extends Command{
             
             return message.reply("something... uhh...",embed);
         }
-
-        const video = videoArray[videoArrayPos];
     
+        const video = videoArray[videoArrayPos];
+
         // when manually attempting to send an nsfw video in a non-nsfw channel
         if(message.channel.nsfw === false && video.nsfw === true){
             const embed = new MessageEmbed()
@@ -100,25 +120,9 @@ class Despacito extends Command{
             return message.channel.send(`that's lewd, <@${message.author.id}>! >_<`,embed);
         }
     
-        const embed = new MessageEmbed()
-            .setColor("#FF0000")
-            .setTitle(video.title)
-            .setDescription(video.description)
-            .setURL("https://youtu.be/" + video.id)
-            .setAuthor(
-                video.creator.name,
-                video.creator.icon,
-                `https://youtube.com/channel/${video.creator.id}`
-            )
-            .setFooter(`[${videoArrayPos} / ${videoArray.length-1}]`);
-            if(!video.thumbOverride){
-                embed.setThumbnail(`https://i3.ytimg.com/vi/${video.id}/maxresdefault.jpg`)
-            } else {
-                embed.setThumbnail(video.thumbOverride);
-            }
+        const embed = await(makeEmbed(video, videoArrayPos));
 
-    
-        return message.channel.send(`i hope this cheers you up, <@${message.author.id}>!`, embed);
+        return message.util.send(`i hope this cheers you up, <@${message.author.id}>!`, embed);
     }
 }
 

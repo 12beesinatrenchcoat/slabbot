@@ -12,8 +12,11 @@ class PingCommand extends Command{
         });
     }
 
-    exec(message){
-        return message.reply(`pong! (${this.client.ws.ping}ms)`);
+    async exec(message){
+        const sent = await message.util.reply(`pong! (${this.client.ws.ping}ms to discord...`);
+        const timeDiff = sent.createdAt - message.createdAt;
+
+        return message.util.reply(`pong! (${this.client.ws.ping}ms to discord, ${timeDiff}ms to response)`);
     }
 }
 
