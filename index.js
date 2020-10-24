@@ -1,45 +1,11 @@
-const { AkairoClient, CommandHandler,ListenerHandler, CommandUtil } = require("discord-akairo");
-const { token, owner } = require("./config.json");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const bot = require("./bot.js");
+const url = "mongodb://localhost:27017"
+const db = mongoose.connection;
 
-class Client extends AkairoClient{
-    constructor(){
-        super({
-            ownerID: owner
-        },{
-            disableMentions: "everyone"
-        });
-
-        this.commandHandler = new CommandHandler(this, {
-            directory: "./commands/",
-            prefix: ["sl ","slabbot "],
-            defaultCooldown: 2000,
-            commandUtil: true
-        });
-
-        this.listenerHandler = new ListenerHandler(this, {
-            directory: "./listeners"
-        });
-
-        this.commandHandler.loadAll();
-        this.commandHandler.useListenerHandler(this.listenerHandler);
-
-        this.listenerHandler.setEmitters({
-            commandHandler: this.commandHandler,
-            listenerHandler: this.listenerHandler
-        });
-        this.listenerHandler.loadAll();
-    }
-}
-
-
-
-const client = new Client();
-
-client.on("error", () => {
-    console.log("sonmething went wrong... [ = ; x ; = ]");
+mongoose.connect(url, {useNewUrlParser: true});
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("connected to database! [|||]")
 });
-
-client.login(token);
-
-
-

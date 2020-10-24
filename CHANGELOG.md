@@ -6,6 +6,7 @@
 [upcoming (unreleased)](https://github.com/AndyThePie/slabbot/blob/master/CHANGELOG.md#upcoming-unreleased)
 
 ...
+[0.3.0-indev "async"](#030-indev), released never
 
 [0.2.0-indev "spaghetti edition"](#020-indev), released 29 september 2020
 
@@ -14,7 +15,11 @@
 [0.1.0-indev "this is so sad play despacito"](#010-indev), released 9 july 2020
 
 ## upcoming (unreleased)
-...shh...
+tba.
+
+## 0.3.0-indev
+
+> await. can you type that again? i can't base my assumptions off the data you've given me.
 
 ## 0.2.0-indev
 
