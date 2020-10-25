@@ -11,6 +11,10 @@
         "content":"gets *luis fonsi - despacito ft. daddy yankee*. and a few other related videos.\n see also: https://www.youtube.com/playlist?list=PLchhjXy0uG8pfrYkYFwG_IwnoR0PozqJs",
         "usage":"use `sl despacito <optional number for specific video>`\nyou can also type exactly: `this is so sad play despacito`"
     },
+    "me": {
+        "content":"information relating to you. your xp level, commands used, and other fun stats!\n [ ^ x ^ ]",
+        "usage":"use `sl me`. that's it."
+    },
     "help": {
         "content":"gets you a list of commands, or explains what a given command does.",
         "usage":"you're using it right now, genius. `sl help <optional command>`"

@@ -2,14 +2,16 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    id: {
-        type: Number,
+    _id: {
+        type: String,
         required: true
     },
     exp: {
         type: Number,
-        require: true
-    }
-})
+        default: 0
+    },
+    lastMessageDate: Date,
+    stats: Object
+}, { minimize: false });
 
-module.exports = mongoose.model("model", userSchema);
+module.exports = mongoose.model("user", userSchema);
