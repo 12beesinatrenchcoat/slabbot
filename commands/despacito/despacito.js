@@ -36,7 +36,7 @@ const videoArray = [
     new Video("Hentaicito","lewd >_<",creator.DaymanOurSavior,"Vn25uTGgYho",true),
     new Video("Despacitouhou","ゆ・っく・り・と!",creator["Princess Sylvyspirit"],"bMCkrXaXFCM",),
     new Video("Luis Fonsi, Daddy Yankee - Despacito (Remix) ft. Justin Bieber","baby please don't go",creator["Luis Fonsi"], 
-    "72UO0v5ESUo", ),
+        "72UO0v5ESUo", ),
     new Video("Luis Fonsi - Despacito 緩緩 (Mandarin Version) ft. JJ Lin","緩緩 = Despacito = slowly",creator["Luis Fonsi"],"Dlbg7onYu08",),
     new Video("Despacito Chipmunks","Remember the good old days of *\"Alvin and the Chipmunks\"* remixes? Yeah, me neither.",creator.MewChip,"jEOPp4iV1WQ",),
     new Video("Despacito (Cello Cover)","honestly this one's just good",creator["2CELLOS"],"D9LrEXF3USs", ),
@@ -48,23 +48,23 @@ const videoArray = [
 async function makeEmbed(video, videoArrayPos){
 
     const embed = new MessageEmbed()
-    .setColor("#FF0000")
-    .setTitle(video.title)
-    .setDescription(video.description)
-    .setURL("https://youtu.be/" + video.id)
-    .setAuthor(
-        video.creator.name,
-        video.creator.icon,
-        `https://youtube.com/channel/${video.creator.id}`
-    )
-    .setFooter(`pos ${videoArrayPos} / ${videoArray.length-1}`);
+        .setColor("#FF0000")
+        .setTitle(video.title)
+        .setDescription(video.description)
+        .setURL("https://youtu.be/" + video.id)
+        .setAuthor(
+            video.creator.name,
+            video.creator.icon,
+            `https://youtube.com/channel/${video.creator.id}`
+        )
+        .setFooter(`pos ${videoArrayPos} / ${videoArray.length-1}`);
     if(!video.thumbOverride){
-        embed.setThumbnail(`https://i3.ytimg.com/vi/${video.id}/maxresdefault.jpg`)
+        embed.setThumbnail(`https://i3.ytimg.com/vi/${video.id}/maxresdefault.jpg`);
     } else {
         embed.setThumbnail(video.thumbOverride);
     }
 
-    return embed
+    return embed;
 }
 
 // what's actually executed when the command is called.

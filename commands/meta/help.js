@@ -25,7 +25,7 @@ class SlabbotHelp extends Command {
         if(!command){
             const embed = new MessageEmbed()
                 .setTitle("a list of commands")
-                .setDescription("a list of things i can do. [ = ' x ' = ]\nuse `sl help <command> for more information on each command.")
+                .setDescription("a list of things i can do. [ = ' x ' = ]\nuse `sl help <command> for more information on each command.");
             for (const category of this.handler.categories.values()) {
                 embed.addField(
                     `${category}`,
@@ -34,7 +34,7 @@ class SlabbotHelp extends Command {
                         .map(command => `\`${command.aliases[0]}\``)
                         .join(" ")
                     }`,
-                )
+                );
             }
             
             return message.reply("here's some information:",embed);
@@ -43,9 +43,9 @@ class SlabbotHelp extends Command {
         const embed = new MessageEmbed()
             .setTitle(command.category + " > `" +command.aliases[0] + "`") 
             .setDescription(command.description.content)
-            .addField("usage",command.description.usage)
+            .addField("usage",command.description.usage);
         return message.channel.send(`in response to: <@${message.author.id}>`,embed);
     }
 }
 
-module.exports = SlabbotHelp
+module.exports = SlabbotHelp;
