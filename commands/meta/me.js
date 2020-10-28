@@ -18,17 +18,11 @@ class SlabbotMe extends Command{
 
     async exec(message) {
 
-        if(await userModel.findById(message.author.id, "exp") === null) {
-            console.log("new user...");
-            const user = new userModel({
-                _id: message.author.id,
-                exp: 0
-            });
-
-            await user.save();
-        }
-
         const { exp, level } = await userModel.findById(message.author.id, "exp level");
+
+        if(exp === 0){
+            return;
+        }
 
         const expForCurrentLevel = expNeededForLevel(level);
         const expForNextLevel = expNeededForLevel(level + 1);
