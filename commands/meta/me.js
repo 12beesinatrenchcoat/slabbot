@@ -27,7 +27,7 @@ class SlabbotMe extends Command{
 
         const { exp } = await userModel.findById(message.author.id, "exp");
 
-        return message.reply(`you currently have ${exp} exp.`);
+        return message.reply(`you currently have ${Math.round(exp * 1000) / 1000} exp.`);
     }
 }
 

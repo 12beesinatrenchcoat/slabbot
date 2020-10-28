@@ -30,11 +30,22 @@ class ExperienceListener extends Listener{
         const lastMessageTimeDiff = message.createdAt - lastMessageDate;
 
         if(isNaN(lastMessageTimeDiff)) {
+            // if null, set value without adding any exp (this shouldn't happen!)
             await userModel.findByIdAndUpdate(message.author.id, { lastMessageDate: message.createdAt });
         } else if(lastMessageTimeDiff > 5000) {
+            console.log(`${message.author.username} sent a message, but got no exp...`);    
             await userModel.findByIdAndUpdate(message.author.id, { lastMessageDate: message.createdAt });
-            const addExp = 5;
+            let addExp;
+            if (lastMessageTimeDiff <= 15000){
+                addExp = lastMessageTimeDiff/1000;
+            } else if(lastMessageTimeDiff <= 60000){
+                addExp = (lastMessageTimeDiff - 15000)/4500+15;
+            } else{
+                addExp = 25;
+            }
+
             await userModel.findByIdAndUpdate(message.author.id, { exp: exp+addExp });
+            console.log(`added ${addExp}exp to user ${message.author.username}!`);
         }
     }
 }
