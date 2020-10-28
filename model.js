@@ -10,6 +10,10 @@ const userSchema = new Schema({
         type: Number,
         default: 0
     },
+    level: {
+        type: Number,
+        default: 0
+    },
     lastMessageDate: Date,
     stats: Object
 }, { minimize: false });
