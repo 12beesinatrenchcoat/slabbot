@@ -22,5 +22,9 @@
     "ping":{
         "content":"> pong!\nreturns ping from bot to discord. s'bout it.",
         "usage":"`sl ping`"
+    },
+    "shutdown":{
+        "content":"shuts down slabbot. **this is an admin-only command** - this only works if you're listed as an owner of the bot.",
+        "usage": "`sl shutdown`. and also check terminal."
     }
 }
