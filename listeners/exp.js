@@ -4,6 +4,91 @@ const userModel = require("../model.js");
 // see also: https://www.desmos.com/calculator/kcrt4evjgg
 const expNeededForLevel = level => 1024*(level**1.3)+(level/35)**4.5;
 
+function toBigNumber(number){
+
+    /* array number corresponds with number. (bigNumbers[0] is zero) 
+       object id corresponds with line number (bigNumbers[0].2 is line 2 of zero.). */
+    const bigNumbers = [[
+        "██████ ",
+        "██  ██ ",
+        "██  ██ ",
+        "██  ██ ",
+        "██████ ",
+    ],[
+        "████   ",
+        "  ██   ",
+        "  ██   ",
+        "  ██   ",
+        "██████ "
+    ],[
+        "██████ ",
+        "    ██ ",
+        "██████ ",
+        "██     ",
+        "██████ "
+    ],[
+        "██████ ",
+        "    ██ ",
+        "██████ ",
+        "    ██ ",
+        "██████ "
+    ],[
+        "██  ██ ",
+        "██  ██ ",
+        "██████ ",
+        "    ██ ",
+        "    ██ "
+    ],[
+        "██████ ",
+        "██     ",
+        "██████ ",
+        "    ██ ",
+        "██████ "
+    ],[
+        "██████ ",
+        "██     ",
+        "██████ ",
+        "██  ██ ",
+        "██████ "
+    ],[
+        "██████ ",
+        "    ██ ",
+        "    ██ ",
+        "    ██ ",
+        "    ██ "
+    ],[
+        "██████ ",
+        "██  ██ ",
+        "██████ ",
+        "██  ██ ",
+        "██████ "
+    ],[
+        "██████ ",
+        "██  ██ ",
+        "██████ ",
+        "    ██ ",
+        "██████ "
+    ]];
+    // turn number into array of numbers
+    const numberDigits = Array.from(String(number)).map(Number);
+
+    console.log(`numberDigits = ${numberDigits}`);
+
+    var output = "";
+
+    for(var line = 0; line < 5; line++) {
+        for(var digit = 0; digit < numberDigits.length; digit++) {
+            console.log(numberDigits[digit]);
+            output += bigNumbers[numberDigits[digit]][line];
+        }
+        output += "\n";
+    }
+
+    console.log("output!");
+    console.log(output);
+    return output;
+}
+
 class ExperienceListener extends Listener{
     constructor(){
         super("exp",{
@@ -33,6 +118,7 @@ class ExperienceListener extends Listener{
         const lastMessageTimeDiff = message.createdAt - lastMessageDate;
 
         if(isNaN(lastMessageTimeDiff)) {
+
             // if null, set value without adding any exp (this shouldn't happen!)
             await userModel.findByIdAndUpdate(message.author.id, { lastMessageDate: message.createdAt });
         } else if(lastMessageTimeDiff > 5000) {
@@ -55,10 +141,10 @@ class ExperienceListener extends Listener{
             const expNextLevel = expNeededForLevel(level + 1);
 
             if(expNextLevel < exp + addExp){
-                await userModel.findByIdAndUpdate(message.author.id, { level: level+1 });
-                message.reply(`ding! you are now **level ${level + 1}**!`);
+                await userModel.findByIdAndUpdate(message.author.id, { level: level + 1 });
+                const bigNumber = toBigNumber(level + 1);
+                message.reply("***ding!***\nyou are now level\n```" + bigNumber + "```");
             }
-
         }
     }
 }
