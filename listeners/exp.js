@@ -1,5 +1,5 @@
 const { Listener } = require("discord-akairo");
-const userModel = require("../model.js");
+const userModel = require("../model.user.js");
 
 // see also: https://www.desmos.com/calculator/kcrt4evjgg
 const expNeededForLevel = level => 1024*(level**1.3)+(level/35)**4.5;
