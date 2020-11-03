@@ -15,7 +15,10 @@ const userSchema = new Schema({
         default: 0
     },
     lastMessageDate: Date,
-    stats: Object
+    stats: {
+        type: Object,
+        default: {}
+    }
 }, { minimize: false });
 
 module.exports = mongoose.model("user", userSchema);
