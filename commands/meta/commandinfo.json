@@ -12,8 +12,8 @@
         "usage":"use `sl despacito <optional number for specific video>`\nyou can also type exactly: `this is so sad play despacito`"
     },
     "me": {
-        "content":"information relating to you. your xp level, commands used, and other fun stats!\n [ ^ x ^ ]",
-        "usage":"use `sl me`. that's it."
+        "content":"wait, are you talking about the command, or...?\ninformation relating to you. your xp level, (and other fun stats)!\n [ = ^ x ^ = ]",
+        "usage":"use `sl me`. you can also add `full` to the end for more numbers!"
     },
     "help": {
         "content":"gets you a list of commands, or explains what a given command does.",
