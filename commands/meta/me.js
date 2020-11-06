@@ -153,7 +153,7 @@ exp [${Math.round(exp*1000)/1000} / ${Math.round(expForNextLevel*1000)/1000}]
                 `
                 )
                 .setThumbnail(message.author.avatarURL())
-                .setFooter("compact ver.")
+                .setFooter("full stats")
                 .setTimestamp(message.createdTimestamp)
                 .addField("Favorite Command",`\`${sortedStats[0][0]}\` (used ${sortedStats[0][1]} times)`, true)
                 .addField("Commands Used", `${totalCommands}`, true);
