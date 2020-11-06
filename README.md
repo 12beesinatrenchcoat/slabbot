@@ -32,6 +32,7 @@ you will then need to make a `config.json` file in the base directory (where `in
     "owner":"<insert discord id(s) here>"
 }
 ```
+(the `token` is a discord bot token, user ids in `owner` can run the `slabbot shutdown` command.)
 
 then run `node .` in the directory where `index.js` is.
 
