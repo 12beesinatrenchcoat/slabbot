@@ -97,20 +97,16 @@ function toBigNumber(number){
     // turn number into array of numbers
     const numberDigits = Array.from(String(number)).map(Number);
 
-    console.log(`numberDigits = ${numberDigits}`);
 
     var output = "";
 
     for(var line = 0; line < 5; line++) {
         for(var digit = 0; digit < numberDigits.length; digit++) {
-            console.log(numberDigits[digit]);
             output += bigNumbers[numberDigits[digit]][line];
         }
         output += "\n";
     }
 
-    console.log("output!");
-    console.log(output);
     return output;
 }
 

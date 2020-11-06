@@ -9,8 +9,7 @@ class CommandCooldown extends Listener {
     }
 
     exec(message,command,remaining) {
-        message.reply(`chill out! *(:snowflake:${remaining}ms left...)*`)
-        console.log(remaining);
+        message.reply(`that command (\`${command.aliases[0]}\`) is on cooldown! *(:snowflake:${Math.round(remaining/10)/100}s left...)*`);
     }
 }
 

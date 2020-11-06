@@ -72,20 +72,15 @@ function toBigNumber(number){
     // turn number into array of numbers
     const numberDigits = Array.from(String(number)).map(Number);
 
-    console.log(`numberDigits = ${numberDigits}`);
-
     var output = "";
 
     for(var line = 0; line < 5; line++) {
         for(var digit = 0; digit < numberDigits.length; digit++) {
-            console.log(numberDigits[digit]);
             output += bigNumbers[numberDigits[digit]][line];
         }
         output += "\n";
     }
 
-    console.log("output!");
-    console.log(output);
     return output;
 }
 
@@ -135,7 +130,7 @@ class ExperienceListener extends Listener{
             }
 
             await userModel.findByIdAndUpdate(message.author.id, { exp: exp+addExp });
-            console.log(`added ${addExp}exp to user ${message.author.username}!`);
+            // console.log(`added ${addExp}exp to user ${message.author.username}!`);
             
             // then check to see if the user has leveled up...
             const expNextLevel = expNeededForLevel(level + 1);
