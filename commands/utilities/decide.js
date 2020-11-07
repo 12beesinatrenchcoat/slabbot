@@ -25,7 +25,7 @@ class Decide extends Command {
 
         const items = args.items.split(",");
         const picked = items[Math.floor(Math.random() * items.length)];
-        return message.reply(`I choose ${picked}!`);
+        return message.reply(`I choose ${picked.trim()}!`);
     }
 }
 
