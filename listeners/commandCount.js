@@ -40,8 +40,6 @@ class CommandListener extends Listener {
 
         // increment single command count
         incrementValueInStatsModel(commandUsed, "value");
-        // increment total command count
-        incrementValueInStatsModel("totalCommandsUsed", "value");
 
         // user command usage. woot.
         let { stats } = await userModel.findById(message.author.id, "stats");
