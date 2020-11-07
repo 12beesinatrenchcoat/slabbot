@@ -1,7 +1,7 @@
 {
     "about": {
-        "content":"tells you some random unimportant information about slabbot. that's about it.",
-        "usage":"`sl about`. that's it."
+        "content":"tells you about me. and also some statistics. don't know what you expected.",
+        "usage":"`sl about`. that's... it."
     },
     "decide": {
         "content":"give me a few items, and i'll randomly decide from one of them!",
