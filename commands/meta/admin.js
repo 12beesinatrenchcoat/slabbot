@@ -13,8 +13,10 @@ class SlabbotShutdown extends Command{
         });
     }
 
-    exec(message){
-        message.reply("slabbot is shutting down... [= - x - =]\ndon't forget to shut down the database, etc. etc.");
+    async exec(message){
+        await message.reply("slabbot is shutting down... [= - x - =]");
+        await console.log('"sl shutdown" was executed.')
+
         return process.exit();
     }
 }

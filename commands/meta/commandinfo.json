@@ -12,7 +12,7 @@
         "usage":"use `sl despacito <optional number for specific video>`\nyou can also type exactly: `this is so sad play despacito`"
     },
     "me": {
-        "content":"wait, are you talking about the command, or...?\ninformation relating to you. your xp level, (and other fun stats)!\n [ = ^ x ^ = ]",
+        "content":"wait, are you talking about the command, or...?\ninformation relating to you. your xp level, (and other fun stats)!",
         "usage":"use `sl me`. you can also add `full` to the end for more numbers!"
     },
     "help": {
