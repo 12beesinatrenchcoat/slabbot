@@ -6,7 +6,7 @@ const info = require("../meta/commandinfo.json");
 class Decide extends Command {
     constructor() {
         super("decide", {
-            aliases: ["decide"],
+            aliases: ["decide", "choose"],
             category: "utilties",
             description: info.decide,
             args: [

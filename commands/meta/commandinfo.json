@@ -5,7 +5,7 @@
     },
     "decide": {
         "content":"give me a few items, and i'll randomly decide from one of them!",
-        "usage":"`sl choose <a bunch of items, separated by commas>`"
+        "usage":"`sl decide <a bunch of items, separated by commas>`\nextra alias: `choose`"
     },
     "despacito": {
         "content":"gets *luis fonsi - despacito ft. daddy yankee*. and a few other related videos.\n see also: https://www.youtube.com/playlist?list=PLchhjXy0uG8pfrYkYFwG_IwnoR0PozqJs",
