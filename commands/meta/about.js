@@ -27,9 +27,9 @@ class SlabbotAbout extends Command{
         const embed = new MessageEmbed()
             .setColor("#f69321")
             .setTitle("[= ^ x ^ =] hello!")
-            .setDescription("**slabbot** (<@!729861979677917214>) is an experimental discord bot with weird features (that no one ever asked for).\nit is being created by `@12beesinatrenchcoat#7664` / <@!231899170716385280>, as a really questionable way to learn how to program in JavaScript.\nthe bot is also open source. source code here. https://github.com/AndyThePie/slabbot")
+            .setDescription("**slabbot** (<@!729861979677917214>) is an experimental discord bot with weird features (that no one ever asked for).\nit is being created by `@12beesinatrenchcoat#7664` / <@!231899170716385280>, as a really questionable way to learn how to program in JavaScript.\nthe bot is also open source. source code [here](https://github.com/AndyThePie/slabbot).") 
             .setThumbnail("https://raw.githubusercontent.com/AndyThePie/slabbot/master/images/slabbot-icon.png")
-            .addField("Powered by", "discord.js + Akairo\nStack Overflow", true)
+            .addField("Powered by", "[discord.js](https://discord.js.org) + [Akairo](https://discord-akairo.github.io/)\n[Stack Overflow](https://stackoverflow.com)", true)
             .addField("Current Uptime",`${Math.round(uptime/10)/100}s`,true)
             .addField("Total Commands Run",totalCommands,true)
             .addField("Most Used Commands",`
