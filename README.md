@@ -26,16 +26,13 @@ download the repository, extract files, `npm install`, etc. you also need a mong
 
 you will then need to make a `config.json` file in the base directory (where `index.js` is.) it currently looks something like this:
 
-```json
+```jsonc
 {
     "token": "your discord bot's token goes here",
     "owner": "your discord id goes here, allows you to run shutdown",
 
-    // everything below is command-specific, remove the corresponding file if you don't care. 
-    
-    // used in osu.js command, get a key here https://osu.ppy.sh/home/account/edit#new-oauth-application
     "osu":{
-        "id": client id, as integer,
+        "id": "client id, as number",
         "secret": "client secret."
     }
 }
