@@ -18,26 +18,33 @@ powered by [**discord.js**](https://github.com/discordjs/discord.js) and [**akai
 
 - really bad `despacito` videos!
 
-...and that's it.
+...and some other underwhelming things. see [commandinfo.json](https://github.com/AndyThePie/slabbot/blob/master/commands/meta/commandinfo.json) for everything.
 
 ## how to run
 
 download the repository, extract files, `npm install`, etc. you also need a mongodb database set up (by default, it connects to `mongodb://localhost:27017`.)
 
-you will then need to make a `config.json` file in the base directory (where `index.js` is.) the structure of it should match something like this:
+you will then need to make a `config.json` file in the base directory (where `index.js` is.) it currently looks something like this:
 
 ```json
 {
-    "token":"<insert token here>",
-    "owner":"<insert discord id(s) here>"
+    "token": "your discord bot's token goes here",
+    "owner": "your discord id goes here, allows you to run shutdown",
+
+    // everything below is command-specific, remove the corresponding file if you don't care. 
+    
+    // used in osu.js command, get a key here https://osu.ppy.sh/home/account/edit#new-oauth-application
+    "osu":{
+        "id": client id, as integer,
+        "secret": "client secret."
+    }
 }
 ```
-(the `token` is a discord bot token, user ids in `owner` can run the `slabbot shutdown` command.)
 
 then run `node .` in the directory where `index.js` is.
 
-(extra note: it may or may not matter, but this is currently being developed on node.js v14.)
+(extra note: currently being developed on node.js v14.)
 
 ## contributing
 
-*really not recommended.* that being said, if you *really* want to, you can always [write an issue](https://github.com/AndyThePie/slabbot/issues/new/choose) or submit a pull request (please make an issue beforehand if you're doing anything major)!
+if you *really* want to put yourself through it, sure! [write an issue](https://github.com/AndyThePie/slabbot/issues/new/choose) or submit a pull request (please make an issue beforehand if you're doing anything major)!
