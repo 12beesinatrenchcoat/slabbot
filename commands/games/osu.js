@@ -45,34 +45,69 @@ class OsuStats extends Command{
                     type: "string"
                 }
             ],
-            cooldown: 30000,
+            cooldown: 60000,
             ratelimit: 2
         });
     }
 
     async exec(message, args){
         if(!args.user) {
-            return message.reply("i need something, pal.");
+            return message.reply("you need to specify a user - a username or an id.");
         }
 
-        var user = {};
+        const url = "https://osu.ppy.sh/api/v2/users/" + args.user
 
-        await fetch("https://osu.ppy.sh/api/v2/users/" + args.user, {
+        await fetch(url, {
             method: "GET",
             headers: {
                 "Accept": "application/json",
-                "Content-Type": "appliction/json",
+                "Content-Type": "application/json",
                 "Authorization": "Bearer "+ token.access_token
             }
         })
         .then(res => res.json())
         .then((json) => {
-            // console.log(json);
+
             const stats = json.statistics;
             const grades = json.statistics.grade_counts;
+
+            // >_< (user with no pfp returns a local path)
+            if(json.avatar_url == "/images/layout/avatar-guest.png"){
+                json.avatar_url = "https://a.ppy.sh/";
+            }
+
+            let title = `${json.username} :flag_${json.country_code.toLowerCase()}:`
+
+            // stuff like -GN's "Champion Above Champions", or BanchoBot's "w00t p00t"
+            if(json.title != null){
+                title += ` [${json.title}]`;
+            }
+
+            let description;
+
+            if(json.is_bot == true){
+                description = "bot";
+            } else {
+                switch(json.playmode){
+                    case "osu":
+                        description = "circle clicker";
+                        break;
+                    case "taiko":
+                        description = "drum basher";
+                        break;
+                    case "fruits":
+                        description = "fruit catcher";
+                        break;
+                    case "mania": 
+                        description = "key smasher";
+                        break;
+                }
+            }
+
             let embed = new MessageEmbed()
                 .setColor("#ff66aa")
-                .setTitle(`\`osu\` / ${json.username} :flag_${json.country_code.toLowerCase()}:`)
+                .setTitle("`osu` / " + title)
+                .setDescription(description)
                 .setURL(`https://osu.ppy.sh/users/${json.id}`)
                 .setThumbnail(json.avatar_url)
                 .addFields(
@@ -90,7 +125,7 @@ class OsuStats extends Command{
                         "inline": true
                     },{
                         "name": "plays and stuff",
-                        "value": `${stats.play_count} plays over ${(stats.play_time / 3600).toFixed(2)} hours`,
+                        "value": `${stats.play_count} plays on ${json.beatmap_playcounts_count} maps over ${(stats.play_time / 3600).toFixed(2)} hours`,
                     },{
                         "name": "grades",
                         "value": 
@@ -105,8 +140,14 @@ class OsuStats extends Command{
             
             return message.channel.send(`here you go, <@!${message.author.id}>!`, embed);
         })
-
-        
+        .catch((error) => {
+            console.log(error);
+            const embed = new MessageEmbed()
+                .setTitle("error: not found")
+                .setColor("#FF0000")
+                .setDescription("the user you looked for doesn't exist. make sure you typed their username / id correctly!\n(unless the user exists, in which case, please [file an issue](https://github.com/AndyThePie/slabbot/issues) because *something* has gone catastrophically wrong.)");
+            return message.reply("something went wrong...", embed);
+        })
     }
 }
 

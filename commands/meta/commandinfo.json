@@ -16,7 +16,7 @@
         "usage":"use `sl me`. you can also add `full` to the end for more numbers!"
     },
     "osu":{
-        "content":"gets data from osu! api.",
+        "content":"displays a bit of information on a circle clicker / drum basher / fruit catcher / key smasher.",
         "usage":"`sl osu <user>`"
     },
     "help": {
