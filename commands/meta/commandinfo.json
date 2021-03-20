@@ -15,6 +15,10 @@
         "content":"wait, are you talking about the command, or...?\ninformation relating to you. your xp level, (and other fun stats)!",
         "usage":"use `sl me`. you can also add `full` to the end for more numbers!"
     },
+    "osu":{
+        "content":"gets data from osu! api.",
+        "usage":"`sl osu <user>`"
+    },
     "help": {
         "content":"gets you a list of commands, or explains what a given command does.",
         "usage":"you're using it right now, genius. `sl help <optional command>`"
