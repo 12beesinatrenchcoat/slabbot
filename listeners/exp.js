@@ -1,8 +1,10 @@
+// see also: me.js (in commands/meta).
+
 const { Listener } = require("discord-akairo");
 const userModel = require("../model.user.js");
 
 // see also: https://www.desmos.com/calculator/kcrt4evjgg
-const expNeededForLevel = level => 1024*(level**1.3)+(level/35)**4.5;
+const expNeededForLevel = level => 1024 * (level ** 1.3) + (256 *((level-1) / 8) ** 1.8);
 
 function toBigNumber(number){
 
@@ -113,20 +115,20 @@ class ExperienceListener extends Listener{
         const lastMessageTimeDiff = message.createdAt - lastMessageDate;
 
         if(isNaN(lastMessageTimeDiff)) {
-
             // if null, set value without adding any exp (this shouldn't happen!)
             await userModel.findByIdAndUpdate(message.author.id, { lastMessageDate: message.createdAt });
-        } else if(lastMessageTimeDiff > 5000) {
-            // if last message was >5000 milliseconds ago. otherwise, nothing happens. 
+        } else if(lastMessageTimeDiff > 6000) {
+            // if last message was >6000 milliseconds ago. otherwise, nothing happens. 
             await userModel.findByIdAndUpdate(message.author.id, { lastMessageDate: message.createdAt });
             let addExp;
-            // see also: https://www.desmos.com/calculator/rs1k8grtc9
+            // scaling exp / message, based on time since last message. minimum is ~2.4 (after 6000ms), max is 9 (after 30000ms)
+            // see also: https://www.desmos.com/calculator/pci07ccizk
             if (lastMessageTimeDiff <= 15000){
-                addExp = lastMessageTimeDiff/1000;
-            } else if(lastMessageTimeDiff <= 60000){
-                addExp = (lastMessageTimeDiff - 15000)/4500+15;
-            } else{
-                addExp = 25;
+                addExp = lastMessageTimeDiff / 2500;
+            } else if(lastMessageTimeDiff <= 30000){
+                addExp = (lastMessageTimeDiff - 15000) / 5000 + 6;
+            } else {
+                addExp = 9;
             }
 
             await userModel.findByIdAndUpdate(message.author.id, { exp: exp+addExp });
