@@ -3,8 +3,7 @@
 const { Listener } = require("discord-akairo");
 const userModel = require("../model.user.js");
 
-// see also: https://www.desmos.com/calculator/kcrt4evjgg
-const expNeededForLevel = level => 1024 * (level ** 1.3) + (256 *((level-1) / 8) ** 1.8);
+const { expNeededForLevel } = require.main.require("./things.js");
 
 function toBigNumber(number){
 

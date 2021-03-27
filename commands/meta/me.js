@@ -6,8 +6,7 @@ const { MessageEmbed } = require("discord.js");
 const info = require("./commandinfo.json");
 const userModel = require("../../model.user.js");
 
-// see also: https://www.desmos.com/calculator/kcrt4evjgg
-const expNeededForLevel = level => 1024*(level**1.3)+(level/35)**4.5;
+const { expNeededForLevel } = require.main.require("./things.js");
 
 async function createExpBar(percentage, maxLength) {
     let output = "";
@@ -149,8 +148,8 @@ class SlabbotMe extends Command{
                     `
 \`\`\`glsl
 # LEVEL 
-${toBigNumber(level)}${expBar} ${Math.round(percentToNextLevel*100)/100}%
-exp [${Math.round(exp*1000)/1000} / ${Math.round(expForNextLevel*1000)/1000}]
+${toBigNumber(level)}${expBar} ${(percentToNextLevel).toFixed(2)}%
+exp [${(exp).toFixed(3)} / ${(expForNextLevel).toFixed(3)}]
 \`\`\`
                 `
                 )
