@@ -71,7 +71,7 @@ class OsuStats extends Command{
             const stats = json.statistics;
             const grades = json.statistics.grade_counts;
 
-            const expBar = createExpBar(stats.level.progress, 12)
+            const expBar = createExpBar(stats.level.progress, 36)
 
             // >_< (user with no pfp returns a local path)
             if(json.avatar_url == "/images/layout/avatar-guest.png"){
@@ -87,8 +87,22 @@ class OsuStats extends Command{
 
             let description;
 
-            if(json.is_bot == true){
-                description = "bot";
+            if(json.is_bot == true){  // beep boop
+                let embed = new MessageEmbed()
+                    .setColor("#ff66aa")
+                    .setTitle("`osu` / " + title)
+                    .setURL(`https://osu.ppy.sh/users/${json.id}`)
+                    .setThumbnail(json.avatar_url)
+                
+                let description = "a chat bot.";
+                if(json.username == "BanchoBot"){  // the best bot
+                    description += " helping you help yourself"
+                    embed.image = { url: "https://i.ppy.sh/35e1889b4ccc5f13a12f44c24efba0b8852c7a4f/687474703a2f2f7075752e73682f326c6466652f38653736313136323132" };
+                }
+
+                embed.description = description;
+                
+                return message.channel.send(`here you go, <@!${message.author.id}>!`, embed);
             } else {
                 switch(json.playmode){
                     case "osu":
@@ -122,9 +136,12 @@ class OsuStats extends Command{
                         "value": fNum(stats.pp, 2),
                         "inline": true
                     },{
-                        "name": "level",
-                        "value": stats.level.current + " `" + expBar + "` " + stats.level.progress + "%",
+                        "name": "accuracy",
+                        "value": fNum(stats.hit_accuracy, 2) + "%",
                         "inline": true
+                    },{
+                        "name": "level",
+                        "value": stats.level.current + " `" + expBar + "` " + stats.level.progress + "%"
                     },{
                         "name": "plays and stuff",
                         "value": `${fNum(stats.play_count)} plays on ${fNum(json.beatmap_playcounts_count)} maps over ${fNum(stats.play_time / 3600, 2)} hours`,
