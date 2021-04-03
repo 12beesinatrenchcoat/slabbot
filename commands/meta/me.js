@@ -6,27 +6,7 @@ const { MessageEmbed } = require("discord.js");
 const info = require("./commandinfo.json");
 const userModel = require("../../model.user.js");
 
-const { expNeededForLevel } = require.main.require("./things.js");
-
-async function createExpBar(percentage, maxLength) {
-    let output = "";
-    const fillCount = Math.floor(percentage / 100 * maxLength);
-
-    for(let char = 0; char < maxLength; char++){
-
-        if (char === 0) {
-            output += "[";
-        } else if (char <= fillCount) {
-            output += "|";
-        } else if (char === maxLength - 1) {
-            output += "]";
-        } else {
-            output += " ";
-        }
-    }
-
-    return output;
-}
+const { expNeededForLevel, createExpBar } = require.main.require("./things.js");
 
 function toBigNumber(number){
 
@@ -122,8 +102,9 @@ class SlabbotMe extends Command{
 
     async exec(message) {
 
-        const { exp, level, stats } = await userModel.findById(message.author.id, "exp level stats");
+        const { exp, level, stats } = await userModel.findById(message.author.id, "exp level stats") || 0;
 
+        // TODO: better error handling with new users.
         if(exp === 0){
             return;
         }

@@ -2,3 +2,23 @@
 
 // see also: https://www.desmos.com/calculator/kcrt4evjgg
 exports.expNeededForLevel = level => 1024 * (level ** 1.3) + (256 *((level-1) / 8) ** 1.8) || 0;
+
+exports.createExpBar = async function createExpBar(percentage, maxLength) {
+    let output = "";
+    const fillCount = Math.floor(percentage / 100 * maxLength);
+
+    for(let char = 0; char < maxLength; char++){
+
+        if (char === 0) {
+            output += "[";
+        } else if (char <= fillCount) {
+            output += "|";
+        } else if (char === maxLength - 1) {
+            output += "]";
+        } else {
+            output += " ";
+        }
+    }
+
+    return output;
+}
