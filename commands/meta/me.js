@@ -121,7 +121,7 @@ class SlabbotMe extends Command{
             const sortedStats = Object.entries(stats).sort((a,b,) => b[1] - a[1]);
             const totalCommands = Object.values(stats).reduce((a, b) => a + b);
 
-            const expBar = await createExpBar(percentToNextLevel, 36);
+            const expBar = createExpBar(percentToNextLevel, 36);
             embed = new MessageEmbed()
                 .setColor("#f69321")
                 .setTitle(`\`me\` / ${message.author.tag}`)
@@ -141,7 +141,7 @@ exp [${(exp).toFixed(3)} / ${(expForNextLevel).toFixed(3)}]
                 .addField("Commands Used", `${totalCommands}`, true);
         } else {
             // compact/lite version of card.
-            const expBar = await createExpBar(percentToNextLevel, 10);
+            const expBar = createExpBar(percentToNextLevel, 10);
             embed = new MessageEmbed()
                 .setColor("#f69321")
                 .setTitle(`\`me\` / ${message.author.tag}`)
