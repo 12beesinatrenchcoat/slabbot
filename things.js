@@ -23,3 +23,8 @@ exports.createExpBar = function createExpBar(percentage, maxLength) {
 
     return output;
 }
+
+// formatting numbers. here to make code just a bit more concise.
+exports.fNum = function fNum(number, decimalPlaces){
+    return number.toLocaleString('en-US', { minimumFractionDigits: decimalPlaces || 0, maximumFractionDigits: decimalPlaces || 0})
+}

@@ -4,6 +4,7 @@ const fetch = require("node-fetch");
 
 const info = require("../meta/commandinfo.json");
 const {osu} = require.main.require("./config.json") 
+const {createExpBar, fNum} = require.main.require("./things.js") 
 
 var token = {};
 
@@ -67,9 +68,10 @@ class OsuStats extends Command{
         })
         .then(res => res.json())
         .then((json) => {
-
             const stats = json.statistics;
             const grades = json.statistics.grade_counts;
+
+            const expBar = createExpBar(stats.level.progress, 12)
 
             // >_< (user with no pfp returns a local path)
             if(json.avatar_url == "/images/layout/avatar-guest.png"){
@@ -113,27 +115,27 @@ class OsuStats extends Command{
                 .addFields(
                     {
                         "name": "global rank", 
-                        "value": "#" + stats.global_rank, 
+                        "value": "#" + fNum(stats.global_rank), 
                         "inline": true 
                     },{
                         "name": "pp",
-                        "value": (stats.pp).toFixed(2),
+                        "value": fNum(stats.pp, 2),
                         "inline": true
                     },{
                         "name": "level",
-                        "value": stats.level.current,
+                        "value": stats.level.current + " `" + expBar + "` " + stats.level.progress + "%",
                         "inline": true
                     },{
                         "name": "plays and stuff",
-                        "value": `${stats.play_count} plays on ${json.beatmap_playcounts_count} maps over ${(stats.play_time / 3600).toFixed(2)} hours`,
+                        "value": `${fNum(stats.play_count)} plays on ${fNum(json.beatmap_playcounts_count)} maps over ${fNum(stats.play_time / 3600, 2)} hours`,
                     },{
                         "name": "grades",
                         "value": 
-                            "<:osu_SSH:822705886005952562>" + grades.ssh +
-                            " <:osu_SS:822705886195089408>" + grades.ss +
-                            " <:osu_SH:822705886035574824>" + grades.sh +
-                            " <:osu_S:822705886040555531>" + grades.s +
-                            " <:osu_A:822705886040424468>" + grades.a,    
+                            "<:osu_SSH:822705886005952562>" + fNum(grades.ssh) +
+                            " <:osu_SS:822705886195089408>" + fNum(grades.ss) +
+                            " <:osu_SH:822705886035574824>" + fNum(grades.sh) +
+                            " <:osu_S:822705886040555531>" + fNum(grades.s) +
+                            " <:osu_A:822705886040424468>" + fNum(grades.a),    
                     }
                 )
                 .setTimestamp(message.createdAt);
