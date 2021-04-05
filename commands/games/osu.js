@@ -147,12 +147,12 @@ class OsuStats extends Command{
                         "value": `${fNum(stats.play_count)} plays on ${fNum(json.beatmap_playcounts_count)} maps over ${fNum(stats.play_time / 3600, 2)} hours`,
                     },{
                         "name": "grades",
-                        "value": 
-                            "<:osu_SSH:822705886005952562>" + fNum(grades.ssh) +
-                            " <:osu_SS:822705886195089408>" + fNum(grades.ss) +
-                            " <:osu_SH:822705886035574824>" + fNum(grades.sh) +
-                            " <:osu_S:822705886040555531>" + fNum(grades.s) +
-                            " <:osu_A:822705886040424468>" + fNum(grades.a),    
+                        "value": // these emoji are in a private server- you can find copies of them in /images/emojis/osu_ranks
+                            "<:osu_SSH:828667457891860535> " + fNum(grades.ssh) + " " +
+                            "<:osu_SS:828667457954775040> " + fNum(grades.ss) + " " +
+                            "<:osu_SH:828667457915846656> " + fNum(grades.sh) + " " +
+                            "<:osu_S:828667457719238667> " + fNum(grades.s) + " " +
+                            "<:osu_A:828667457307672627> " + fNum(grades.a),    
                     }
                 )
                 .setTimestamp(message.createdAt);
