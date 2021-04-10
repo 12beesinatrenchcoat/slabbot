@@ -1,6 +1,6 @@
 {
   "name": "slabbot",
-  "version": "0.0.1",
+  "version": "0.3.0",
   "description": "an experimental discord bot with avant-garde features (that no one ever asked for).",
   "main": "index.js",
   "scripts": {
