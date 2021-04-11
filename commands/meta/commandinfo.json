@@ -17,7 +17,7 @@
     },
     "osu":{
         "content":"displays a bit of information on a circle clicker / drum basher / fruit catcher / key smasher.",
-        "usage":"`sl osu <user>`"
+        "usage":"`sl osu <user>`\nalso has multiple aliases: `osu!`, `osu!taiko`, `osu!catch`, and `osu!mania`, for each respective mode."
     },
     "help": {
         "content":"gets you a list of commands, or explains what a given command does.",
