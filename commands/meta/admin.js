@@ -15,7 +15,8 @@ class SlabbotShutdown extends Command{
 
     async exec(message){
         await message.reply("slabbot is shutting down... [= - x - =]");
-        await console.log('"sl shutdown" was executed.')
+        // eslint-disable-next-line quotes
+        console.log('"sl shutdown" was executed.');  // uses double quotes in message, so single quotes for string instead.
 
         return process.exit();
     }

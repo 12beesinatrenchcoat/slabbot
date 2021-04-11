@@ -18,8 +18,8 @@
             "unix"
         ],
         "quotes": [
-            "error",
-            "warn"
+            "warn",
+            "double"
         ],
         "semi": [
             "error",
