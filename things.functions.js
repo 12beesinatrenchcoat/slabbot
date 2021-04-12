@@ -28,3 +28,19 @@ exports.createExpBar = function createExpBar(percentage, maxLength) {
 exports.fNum = function fNum(number, decimalPlaces){
     return number.toLocaleString("en-US", { minimumFractionDigits: decimalPlaces || 0, maximumFractionDigits: decimalPlaces || 0});
 };
+
+// formatting durations - seconds to a string. elegant answer mostly stolen from https://stackoverflow.com/a/52387803/10873246.
+exports.sToDhms = function sToDhms(seconds){
+
+    const d = Math.floor(seconds / (3600 * 24));
+    const h = Math.floor(seconds % (3600 * 24) / 3600);
+    const m = Math.floor(seconds % 3600 / 60);
+    const s = (seconds % 60).toFixed(2);
+
+    const dStr = d > 0 ? d + "d " : "";
+    const hStr = h > 0 | d > 0 ? h + "h " : "";
+    const mStr = m > 0 | d > 0 | h > 0 ? m + "m " : "";
+    const sStr = s > 0 | d > 0 | h > 0 | m > 0 ? s + "s" : "";
+
+    return dStr + hStr + mStr + sStr;
+};

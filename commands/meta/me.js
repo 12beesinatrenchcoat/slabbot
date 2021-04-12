@@ -6,7 +6,7 @@ const { MessageEmbed } = require("discord.js");
 const info = require("./commandinfo.json");
 const userModel = require("../../model.user.js");
 
-const { expNeededForLevel, createExpBar } = require.main.require("./things.js");
+const { expNeededForLevel, createExpBar } = require.main.require("./things.functions.js");
 
 function toBigNumber(number){
 

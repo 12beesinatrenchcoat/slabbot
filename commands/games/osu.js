@@ -4,7 +4,7 @@ const fetch = require("node-fetch");
 
 const info = require("../meta/commandinfo.json");
 const {osu} = require.main.require("./config.json") ;
-const {createExpBar, fNum} = require.main.require("./things.js") ;
+const {createExpBar, fNum} = require.main.require("./things.functions.js") ;
 
 var token = {};
 

@@ -3,7 +3,7 @@
 const { Listener } = require("discord-akairo");
 const userModel = require("../model.user.js");
 
-const { expNeededForLevel } = require.main.require("./things.js");
+const { expNeededForLevel } = require.main.require("./things.functions.js");
 
 function toBigNumber(number){
 
