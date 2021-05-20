@@ -6,7 +6,7 @@ const info = require("../meta/commandinfo.json");
 const {osu} = require.main.require("./config.json") ;
 const {createExpBar, fNum} = require.main.require("./things.functions.js") ;
 
-var token = {};
+var token;
 
 async function auth(){
     return fetch("https://osu.ppy.sh/oauth/token", {
@@ -24,10 +24,13 @@ async function auth(){
     })
         .then(res => res.json())
         .then((json) => {
-            // console.log(json);
             const timeout = json.expires_in * 1000;
             token = json;
             setTimeout(auth, timeout);
+        })
+        .catch ((error) => {
+            console.log("something went wrong while trying to get a token for the osu!api.\n" + error);
+            token = null;
         });
 }
 
@@ -156,7 +159,13 @@ class OsuStats extends Command{
         });
     }
 
-    async exec(message, args){
+    async exec(message, args) {
+        // in case something went wrong with authentication... try again!
+        if (token === null) {
+            console.log("trying to get a token again...");
+            await auth(); 
+        }
+
         if(!args.user) {
             return message.reply("you need to specify a user - a username or an id.");
         }
