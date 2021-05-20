@@ -97,10 +97,11 @@ const createProfileEmbed = function (json, modeRequested) {
 
     embed.setDescription(description);
     embed.setTitle(title + " (" + (modeRequested ?? mode) + ")");
+
     embed.addFields(
         {
             "name": "global rank",
-            "value": "#" + fNum(stats.global_rank),
+            "value": stats.global_rank ? "#" + fNum(stats.global_rank) : "unranked",
             "inline": true
         }, {
             "name": "pp",
