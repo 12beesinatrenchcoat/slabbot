@@ -2,19 +2,19 @@
 name: Bug report
 about: A thing that *probably* shouldn't have happened.
 title: ''
-labels: ''
+labels: 'bug'
 assignees: ''
 
 ---
 
 **Describe the bug**
-<< What *is* the bug? What's going on? >>
+<!-- What *is* the bug? What's going on? -->
 
 **To Reproduce**
-<< How did you trigger the bug? >>
+<!-- How did you trigger the bug? -->
 
 **Expected behavior**
-<< What *should* have happened? >
+<!-- What *should* have happened? -->
 
 **Additional info**
-<< Screenshots, videos, any information I should know. >>
+<!-- Screenshots, videos, any information I should know. -->
