@@ -33,12 +33,111 @@ async function auth(){
 
 auth();
 
+// the stuff that creates the actual embed...
+const createProfileEmbed = function (json, modeRequested) {
+
+    const stats = json.statistics;
+    const grades = json.statistics.grade_counts;
+
+    const expBar = createExpBar(stats.level.progress, 36);
+
+    // >_< (user with no pfp returns a local path)
+    if (json.avatar_url === "/images/layout/avatar-guest.png") {
+        json.avatar_url = "https://a.ppy.sh/";
+    }
+
+    let title = `${json.username} :flag_${json.country_code.toLowerCase()}:`;
+
+    // stuff like -GN's "Champion Above Champions", or BanchoBot's "w00t p00t"
+    if (json.title != null) {
+        title += ` [${json.title}]`;
+    }
+
+    // same for all, regardless of user
+    let embed = new MessageEmbed()
+        .setColor("#ff66aa")
+        .setTitle(title)
+        .setURL(`https://osu.ppy.sh/users/${json.id}`)
+        .setThumbnail(json.avatar_url);
+
+    // beep boop?
+    if (json.is_bot === true) {
+        let description = "a chat bot.";
+
+        if (json.username === "BanchoBot") {  // the best bot
+            description += " helping you help yourself";
+            embed.image = { url: "https://i.ppy.sh/35e1889b4ccc5f13a12f44c24efba0b8852c7a4f/687474703a2f2f7075752e73682f326c6466652f38653736313136323132" };
+        }
+        embed.description = description;
+        return embed; // quit function here - bot accounts do not have stats.
+    }
+
+    // using player's default mode
+    let mode;
+    let description;
+    switch (json.playmode) {
+    case "osu":
+        // i'm mad :pink_circle: isn't an actual emoji
+        description = "<:pink_circle:830550207699484674> circle clicker";
+        mode = "osu!";
+        break;
+    case "taiko":
+        description = ":drum: drum basher";
+        mode = "osu!taiko";
+        break;
+    case "fruits":
+        description = ":apple: fruit catcher";
+        mode = "osu!catch";
+        break;
+    case "mania":
+        description = ":musical_keyboard: key smasher";
+        mode = "osu!mania";
+        break;
+    }
+
+    embed.setDescription(description);
+    embed.setTitle(title + " (" + (modeRequested ?? mode) + ")");
+    embed.addFields(
+        {
+            "name": "global rank",
+            "value": "#" + fNum(stats.global_rank),
+            "inline": true
+        }, {
+            "name": "pp",
+            "value": fNum(stats.pp, 2),
+            "inline": true
+        }, {
+            "name": "accuracy",
+            "value": fNum(stats.hit_accuracy, 2) + "%",
+            "inline": true
+        }, {
+            "name": "level",
+            "value": stats.level.current + " `" + expBar + "` " + stats.level.progress + "%"
+        }, {
+            "name": "plays and stuff",
+            "value": `${fNum(stats.play_count)} plays over ${fNum(stats.play_time / 3600, 2)} hours\nplayed ${fNum(json.beatmap_playcounts_count)} maps (across all modes)`,
+        }, {
+            "name": "grades",
+            "value": // the blank characters in the quotes are em spaces, U+2003.
+            "<:osu_SSH:828667457891860535> " + fNum(grades.ssh) + " " +
+            "<:osu_SS:828667457954775040> " + fNum(grades.ss) + " " +
+            "<:osu_SH:828667457915846656> " + fNum(grades.sh) + " " +
+            "<:osu_S:828667457719238667> " + fNum(grades.s) + " " +
+            "<:osu_A:828667457307672627> " + fNum(grades.a)
+        // these emoji are in a private server - you can find copies of them in /images/emojis/osu_ranks 
+        }
+    );
+    
+    return embed;
+};
+
+// and now actually defining the actual command...
 class OsuStats extends Command{
     constructor(){
         super("osu", {
             aliases: [
                 "osu",  // will use user's default mode
-                "osu!",
+                "osu!", // other command aliases are mode-specific
                 "osu!taiko",
                 "osu!catch",
                 "osu!mania"
@@ -48,11 +147,11 @@ class OsuStats extends Command{
             args: [
                 {
                     id: "user",
-                    match: "content"
+                    match: "content" // because usernames can have spaces???
                 }
             ],
             cooldown: 30000,
-            ratelimit: 2
+            ratelimit: 3
         });
     }
 
@@ -61,8 +160,8 @@ class OsuStats extends Command{
             return message.reply("you need to specify a user - a username or an id.");
         }
 
-        let GameMode = "";  // used only in api request.
-
+        // using different aliases results in different modes being fetched
+        let GameMode = ""; // only used in request
         switch(message.util.parsed.alias){
         case "osu!":
             GameMode += "osu"; 
@@ -80,6 +179,7 @@ class OsuStats extends Command{
 
         const url = "https://osu.ppy.sh/api/v2/users/" + args.user + "/" + GameMode;
 
+        // making the request
         await fetch(url, {
             method: "GET",
             headers: {
@@ -89,117 +189,23 @@ class OsuStats extends Command{
             }
         })
             .then(res => res.json())
-            .then((json) => {
-                const stats = json.statistics;
-                const grades = json.statistics.grade_counts;
-
-                const expBar = createExpBar(stats.level.progress, 36);
-
-                // >_< (user with no pfp returns a local path)
-                if(json.avatar_url == "/images/layout/avatar-guest.png"){
-                    json.avatar_url = "https://a.ppy.sh/";
-                }
-
-                let title = `${json.username} :flag_${json.country_code.toLowerCase()}:`;
-
-                // stuff like -GN's "Champion Above Champions", or BanchoBot's "w00t p00t"
-                if(json.title != null){
-                    title += ` [${json.title}]`;
-                }
-
-                let mode;
-                let description;
-
-                if(json.is_bot == true){  // beep boop
-                    let embed = new MessageEmbed()
-                        .setColor("#ff66aa")
-                        .setTitle(title)
-                        .setURL(`https://osu.ppy.sh/users/${json.id}`)
-                        .setThumbnail(json.avatar_url);
+            .then((json) => { // doing stuff with the output
                 
-                    let description = "a chat bot.";
-                    if(json.username == "BanchoBot"){  // the best bot
-                        description += " helping you help yourself";
-                        embed.image = { url: "https://i.ppy.sh/35e1889b4ccc5f13a12f44c24efba0b8852c7a4f/687474703a2f2f7075752e73682f326c6466652f38653736313136323132" };
-                    }
+                const modeRequested = message.util.parsed.alias != "osu" ?
+                    message.util.parsed.alias : // mode-specific alias used
+                    null;
 
-                    embed.description = description;
-                
-                    return message.channel.send(`here you go, <@!${message.author.id}>!`, embed);
-                } else {
-                    switch(json.playmode){
-                    case "osu":
-                        // i'm mad :pink_circle: isn't an actual emoji
-                        description = "<:pink_circle:830550207699484674> circle clicker";  
-                        mode = "osu!";
-                        break;
-                    case "taiko":
-                        description = ":drum: drum basher";
-                        mode = "osu!taiko";
-                        break;
-                    case "fruits":
-                        description = ":apple: fruit catcher";
-                        mode = "osu!catch";
-                        break;
-                    case "mania": 
-                        description = ":musical_keyboard: key smasher";
-                        mode = "osu!mania";
-                        break;
-                    }
-                }
+                const embed = createProfileEmbed(json, modeRequested);
 
-
-                if(message.util.parsed.alias != "osu"){
-                    mode = message.util.parsed.alias;
-                }
-
-                let embed = new MessageEmbed()
-                    .setColor("#ff66aa")
-                    .setTitle(title + " (" + mode + ")")
-                    .setDescription(description)
-                    .setURL(`https://osu.ppy.sh/users/${json.id}`)
-                    .setThumbnail(json.avatar_url)
-                    .addFields(
-                        {
-                            "name": "global rank", 
-                            "value": "#" + fNum(stats.global_rank), 
-                            "inline": true 
-                        },{
-                            "name": "pp",
-                            "value": fNum(stats.pp, 2),
-                            "inline": true
-                        },{
-                            "name": "accuracy",
-                            "value": fNum(stats.hit_accuracy, 2) + "%",
-                            "inline": true
-                        },{
-                            "name": "level",
-                            "value": stats.level.current + " `" + expBar + "` " + stats.level.progress + "%"
-                        },{
-                            "name": "plays and stuff",
-                            "value": `${fNum(stats.play_count)} plays over ${fNum(stats.play_time / 3600, 2)} hours\nplayed ${fNum(json.beatmap_playcounts_count)} maps (across all modes)`,
-                        },{
-                            "name": "grades",
-                            "value":
-                            "<:osu_SSH:828667457891860535> " + fNum(grades.ssh) + " " +
-                            "<:osu_SS:828667457954775040> " + fNum(grades.ss) + " " +
-                            "<:osu_SH:828667457915846656> " + fNum(grades.sh) + " " +
-                            "<:osu_S:828667457719238667> " + fNum(grades.s) + " " +
-                            "<:osu_A:828667457307672627> " + fNum(grades.a)
-                            // these emoji are in a private server - you can find copies of them in /images/emojis/osu_ranks 
-                        }
-                    )
-                    .setTimestamp(message.createdAt);
-            
                 return message.channel.send(`here you go, <@!${message.author.id}>!`, embed);
             })
             .catch((error) => {
                 console.log(error);
                 const embed = new MessageEmbed()
-                    .setTitle("error: not found")
+                    .setTitle("error: something went wrong...")
                     .setColor("#FF0000")
-                    .setDescription("the user you looked for doesn't exist. make sure you typed their username / id correctly!\n(unless the user exists, in which case, please [file an issue](https://github.com/AndyThePie/slabbot/issues) because *something* has gone catastrophically wrong.)");
-                return message.reply("something went wrong...", embed);
+                    .setDescription("make sure you spelled the username / typed the id correctly. otherwise, please [file an issue](https://github.com/AndyThePie/slabbot/issues) because *something* has gone catastrophically wrong.)");
+                return message.reply("sorry about this... [=^x^;=]", embed);
             });
     }
 }
