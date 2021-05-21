@@ -4,7 +4,7 @@ const fetch = require("node-fetch");
 
 const info = require("../meta/commandinfo.json");
 const {osu} = require.main.require("./config.json") ;
-const {createExpBar, fNum} = require.main.require("./things.functions.js") ;
+const {createExpBar, fNum, getLongMonth, sToDhms} = require.main.require("./things.functions.js") ;
 
 var token;
 
@@ -56,12 +56,33 @@ const createProfileEmbed = function (json, modeRequested) {
         title += ` [${json.title}]`;
     }
 
+    // date joined / last active
+    const joinDate = new Date(json.join_date);
+    const joinMonth = getLongMonth(joinDate);
+    const joinYear = joinDate.getFullYear();
+    // "here since the beginning" seems to be pre-2008
+    // see: https://osu.ppy.sh/community/forums/posts/6766770
+    const wasHereSinceBeginning = joinYear < 2008;
+
+    const now = Date.now();
+    const lastVisit = new Date(json.last_visit);
+    const sinceLastVisit = sToDhms((now - lastVisit)/1000, "obj");
+
+    const joinDateString = wasHereSinceBeginning ?
+        "Here since the beginning (" + joinMonth + " " + joinYear +")" :
+        "Joined " + joinMonth + " " + joinYear;
+    
+    const lastVisitString = json.is_online ?
+        "Currently online" :
+        "Last active " + (sinceLastVisit.d || sinceLastVisit.h || sinceLastVisit.m) + "ago";
+
     // same for all, regardless of user
     let embed = new MessageEmbed()
         .setColor("#ff66aa")
         .setTitle(title)
         .setURL(`https://osu.ppy.sh/users/${json.id}`)
-        .setThumbnail(json.avatar_url);
+        .setThumbnail(json.avatar_url)
+        .setFooter(joinDateString + " / " + lastVisitString);
 
     // beep boop?
     if (json.is_bot === true) {
@@ -200,7 +221,7 @@ class OsuStats extends Command{
         })
             .then(res => res.json())
             .then((json) => { // doing stuff with the output
-                
+
                 const modeRequested = message.util.parsed.alias != "osu" ?
                     message.util.parsed.alias : // mode-specific alias used
                     null;
