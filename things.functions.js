@@ -56,3 +56,7 @@ exports.sToDhms = function sToDhms(seconds, format = "str") {
         return dStr + hStr + mStr + sStr;
     }
 };
+
+exports.getLongMonth = function getLongMonth(month) {
+    return Intl.DateTimeFormat("en-US", { month: "long" }).format(month);
+};
