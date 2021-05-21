@@ -30,7 +30,9 @@ exports.fNum = function fNum(number, decimalPlaces){
 };
 
 // formatting durations - seconds to a string. elegant answer mostly stolen from https://stackoverflow.com/a/52387803/10873246.
-exports.sToDhms = function sToDhms(seconds){
+// format can be "str" or "obj"
+exports.sToDhms = function sToDhms(seconds, format = "str") {
+    
 
     const d = Math.floor(seconds / (3600 * 24));
     const h = Math.floor(seconds % (3600 * 24) / 3600);
@@ -42,5 +44,15 @@ exports.sToDhms = function sToDhms(seconds){
     const mStr = m > 0 | d > 0 | h > 0 ? m + "m " : "";
     const sStr = s > 0 | d > 0 | h > 0 | m > 0 ? s + "s" : "";
 
-    return dStr + hStr + mStr + sStr;
+    switch (format){
+    case "obj":
+        return {
+            d: dStr,
+            h: hStr,
+            m: mStr,
+            s: sStr
+        };
+    default:
+        return dStr + hStr + mStr + sStr;
+    }
 };
