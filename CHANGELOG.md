@@ -1,8 +1,10 @@
 # slabbot changelog
 
-[ = ' x ' = ] :clock3:in terms of versioning numbers, the first number increases on some major milestone, the second number increases on a new feature/command, and the last number increments on any bug-fixes or any other minor things.
+[ = ' x ' = ] :clock3: in terms of versioning numbers, the first number increases on some major milestone, the second number increases on a new feature/command, and the last number increments on any bug-fixes or any other minor things.
 
 ## ~~table of~~ contents
+
+[0.4.0-indev "pro gamer move"](#040-indev), released 27 may 2021
 
 [0.3.0-indev "await, mongoose!"](#030-indev), released 7 november 2020
 
@@ -11,6 +13,59 @@
 [0.1.1-indev "wait, it's all despacito?"](#011-indev), released 24 september 2020
 
 [0.1.0-indev "this is so sad play despacito"](#010-indev), released 9 july 2020
+
+-----
+
+## 0.4.0-indev
+
+> “I'll probably end up abandoning this again for another month.”  
+\- Me, 6 months ago
+
+**27 May 2021** / commit [`065ef89`](https://github.com/AndyThePie/slabbot/commit/065ef89e7493824246b07a8fe490dee297267d42)
+
+this version focused on some game stuff, i guess. it's been so long that i don't really even remember this... (>_<)
+
+### + additions
+
+- **get `osu`! user stats!**
+  - you can get a user's [osu!](https://osu.ppy.sh) stats with this command.
+  - defaults to the user's default mode.
+    - specific modes can also be specified (`osu!taiko`, `osu!catch`, `osu!mania`, or just `osu!`.)
+  - w00t p00t :3
+  - and just in case, no, i am not affiliated with the osu!team.
+- **roll some `dice`!**
+  - because... why not?
+- fancier `about` command.
+  - links now exist, the description's been changed, and there's also a version thing. 
+    - current uptime is also fancier.
+- slabbot has a [website](https://andythepie.github.io/slabbot)?
+  - well, not really. it's just the `README` for now. watch this space, though...
+- `decide` command can now also be invoked with the alias `choose`.
+- `shutdown` command posts a message *before* it shuts down.
+
+### ~ other changes
+- **xp gain has been nerfed, and level thresholds are higher.**
+  - levels may have been lost as well, the exp/level calculation has also slightly changed. 
+  ```js 
+  // const expNeededForLevel = level => 1024*(level**1.3)+(level/35)**4.5;
+  const expNeededForLevel = level => 1024 * (level ** 1.3) + (256 *((level-1) / 8) ** 1.8);
+  ```
+  - exp per message is also lower.
+    - 2.4exp at 6000ms, increasing to 9exp at 30000ms. 
+    - previously 5exp at 5000ms, increasing to 25exp at 60000ms.
+    - see also: desmos graphs for the [old exp/message graph](https://www.desmos.com/calculator/pzw6sryjnm) and the [new one](https://www.desmos.com/calculator/pci07ccizk).
+- a new `things.functions.js` for functions that do things that i'll probably use in multiple commands.
+  - `createExpBar` has been moved here (from `sl me` command).
+    - so has `expNeededForLevel`.
+  - `fNum` formats numbers (adds commas and decimals).
+  - `sToDhms` converts seconds to other units (used in `sl about`)
+  - `getLongMonth` gets month name from a `Date`.
+  - **`returnError` standardizes error embeds, I guess.**
+    - not yet used everywhere else... yet.
+  
+i think...? that's all. it's been fun to write these and get back into code and all the sort. it's summer as well... oh boy... 
+
+next update will focus on refactors and code cleanups and documentation and all the sort. so... see you then! (^^)/
 
 -----
 
