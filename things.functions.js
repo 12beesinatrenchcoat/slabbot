@@ -60,3 +60,22 @@ exports.sToDhms = function sToDhms(seconds, format = "str") {
 exports.getLongMonth = function getLongMonth(month) {
     return Intl.DateTimeFormat("en-US", { month: "long" }).format(month);
 };
+ 
+/**
+ * creates a MessageEmbed for response to a command error.
+ * @param {Message} message the message that triggered the command.
+ * @param {Object} error the error that occured.
+ * @param {String} error.title a title for the embed.
+ * @param {String} error.description description of the embed.
+ * @param {String} error.message message that goes along with the embed.
+ * @param {String} [descriptionOverride] override embed description with other text, if needed.
+ */
+const { MessageEmbed } = require("discord.js");
+exports.returnError = function (message, error, descriptionOverride = undefined) {
+    const embed = new MessageEmbed()
+        .setTitle("error: " + error.title)
+        .setDescription(descriptionOverride ?? error.description)
+        .setColor("#FF0000");
+
+    return message.reply(error.message, embed);
+};
