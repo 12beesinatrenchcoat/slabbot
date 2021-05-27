@@ -7,7 +7,7 @@ class Decide extends Command {
     constructor() {
         super("decide", {
             aliases: ["decide", "choose"],
-            category: "utilties",
+            category: "utilities",
             description: info.decide,
             args: [
                 {

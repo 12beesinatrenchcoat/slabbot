@@ -4,6 +4,8 @@
 
 ## ~~table of~~ contents
 
+[0.4.1-indev "whoops"](#041-indev), released 27 may 2021
+
 [0.4.0-indev "pro gamer move"](#040-indev), released 27 may 2021
 
 [0.3.0-indev "await, mongoose!"](#030-indev), released 7 november 2020
@@ -15,6 +17,19 @@
 [0.1.0-indev "this is so sad play despacito"](#010-indev), released 9 july 2020
 
 -----
+
+## 0.4.1-indev
+
+**27 May 2021** / commit [`41f150d`](https://github.com/AndyThePie/slabbot/commit41f150dc27199f774552a3e732c2b7efd4571c82)
+
+:fire: a hotfix because i forgot about two files!
+
+### >_< fixes
+
+- `sl decide` is now in the "utilities" category. (as opposed to the "utilties" category)
+- `sl dice` has help info now.
+
+that's it. that's literally it.
 
 ## 0.4.0-indev
 
@@ -62,7 +77,7 @@ this version focused on some game stuff, i guess. it's been so long that i don't
   - `getLongMonth` gets month name from a `Date`.
   - **`returnError` standardizes error embeds, I guess.**
     - not yet used everywhere else... yet.
-  
+
 i think...? that's all. it's been fun to write these and get back into code and all the sort. it's summer as well... oh boy... 
 
 next update will focus on refactors and code cleanups and documentation and all the sort. so... see you then! (^^)/
@@ -161,7 +176,6 @@ Just a few small additions... because I can. I haven't practiced code in a long 
 - added cooldowns. default is 2000ms per command, `this is so sad play despacito` has a cooldown of 8000ms / 2 uses.
 - added the ability to choose a specific video from the `this is so sad play despacito`-list.
   - basically, typing a number after the command will return video with that position in the list. something like that.
-  
 ### ~ other changes
 
 - changed the `about` text by like one word
@@ -218,5 +232,4 @@ yeah, that's about it.
 - [ ] a website or something
 
 > i'll do this for v0.4.0. (7 nov 2020)
-
 
