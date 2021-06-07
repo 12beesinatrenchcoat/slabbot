@@ -3,7 +3,7 @@
 const { Command } = require("discord-akairo");
 const { MessageEmbed } = require("discord.js");
 
-const info = require("./commandinfo.json");
+const info = require.main.require("./commandInfo.json");
 const statsModel = require.main.require("./model.globalStats.js");
 const { sToDhms } = require.main.require("./things.functions.js");
 

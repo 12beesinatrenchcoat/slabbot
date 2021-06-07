@@ -18,7 +18,7 @@ powered by [**discord.js**](https://github.com/discordjs/discord.js) and [**akai
 
 - really bad `despacito` videos!
 
-...and some other underwhelming things. see [commandinfo.json](https://github.com/AndyThePie/slabbot/blob/master/commands/meta/commandinfo.json) for everything.
+...and some other underwhelming things. see [commandinfo.json](commandInfo.json) for everything.
 
 ## how to run
 

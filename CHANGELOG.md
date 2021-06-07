@@ -18,6 +18,13 @@
 
 -----
 
+## unreleased
+> please hold!
+
+### code stuff
+- renamed `commandinfo.json` to `commandInfo.json`, and moved to root directory.
+  - and also using `require.main.require`, because it's cleaner.
+
 ## 0.4.1-indev
 
 **27 May 2021** / commit [`41f150d`](https://github.com/AndyThePie/slabbot/commit41f150dc27199f774552a3e732c2b7efd4571c82)

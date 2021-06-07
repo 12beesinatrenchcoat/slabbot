@@ -1,7 +1,7 @@
 // admin commands.
 
 const { Command } = require("discord-akairo");
-const info = require("./commandinfo.json");
+const info = require.main.require("./commandInfo.json");
 
 class SlabbotShutdown extends Command{
     constructor(){

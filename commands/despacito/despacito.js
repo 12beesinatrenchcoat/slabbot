@@ -4,7 +4,7 @@ const { Command } = require("discord-akairo");
 const { MessageEmbed } = require("discord.js");
 
 const creator = require("./creatorlist.json");
-const info = require("../meta/commandinfo.json");
+const info = require.main.require("./commandInfo.json");
 
 class Video{
     constructor(title, description, creator, id, nsfw = false, thumbOverride = ""){

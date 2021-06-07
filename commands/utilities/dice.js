@@ -2,7 +2,7 @@
 
 const { Command } = require("discord-akairo");
 const { MessageEmbed } = require("discord.js");
-const info = require("../meta/commandinfo.json");
+const info = require.main.require("./commandInfo.json");
 const { returnError } = require.main.require("./things.functions.js");
 
 // handled user(?) errors.

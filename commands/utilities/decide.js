@@ -1,7 +1,7 @@
 // give slabbot some things, and they'll choose one.
 
 const { Command } = require("discord-akairo");
-const info = require("../meta/commandinfo.json");
+const info = require.main.require("./commandInfo.json");
 
 class Decide extends Command {
     constructor() {

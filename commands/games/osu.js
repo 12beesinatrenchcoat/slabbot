@@ -2,7 +2,7 @@ const { Command } = require("discord-akairo");
 const { MessageEmbed } = require("discord.js");
 const fetch = require("node-fetch");
 
-const info = require("../meta/commandinfo.json");
+const info = require.main.require("./commandInfo.json");
 const {osu} = require.main.require("./config.json") ;
 const {createExpBar, fNum, getLongMonth, sToDhms} = require.main.require("./things.functions.js") ;
 

@@ -1,7 +1,7 @@
 // a classic command that every bot uses. shamelessly stolen from the guide.
 
 const { Command } = require("discord-akairo");
-const info = require("./commandinfo.json");
+const info = require.main.require("./commandInfo.json");
 
 class PingCommand extends Command{
     constructor() {
