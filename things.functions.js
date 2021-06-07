@@ -4,7 +4,7 @@
 exports.expNeededForLevel = level => 1024 * (level ** 1.3) + (256 *((level-1) / 8) ** 1.8) || 0;
 
 // creating an exp bar. (takes in a number >1 as percentage!)
-exports.createExpBar = function createExpBar(percentage, maxLength) {
+exports.createExpBar = function (percentage, maxLength) {
     let output = "";
     const fillCount = Math.floor(percentage / 100 * maxLength);
 
@@ -25,13 +25,13 @@ exports.createExpBar = function createExpBar(percentage, maxLength) {
 };
 
 // formatting numbers. here to make code just a bit more concise.
-exports.fNum = function fNum(number, decimalPlaces){
+exports.fNum = function (number, decimalPlaces){
     return number.toLocaleString("en-US", { minimumFractionDigits: decimalPlaces || 0, maximumFractionDigits: decimalPlaces || 0});
 };
 
 // formatting durations - seconds to a string. elegant answer mostly stolen from https://stackoverflow.com/a/52387803/10873246.
 // format can be "str" or "obj"
-exports.sToDhms = function sToDhms(seconds, format = "str") {
+exports.sToDhms = function (seconds, format = "str") {
     
 
     const d = Math.floor(seconds / (3600 * 24));
@@ -57,7 +57,7 @@ exports.sToDhms = function sToDhms(seconds, format = "str") {
     }
 };
 
-exports.getLongMonth = function getLongMonth(month) {
+exports.getLongMonth = function (month) {
     return Intl.DateTimeFormat("en-US", { month: "long" }).format(month);
 };
  
