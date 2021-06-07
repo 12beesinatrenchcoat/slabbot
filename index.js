@@ -5,11 +5,11 @@ const db = mongoose.connection;
 require("./bot.js");
 
 mongoose.connect(url, {
-    useFindAndModify: false,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+	useFindAndModify: false,
+	useNewUrlParser: true,
+	useUnifiedTopology: true
 });
 db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function() {
-    console.log("connected to database! [...]");  
+db.once("open", () => {
+	console.log("connected to database! [...]");
 });
