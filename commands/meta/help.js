@@ -3,6 +3,7 @@
 const {Command} = require("discord-akairo");
 const {MessageEmbed} = require("discord.js");
 const info = require.main.require("./commandInfo.json");
+const {SLABBOT_ORANGE} = require.main.require("./things.constants.js");
 
 class SlabbotHelp extends Command {
 	constructor() {
@@ -23,7 +24,8 @@ class SlabbotHelp extends Command {
 		if (!command) {
 			const embed = new MessageEmbed()
 				.setTitle("a list of commands")
-				.setDescription("a list of things i can do. [ = ' x ' = ]\nuse `sl help <command> for more information on each command.");
+				.setDescription("a list of things i can do. [ = ' x ' = ]\nuse `sl help <command>` for more information on each command.")
+				.setColor(SLABBOT_ORANGE);
 			for (const category of this.handler.categories.values()) {
 				embed.addField(
 					`${category}`,
@@ -41,6 +43,7 @@ class SlabbotHelp extends Command {
 		const embed = new MessageEmbed()
 			.setTitle(command.category + " > `" + command.aliases[0] + "`")
 			.setDescription(command.description.content)
+			.setColor(SLABBOT_ORANGE)
 			.addField("usage", command.description.usage);
 		return message.channel.send(`in response to: <@${message.author.id}>`, embed);
 	}

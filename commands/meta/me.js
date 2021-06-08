@@ -7,6 +7,7 @@ const info = require.main.require("./commandInfo.json");
 const userModel = require("../../model.user.js");
 
 const {expNeededForLevel, createExpBar} = require.main.require("./things.functions.js");
+const {SLABBOT_ORANGE} = require.main.require("./things.constants.js");
 
 function toBigNumber(number) {
 	/* array number corresponds with number. (bigNumbers[0] is zero)
@@ -121,7 +122,7 @@ class SlabbotMe extends Command {
 
 			const expBar = createExpBar(percentToNextLevel, 36);
 			embed = new MessageEmbed()
-				.setColor("#f69321")
+				.setColor(SLABBOT_ORANGE)
 				.setTitle(`\`me\` / ${message.author.tag}`)
 				.setDescription(
 					`
@@ -141,7 +142,7 @@ exp [${(exp).toFixed(3)} / ${(expForNextLevel).toFixed(3)}]
 			// compact/lite version of card.
 			const expBar = createExpBar(percentToNextLevel, 10);
 			embed = new MessageEmbed()
-				.setColor("#f69321")
+				.setColor(SLABBOT_ORANGE)
 				.setTitle(`\`me\` / ${message.author.tag}`)
 				.setDescription(
 					`

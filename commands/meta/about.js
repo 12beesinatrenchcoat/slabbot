@@ -6,6 +6,7 @@ const {MessageEmbed} = require("discord.js");
 const info = require.main.require("./commandInfo.json");
 const statsModel = require.main.require("./model.globalStats.js");
 const {sToDhms} = require.main.require("./things.functions.js");
+const {SLABBOT_ORANGE} = require.main.require("./things.constants.js");
 
 // all the git stuff.
 const {execSync} = require("child_process");
@@ -40,7 +41,7 @@ class SlabbotAbout extends Command {
 		const totalCommands = stats.reduce((a, b) => a + b.value, 0);
 
 		const embed = new MessageEmbed()
-			.setColor("#f69321")
+			.setColor(SLABBOT_ORANGE)
 			.setTitle("[= ^ x ^ =] hello!")
 			.setDescription("i'm **<@!729861979677917214>** - an experimental discord bot with some random features my developer (foolishly) thought would be fun to develop.\nsaid programmer is `@12beesinatrenchcoat#7664`, who wanted to learn JavaScript in his spare time or something (the fool...)\nyou can find my source code [here](https://github.com/AndyThePie/slabbot).")
 			.setThumbnail("https://raw.githubusercontent.com/AndyThePie/slabbot/master/images/slabbot-icon.png")
