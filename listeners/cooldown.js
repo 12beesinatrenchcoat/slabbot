@@ -9,7 +9,11 @@ class CommandCooldown extends Listener {
 	}
 
 	exec(message, command, remaining) {
-		message.reply(`that command (\`${command.aliases[0]}\`) is on cooldown! *(:snowflake:${Math.round(remaining / 10) / 100}s left...)*`);
+		message.reply(`that command (\`${command.aliases[0]}\`) is on cooldown! *(:snowflake:${Math.round(remaining / 10) / 100}s left...)*`)
+			// thank you https://stackoverflow.com/a/46918813!
+			.then(msg => {
+				setTimeout(() => msg.delete(), remaining);
+			});
 	}
 }
 
