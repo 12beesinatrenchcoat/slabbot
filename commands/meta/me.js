@@ -94,7 +94,7 @@ class SlabbotMe extends Command {
 			aliases: ["me"],
 			category: "meta",
 			description: info.me,
-			cooldown: 30000,
+			cooldown: 15000,
 			ratelimit: 2
 		});
 	}

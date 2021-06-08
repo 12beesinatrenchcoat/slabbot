@@ -180,7 +180,7 @@ class OsuStats extends Command {
 				}
 			],
 			cooldown: 30000,
-			ratelimit: 3
+			ratelimit: 4
 		});
 	}
 

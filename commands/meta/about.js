@@ -28,8 +28,7 @@ class SlabbotAbout extends Command {
 		super("about", {
 			aliases: ["about"],
 			category: "meta",
-			description: info.about,
-			cooldown: 5000
+			description: info.about
 		});
 	}
 

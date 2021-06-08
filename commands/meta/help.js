@@ -10,7 +10,6 @@ class SlabbotHelp extends Command {
 			aliases: ["help"],
 			category: "meta",
 			description: info.help,
-			cooldown: 10000,
 			args: [
 				{
 					id: "command",
