@@ -1,3 +1,6 @@
-# games
+# commands/**games**
+commands involving games.
 
-commands that link to apis involving games. for stats and all the sort. currently only has osu!
+## osu.js
+- `osu [user]` - fetches some info about an [osu!](https://osu.ppy.sh) player.
+    - prefixes `osu!/osu!taiko/osu!catch/osu!mania` can also be used to get a specific mode.

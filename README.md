@@ -1,6 +1,12 @@
-# slabbot [='ｘ'=]
+<img align="left" height="256px" src="./images/slabbot-icon.png"/> 
 
-<img align="left" src="./images/slabbot-icon.png" width="15%" height="15%"/> [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/andythepie/slabbot?include_prereleases&style=flat-square)](https://github.com/AndyThePie/slabbot/releases) [![GitHub last commit](https://img.shields.io/github/last-commit/andythepie/slabbot?style=flat-square)](https://github.com/AndyThePie/slabbot/commit/master) ![Manually updated badge count (<3 Shields.io!)](https://img.shields.io/badge/badges-%203,%20i%20guess-informational?style=flat-square)
+# slabbot [= ' x ' =]
+
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/andythepie/slabbot?include_prereleases&style=flat-square)](https://github.com/AndyThePie/slabbot/releases) 
+[![GitHub last commit](https://img.shields.io/github/last-commit/andythepie/slabbot?style=flat-square)](https://github.com/AndyThePie/slabbot/commit/master) 
+![GitHub repo size](https://img.shields.io/github/repo-size/AndyThePie/slabbot?style=flat-square) 
+![XO code style](https://flat.badgen.net/badge/code%20style/XO/cyan)
+![Badge count](https://img.shields.io/badge/badges-5%20%28too%20many,%20let's%20be%20honest%29-informational?style=flat-square)
 
 an experimental discord bot with weird features that no one ever asked for.
 
@@ -8,40 +14,41 @@ powered by [**discord.js**](https://github.com/discordjs/discord.js) and [**akai
 
 -----
 
-## features!!
+## features!
 
-- boring commands, like `ping` and `help`!
+- `roll` some dice...
+- let slabbot `decide` between things when you can't~
+- > this is so sad play despacito
+- get an `osu`! player's stats
+- there's an exp system, i guess.
 
-- a basic exp system! (see `me`)
+see [commandinfo.json](commandInfo.json) or the [commands folder](/commands) for more info.
 
-- a command that `decide`s between things!
+## how to run...
 
-- really bad `despacito` videos!
+zeroth, get [node.js](https://nodejs.org/en/download/). (i currently use v16.2.0.)
 
-...and some other underwhelming things. see [commandinfo.json](commandInfo.json) for everything.
+then first, set up mongodb. see mongodb's documentation on [mongod](https://docs.mongodb.com/manual/reference/program/mongod/).   
+by default, mongoose attempts to connect to `mongodb://localhost:27017`, although this can be changed in [index.js](index.js).
 
-## how to run
+after that, clone/download the repository, install packages (run `npm ci` in your terminal).
 
-download the repository, extract files, `npm install`, etc. you also need a mongodb database set up (by default, it connects to `mongodb://localhost:27017`.)
-
-you will then need to make a `config.json` file in the base directory (where `index.js` is.) it currently looks something like this:
+you will then need to make a `config.json` file in the base directory (where `index.js` is.) it currently looks like this:
 
 ```jsonc
 {
-    "token": "your discord bot's token goes here",
-    "owner": "your discord id goes here, allows you to run shutdown",
+    "token": // your discord bot's token goes here
+    "owner": // your discord id goes here, allows you to run ownerOnly commands
 
     "osu":{
-        "id": "client id, as number",
-        "secret": "client secret."
+        "id": // client id, as number
+        "secret": // client secret.
     }
 }
 ```
 
-then run `node .` in the directory where `index.js` is.
-
-(extra note: currently being developed on node.js v14.)
+after all of that, start it up! (run `node .` in the directory where `index.js` is.)
 
 ## contributing
 
-if you *really* want to put yourself through it, sure! [write an issue](https://github.com/AndyThePie/slabbot/issues/new/choose) or submit a pull request (please make an issue beforehand if you're doing anything major)!
+if you'd really like to, sure! [bug reports](https://github.com/AndyThePie/slabbot/issues/new?assignees=&labels=bug&template=bug_report.md&title=) and [feature requests](https://github.com/AndyThePie/slabbot/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=) are always welcome. if you want to fix something,  pull requests are also accepted! (although, if you're adding something and/or doing anything major, please open an issue before!)

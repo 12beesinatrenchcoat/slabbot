@@ -1,16 +1,17 @@
-# meta
+# commands/**meta**
+these commands relate to slabbot directly, in one way or another.
 
-these commands give information about slabbot. they are quite self-explanitory.
+## about.js 
+- `about` - returns information about slabbot.
 
-- `about` gives you very simple information about the bot.
+## admin.js
+- `shutdown` - pulls a `process.exit();`. owner only.
 
-  - >  `[ = ' x ' = ]` slabbot is an experimental discord bot with weird features (that no one ever asked for).  
-    > it is created by `@AndzCLiv3#7664`, and its source code can be found [here](https://github.com/AndyThePie/slabbot).
-    >
-    > slabbot has been up for **`x`ms** / running version `dev`.
+## help.js
+- `help [command]` - returns a list of commands, or information about a specific command.
 
-- `ping` just gives the time it takes for the bot to connect to discord.
+## me.js
+- `me [full]` - gives information on the user (exp + level, most used command).
 
-- `help` gives you a list of commands - `help <command>` tells you more about the command.
-
-- `me` gives information about the user (well, stuff like exp and level). adding `full` to the end also gives information about command usage.
+## ping.js
+- `ping` - does what it says on the tin, really. (ping between client and discord + time it took to respond to the message).
