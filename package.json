@@ -34,10 +34,10 @@
       {
         "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
         "automerge": true,
-        "requiredStatusChecks": null
+        "requiredStatusChecks": null,
+        "stabilityDays": 3
       }
-    ],
-    "stabilityDays": 3
+    ]
   }
 
 }
