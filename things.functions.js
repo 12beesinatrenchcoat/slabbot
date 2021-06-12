@@ -93,10 +93,10 @@ exports.createExpBar = function (percentage, maxLength) {
 	for (let char = 0; char < maxLength; char++) {
 		if (char === 0) {
 			output += "[";
-		} else if (char < fillCount) {
-			output += "|";
 		} else if (char === maxLength - 1) {
 			output += "]";
+		} else if (char < fillCount) {
+			output += "|";
 		} else {
 			output += " ";
 		}
