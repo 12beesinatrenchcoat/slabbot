@@ -24,5 +24,20 @@
   },
   "devDependencies": {
     "eslint": "^7.22.0"
+  },
+  "renovate":{
+    "extends": [
+      "config:base"
+    ],
+    "labels": ["dependencies"],
+    "packageRules": [
+      {
+        "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+        "automerge": true,
+        "requiredStatusChecks": null
+      }
+    ],
+    "stabilityDays": 3
   }
+
 }
