@@ -59,7 +59,7 @@ class ExperienceListener extends Listener {
 			if (expNextLevel < exp + addExp) {
 				await UserModel.findByIdAndUpdate(message.author.id, {level: level + 1});
 				const bigNumber = toBigNumber(level + 1);
-				message.reply("***ding!***\nyou are now level\n```" + bigNumber + "```");
+				message.reply("***ding!***\n```glsl\n# LEVEL UP!\n" + bigNumber + "```");
 			}
 		}
 	}
