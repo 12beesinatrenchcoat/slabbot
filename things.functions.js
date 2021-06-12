@@ -1,5 +1,87 @@
 // misc. things that would be used in more than one thing.
 
+exports.toBigNumber = function (number, prefix = ["# ", "# ", "# ", "# ", "# "]) {
+	/* array number corresponds with number. (bigNumbers[0] is zero)
+	   object id corresponds with line number (bigNumbers[0].2 is line 2 of zero.). */
+	/* "prefix" should be an array with 5 items. */
+	const bigNumbers = [[
+		"██████ ",
+		"██  ██ ",
+		"██  ██ ",
+		"██  ██ ",
+		"██████ "
+	], [
+		"████   ",
+		"  ██   ",
+		"  ██   ",
+		"  ██   ",
+		"██████ "
+	], [
+		"██████ ",
+		"    ██ ",
+		"██████ ",
+		"██     ",
+		"██████ "
+	], [
+		"██████ ",
+		"    ██ ",
+		"██████ ",
+		"    ██ ",
+		"██████ "
+	], [
+		"██  ██ ",
+		"██  ██ ",
+		"██████ ",
+		"    ██ ",
+		"    ██ "
+	], [
+		"██████ ",
+		"██     ",
+		"██████ ",
+		"    ██ ",
+		"██████ "
+	], [
+		"██████ ",
+		"██     ",
+		"██████ ",
+		"██  ██ ",
+		"██████ "
+	], [
+		"██████ ",
+		"    ██ ",
+		"    ██ ",
+		"    ██ ",
+		"    ██ "
+	], [
+		"██████ ",
+		"██  ██ ",
+		"██████ ",
+		"██  ██ ",
+		"██████ "
+	], [
+		"██████ ",
+		"██  ██ ",
+		"██████ ",
+		"    ██ ",
+		"██████ "
+	]];
+	// turn number into array of numbers
+	const numberDigits = Array.from(String(number)).map(Number);
+
+	let output = "";
+
+	for (let line = 0; line < 5; line++) {
+		output += prefix[line];
+		for (let digit = 0; digit < numberDigits.length; digit++) {
+			output += bigNumbers[numberDigits[digit]][line];
+		}
+
+		output += "\n";
+	}
+
+	return output;
+};
+
 // see also: https://www.desmos.com/calculator/kcrt4evjgg
 exports.expNeededForLevel = level => (1024 * (level ** 1.3)) + ((256 * ((level - 1)) / 8) ** 1.8) || 0;
 

@@ -6,88 +6,8 @@ const {MessageEmbed} = require("discord.js");
 const info = require.main.require("./commandInfo.json");
 const userModel = require("../../model.user.js");
 
-const {expNeededForLevel, createExpBar} = require.main.require("./things.functions.js");
+const {expNeededForLevel, createExpBar, toBigNumber} = require.main.require("./things.functions.js");
 const {SLABBOT_ORANGE} = require.main.require("./things.constants.js");
-
-function toBigNumber(number) {
-	/* array number corresponds with number. (bigNumbers[0] is zero)
-       object id corresponds with line number (bigNumbers[0].2 is line 2 of zero.). */
-	const bigNumbers = [[
-		"██████ ",
-		"██  ██ ",
-		"██  ██ ",
-		"██  ██ ",
-		"██████ "
-	], [
-		"████   ",
-		"  ██   ",
-		"  ██   ",
-		"  ██   ",
-		"██████ "
-	], [
-		"██████ ",
-		"    ██ ",
-		"██████ ",
-		"██     ",
-		"██████ "
-	], [
-		"██████ ",
-		"    ██ ",
-		"██████ ",
-		"    ██ ",
-		"██████ "
-	], [
-		"██  ██ ",
-		"██  ██ ",
-		"██████ ",
-		"    ██ ",
-		"    ██ "
-	], [
-		"██████ ",
-		"██     ",
-		"██████ ",
-		"    ██ ",
-		"██████ "
-	], [
-		"██████ ",
-		"██     ",
-		"██████ ",
-		"██  ██ ",
-		"██████ "
-	], [
-		"██████ ",
-		"    ██ ",
-		"    ██ ",
-		"    ██ ",
-		"    ██ "
-	], [
-		"██████ ",
-		"██  ██ ",
-		"██████ ",
-		"██  ██ ",
-		"██████ "
-	], [
-		"██████ ",
-		"██  ██ ",
-		"██████ ",
-		"    ██ ",
-		"██████ "
-	]];
-	// turn number into array of numbers
-	const numberDigits = Array.from(String(number)).map(Number);
-
-	let output = "";
-
-	for (let line = 0; line < 5; line++) {
-		for (let digit = 0; digit < numberDigits.length; digit++) {
-			output += bigNumbers[numberDigits[digit]][line];
-		}
-
-		output += "\n";
-	}
-
-	return output;
-}
 
 class SlabbotMe extends Command {
 	constructor() {
