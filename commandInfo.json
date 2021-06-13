@@ -13,11 +13,11 @@
     },
     "dice": {
         "content":"roll some dice!",
-        "usage":"`sl dice <dice>` (you can also use `sl roll <dice>`)\ndice is specified as [number of dice]`d`[number of sides]. so `d6` (or `1d6`) is one 6-sided die, `4d10` is 4x 10-sided die, and so on."
+        "usage":"`sl dice [dice]` (you can also `sl roll`)\ndice is specified as [number of dice]`d`[number of sides]. so `d6` (or `1d6`) is one 6-sided die, `4d10` is 4x 10-sided die, and so on."
     },
     "me": {
-        "content":"wait, are you talking about the command, or...?\ninformation relating to you. your xp level, (and other fun stats)!",
-        "usage":"use `sl me`. you can also add `full` to the end for more numbers!"
+        "content":"wait, are you talking about the command, or...?\ninformation relating to you. your exp, level, and stuff about commands!",
+        "usage":"`sl me`."
     },
     "osu":{
         "content":"displays a bit of information on a circle clicker / drum basher / fruit catcher / key smasher.",
