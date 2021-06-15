@@ -9,6 +9,11 @@ const userModel = require("../../model.user.js");
 const {expNeededForLevel, createExpBar, toBigNumber, fNum} = require.main.require("./things.functions.js");
 const {SLABBOT_ORANGE} = require.main.require("./things.constants.js");
 
+async function getNickname(message, user) {
+	const guildMember = await message.guild ? await message.guild.members.fetch(user.id) : "";
+	return guildMember.nickname ?? "";
+}
+
 class SlabbotMe extends Command {
 	constructor() {
 		super("me", {
@@ -16,23 +21,33 @@ class SlabbotMe extends Command {
 			category: "meta",
 			description: info.me,
 			cooldown: 15000,
-			ratelimit: 2
+			ratelimit: 2,
+			args: [
+				{
+					id: "user",
+					type: "user"
+				}
+			]
+
 		});
 	}
 
-	async exec(message) {
-		const user = message.author;
+	async exec(message, args) {
+		console.log(args.user);
+		const user = args.user ?? message.author;
+		const nickname = await getNickname(message, user);
 
 		// fetch exp, level, and stats (command usage)
-		const {exp, level, stats} = await userModel.findById(message.author.id, "exp level stats") || 0;
+		const {exp, level, stats} = await userModel.findById(user.id, "exp level stats") || 0;
 
 		// TODO: better error handling with new users.
 		if (exp === 0) {
 			return;
 		}
 
-		const guildMember = await message.guild.members.fetch(user.id);
-		const nickname = guildMember.nickname ?? "";
+		if (!stats) {
+			return message.reply("that user isn't in my database...");
+		}
 
 		const expForCurrentLevel = expNeededForLevel(level);
 		const expForNextLevel = expNeededForLevel(level + 1);
@@ -41,7 +56,7 @@ class SlabbotMe extends Command {
 		const sortedStats = Object.entries(stats).sort((a, b) => b[1] - a[1]);
 		const totalCommands = Object.values(stats).reduce((a, b) => a + b);
 
-		const expBar = createExpBar(percentToNextLevel, 43);
+		const expBar = createExpBar(percentToNextLevel, 44);
 		const bigLevelNumber = toBigNumber(level);
 
 		const description = `
@@ -56,9 +71,9 @@ ${(expForNextLevel - exp).toFixed(3)} to next level
 
 		const embed = new MessageEmbed()
 			.setColor(SLABBOT_ORANGE)
-			.setTitle(`\`me\` ${message.author.tag}`)
+			.setTitle(`\`me\` ${user.tag}`)
 			.setDescription(description)
-			.setThumbnail(message.author.avatarURL())
+			.setThumbnail(user.avatarURL())
 			.setTimestamp(message.createdTimestamp)
 			.addField("Commands Run", `${totalCommands} (mostly \`${fNum(sortedStats[0][0])}\`, ${fNum(sortedStats[0][1])}x)`, true);
 
