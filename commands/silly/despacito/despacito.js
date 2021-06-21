@@ -52,7 +52,7 @@ class Despacito extends Command {
 			videoArrayPos = Math.floor(Math.random() * videoArray.length);
 			while (message.channel.nsfw === false && videoArray[videoArrayPos].nsfw === true) {
 				videoArrayPos = Math.floor(Math.random() * videoArray.length);
-				console.log("random lewd! >_<");
+				// console.log("random lewd! >_<");
 			}
 		}
 

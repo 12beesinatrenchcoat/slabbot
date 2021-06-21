@@ -5,6 +5,7 @@ const fetch = require("node-fetch");
 const info = require.main.require("./commandInfo.json");
 const {osu} = require.main.require("./config.json");
 const {createExpBar, fNum, getLongMonth, sToDhms} = require.main.require("./things.functions.js");
+const {LOG_COLOR} = require.main.require("./things.constants.js");
 
 let token;
 
@@ -31,7 +32,7 @@ async function auth() {
 			setTimeout(auth, timeout);
 		})
 		.catch(error => {
-			console.log("something went wrong while trying to get a token for the osu!api.\n" + error);
+			console.log(LOG_COLOR.FG.RED, "something went wrong while trying to get a token for the osu!api.\n" + error);
 			token = null;
 		});
 }
@@ -187,7 +188,7 @@ class OsuStats extends Command {
 	async exec(message, args) {
 		// in case something went wrong with authentication... try again!
 		if (token === null) {
-			console.log("trying to get a token again...");
+			console.log(LOG_COLOR.FG.YELLOW, "trying to get a token again...");
 			await auth();
 		}
 
@@ -235,7 +236,7 @@ class OsuStats extends Command {
 				return message.channel.send(`here you go, <@!${message.author.id}>!`, embed);
 			})
 			.catch(error => {
-				console.log(error);
+				console.log(LOG_COLOR.BG.RED, error);
 				const embed = new MessageEmbed()
 					.setTitle("error: something went wrong...")
 					.setColor("#FF0000")

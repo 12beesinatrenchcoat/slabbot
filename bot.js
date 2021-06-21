@@ -23,6 +23,10 @@ class Client extends AkairoClient {
 			directory: "./listeners"
 		});
 
+		this.commandHandler.on("load", command => {
+			console.log("loaded command", "\x1b[33m" + command.id + "\x1b[0m");
+		});
+
 		this.commandHandler.loadAll("./commands/", commandFilter);
 		this.commandHandler.useListenerHandler(this.listenerHandler);
 
@@ -30,6 +34,11 @@ class Client extends AkairoClient {
 			commandHandler: this.commandHandler,
 			listenerHandler: this.listenerHandler
 		});
+
+		this.listenerHandler.on("load", listener => {
+			console.log("loaded listener", "\x1b[33m" + listener.id + "\x1b[0m");
+		});
+
 		this.listenerHandler.loadAll();
 	}
 

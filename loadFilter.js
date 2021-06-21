@@ -1,6 +1,7 @@
 // a LoadPredicate... thing? no idea how this works.
 
 const config = require("./config.json");
+const {LOG_COLOR} = require("./things.constants.js");
 
 exports.commandFilter = filepath => {
 	// console.log(filepath);
@@ -13,7 +14,7 @@ exports.commandFilter = filepath => {
 			return true;
 		}
 
-		console.log("no 'osu' property detected in config.json; osu command will not be loaded.");
+		console.log(LOG_COLOR.FG.RED, "no 'osu' property detected in config.json; osu command will not be loaded.");
 		return false;
 	}
 

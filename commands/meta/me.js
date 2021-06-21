@@ -33,7 +33,6 @@ class SlabbotMe extends Command {
 	}
 
 	async exec(message, args) {
-		console.log(args.user);
 		const user = args.user ?? message.author;
 		const nickname = await getNickname(message, user);
 

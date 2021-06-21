@@ -2,7 +2,8 @@
 const mongoose = require("mongoose");
 const url = "mongodb://localhost:27017";
 const db = mongoose.connection;
-require("./bot.js");
+const {LOG_COLOR} = require("./things.constants.js");
+require("./bot.js"); // this file is the important one (sets up commands!)
 
 mongoose.connect(url, {
 	useFindAndModify: false,
@@ -11,5 +12,5 @@ mongoose.connect(url, {
 });
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
-	console.log("connected to database! [...]");
+	console.log(LOG_COLOR.FG.GREEN, "connected to database! [...]");
 });
