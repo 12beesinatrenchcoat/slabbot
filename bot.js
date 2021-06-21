@@ -2,6 +2,7 @@
 
 const {AkairoClient, CommandHandler, ListenerHandler} = require("discord-akairo");
 const {token, owner} = require("./config.json");
+const {commandFilter} = require("./loadFilter.js");
 
 class Client extends AkairoClient {
 	constructor() {
@@ -22,7 +23,7 @@ class Client extends AkairoClient {
 			directory: "./listeners"
 		});
 
-		this.commandHandler.loadAll();
+		this.commandHandler.loadAll("./commands/", commandFilter);
 		this.commandHandler.useListenerHandler(this.listenerHandler);
 
 		this.listenerHandler.setEmitters({
