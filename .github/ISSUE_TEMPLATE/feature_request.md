@@ -1,20 +1,10 @@
 ---
 name: Feature request
-about: Hmm... what if the bot had *this* feature?
+about: What if the bot had "x" feature and/or if this command could do "y".
 title: ''
 labels: enhancement
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
-
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
-
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+<!-- This is the part where you describe a feature, addition, something. Please be detailed and specific! -->

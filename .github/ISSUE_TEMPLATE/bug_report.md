@@ -17,4 +17,4 @@ assignees: ''
 <!-- What *should* have happened? -->
 
 **Additional info**
-<!-- Screenshots, videos, any information I should know. -->
+<!-- Screenshots, videos, any additional information I should know. -->

@@ -5,27 +5,27 @@
     },
     "decide": {
         "content":"give me a few items, and i'll randomly decide from one of them!",
-        "usage":"`sl decide <a bunch of items, separated by commas>`\nextra alias: `choose`"
+        "usage":"`sl decide [list of items, separated by commas]`\nextra alias: `choose`"
     },
     "despacito": {
         "content":"gets *luis fonsi - despacito ft. daddy yankee*. and a few other related videos.\n see also: https://www.youtube.com/playlist?list=PLchhjXy0uG8pfrYkYFwG_IwnoR0PozqJs",
-        "usage":"use `sl despacito <optional number for specific video>`\nyou can also type exactly: `this is so sad play despacito`"
+        "usage":"use `sl despacito [video position, optional]`\nyou can also type exactly: `this is so sad play despacito`."
     },
     "dice": {
         "content":"roll some dice!",
-        "usage":"`sl dice <dice>` (you can also use `sl roll <dice>`)\ndice is specified as [number of dice]`d`[number of sides]. so `d6` (or `1d6`) is one 6-sided die, `4d10` is 4x 10-sided die, and so on."
+        "usage":"`sl dice [dice]` (you can also `sl roll`)\ndice is specified as [number of dice]`d`[number of sides]. so `d6` (or `1d6`) is one 6-sided die, `4d10` is 4x 10-sided die, and so on."
     },
     "me": {
-        "content":"wait, are you talking about the command, or...?\ninformation relating to you. your xp level, (and other fun stats)!",
-        "usage":"use `sl me`. you can also add `full` to the end for more numbers!"
+        "content":"wait, are you talking about the command, or...?\ninformation relating to you. your exp, level, and stuff about commands!",
+        "usage":"`sl me [optional user]`."
     },
     "osu":{
         "content":"displays a bit of information on a circle clicker / drum basher / fruit catcher / key smasher.",
-        "usage":"`sl osu <user>`\nalso has multiple aliases: `osu!`, `osu!taiko`, `osu!catch`, and `osu!mania`, for each respective mode."
+        "usage":"`sl osu [user]`\nalso has multiple aliases: `osu!`, `osu!taiko`, `osu!catch`, and `osu!mania`, for each respective mode."
     },
     "help": {
         "content":"gets you a list of commands, or explains what a given command does.",
-        "usage":"you're using it right now, genius. `sl help <optional command>`"
+        "usage":"you're using it right now, genius. `sl help [optional command]`"
     },
     "ping":{
         "content":"> pong!\nreturns ping from bot to discord. s'bout it.",

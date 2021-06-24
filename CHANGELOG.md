@@ -18,6 +18,21 @@
 
 -----
 
+## unreleased
+> please hold!
+
+### code stuff
+- **now using [xo](https://github.com/xojs/xo) code style.**
+  - with a few exceptions:
+    - strings still use double quotes (unless you have to use them in the string).
+    - comments don't have to be capitalized (too professional!)
+      - todo comments don't return warnings, we have a github bot for that.
+    - no radix needed in `randInt()` (i only use decimal numbers...)
+- functions in `things.functions.js` are no longer named
+  - felt a tad redundant when they were called by their export names...
+- renamed `commandinfo.json` to `commandInfo.json`, and moved to root directory.
+  - and also using `require.main.require`, because it's cleaner.
+
 ## 0.4.1-indev
 
 **27 May 2021** / commit [`41f150d`](https://github.com/AndyThePie/slabbot/commit41f150dc27199f774552a3e732c2b7efd4571c82)

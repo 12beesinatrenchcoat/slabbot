@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const {Schema} = mongoose;
 
 const globalStatsSchema = new Schema({
-    _id: {
-        type: String,
-        required: true
-    },
-    value: {
-        type: Number,
-        default: 0
-    },
-}, { minimize: false });
+	_id: {
+		type: String,
+		required: true
+	},
+	value: {
+		type: Number,
+		default: 0
+	}
+}, {minimize: false});
 
 const statsDb = mongoose.connection.useDb("statsDb");
 
