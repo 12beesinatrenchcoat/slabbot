@@ -2,7 +2,7 @@
 
 const {AkairoClient, CommandHandler, ListenerHandler} = require("discord-akairo");
 const {token, owner} = require("./config.json");
-const {commandFilter} = require("./loadFilter.js");
+const {commandFilter, listenerFilter} = require("./loadFilter.js");
 
 class Client extends AkairoClient {
 	constructor() {
@@ -39,7 +39,7 @@ class Client extends AkairoClient {
 			console.log("loaded listener", "\x1b[33m" + listener.id + "\x1b[0m");
 		});
 
-		this.listenerHandler.loadAll();
+		this.listenerHandler.loadAll("./listeners/", listenerFilter);
 	}
 
 	async login(token) {
