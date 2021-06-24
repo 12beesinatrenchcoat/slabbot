@@ -1,2 +1,7 @@
 todo:
   label: "todo"
+  keyword: ['@todo','TODO']
+  caseSensitive: true
+  reopenClosed: true
+  exclude: "/.md$/"
+  
