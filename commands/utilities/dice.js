@@ -3,7 +3,7 @@
 const {Command} = require("discord-akairo");
 const {MessageEmbed} = require("discord.js");
 const info = require.main.require("./commandInfo.json");
-const {returnError} = require.main.require("./things.functions.js");
+const {returnError, hslToRgb} = require.main.require("./things.functions.js");
 
 // handled user(?) errors.
 const e = {
@@ -50,14 +50,16 @@ class DiceRoll extends Command {
 		}
 
 		const results = [];
-		let diceCount = 0;
+		let diceCount = 0; // total amount of dice being rolled / lowest number rollable
+		let diceMax = 0; // highest possible number that can be rolled
+		let totalRoll = 0;
 
 		// for checking if the argument is valid
 		const regex = /^([0-9]+|)d([0-9]+)/;
 
 		// rolling the dice
 		for (const die of args.dice) {
-			// does it fit
+			// does it fit the regex?
 			if (!regex.test(die)) {
 				return returnError(message, e.malformedArguments);
 			}
@@ -65,14 +67,19 @@ class DiceRoll extends Command {
 			const values = die.split("d");
 			// values[0] is number of dice
 			// values[1] is sides to the dice
+			values[0] = parseInt(values[0]) || 1;
+			values[1] = parseInt(values[1]);
 
-			diceCount += (parseInt(values[0]) || 1);
+			diceMax += values[0] * values[1];
+
+			// counting number of die...
+			diceCount += values[0];
 
 			if (diceCount > 100) {
 				return returnError(message, e.tooManyDice);
 			}
 
-			if (parseInt(values[1]) > 10000000) {
+			if (values[1] > 100000) {
 				return returnError(message, e.tooManySides);
 			}
 
@@ -80,8 +87,9 @@ class DiceRoll extends Command {
 
 			const diceResults = [];
 
+			// for each dice...
 			for (let i = 0; i < (values[0] || 1); i++) {
-				diceResults.push(Math.floor((Math.random() * (values[1] - min)) + min));
+				diceResults.push(Math.floor((Math.random() * (values[1] - min + 1)) + min));
 			}
 
 			results.push({
@@ -100,11 +108,28 @@ class DiceRoll extends Command {
 			const rolls = "`" + result.rolls.join("` `") + "`";
 			const total = result.rolls.reduce((a, b) => a + b);
 
+			totalRoll += total;
+
 			embed.addField(
 				result.dice,
 				rolls + " (total " + total + ")",
 				true
 			);
+		}
+
+		// coloring the embed based on the total roll
+		switch (totalRoll) {
+			case diceMax:
+				embed.setColor("GREEN");
+				break;
+			case diceCount:
+				embed.setColor("RED");
+				break;
+			default: {
+				const h = (((totalRoll - diceCount) / (diceMax - diceCount)) * 100) + 10; // min 10, max 110
+				const color = (hslToRgb(h, 0.75, 0.55));
+				embed.setColor(color);
+			}
 		}
 
 		return message.reply("the dice hath been rolled!", embed);

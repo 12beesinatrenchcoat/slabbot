@@ -1,5 +1,7 @@
 // misc. things that would be used in more than one thing.
 
+const {MessageEmbed} = require("discord.js");
+
 exports.toBigNumber = function (number, prefix = ["# ", "# ", "# ", "# ", "# "]) {
 	/* array number corresponds with number. (bigNumbers[0] is zero)
 	   object id corresponds with line number (bigNumbers[0].2 is line 2 of zero.). */
@@ -111,7 +113,7 @@ exports.fNum = function (number, decimalPlaces) {
 		maximumFractionDigits: decimalPlaces || 0});
 };
 
-// formatting durations - seconds to a string. elegant answer mostly stolen from https://stackoverflow.com/a/52387803/10873246.
+// formatting durations - seconds to a string. elegant answer mostly stolen from https://stackoverflow.com/a/52387803.
 // format can be "str" or "obj"
 exports.sToDhms = function (seconds, format = "str") {
 	const d = Math.floor(seconds / (3600 * 24));
@@ -151,7 +153,6 @@ exports.getLongMonth = function (month) {
  * @param {String} error.message message that goes along with the embed.
  * @param {String} [descriptionOverride] override embed description with other text, if needed.
  */
-const {MessageEmbed} = require("discord.js");
 exports.returnError = function (message, error, descriptionOverride = null) {
 	const embed = new MessageEmbed()
 		.setTitle("error: " + error.title)
@@ -159,4 +160,41 @@ exports.returnError = function (message, error, descriptionOverride = null) {
 		.setColor("#FF0000");
 
 	return message.reply(error.message, embed);
+};
+
+// taken from https://gist.github.com/vahidk/05184faf3d92a0aa1b46aeaa93b07786, which was based on https://en.wikipedia.org/wiki/HSL_and_HSV.
+/**
+ * takes numbers for hue, saturation, and lightness, converts to rgb.
+ * @param {Number} h hue, between 0 and 360.
+ * @param {Number} s saturation, between 0 and 1.
+ * @param {Number} l lightness, between 0 and 1.
+ * @returns {Array} array of numbers [r, g, b].
+ */
+exports.hslToRgb = function (h, s, l) {
+	const c = (1 - Math.abs((2 * l) - 1)) * s;
+	const hp = h / 60.0;
+	const x = c * (1 - Math.abs((hp % 2) - 1));
+	let rgb1;
+	if (isNaN(h)) {
+		rgb1 = [0, 0, 0];
+	} else if (hp <= 1) {
+		rgb1 = [c, x, 0];
+	} else if (hp <= 2) {
+		rgb1 = [x, c, 0];
+	} else if (hp <= 3) {
+		rgb1 = [0, c, x];
+	} else if (hp <= 4) {
+		rgb1 = [0, x, c];
+	} else if (hp <= 5) {
+		rgb1 = [x, 0, c];
+	} else if (hp <= 6) {
+		rgb1 = [c, 0, x];
+	}
+
+	const m = l - (c * 0.5);
+	return [
+		Math.round(255 * (rgb1[0] + m)),
+		Math.round(255 * (rgb1[1] + m)),
+		Math.round(255 * (rgb1[2] + m))
+	];
 };
