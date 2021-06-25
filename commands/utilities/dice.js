@@ -8,7 +8,7 @@ const {returnError, hslToRgb} = require.main.require("./things.functions.js");
 // handled user(?) errors.
 const e = {
 	missingArguments: {
-		message: "roll... what? [=o x o=]",
+		message: "roll... what? [= + x + =];",
 		title: "no dice.",
 		description: "you need to specify dice to roll. say, `d6` for a six-sided die. add a number before that if you want to roll multiple (e.g. `3d20` will roll three 20-sided dice.)"
 	},
@@ -17,15 +17,15 @@ const e = {
 		title: "malformed arguments.",
 		description: 'one or more of the arguments you gave aren\'t right. they must be in the format of `xdy`, where `x` is the number of dice, `y` is the sides of the dice, and `d` is the letter "d". \n for the nerds, here\'s some regex:\n```\n/^([0-9]+|)d[0-9]+/\n```'
 	},
-	tooManyDice: {
-		message: "that's... a bit too many dice for me to handle... [> x <]",
-		title: "too many dice!",
-		description: "you can roll at most 100 dice at a time. please split your rolls into multiple messages."
+	outputTooLong: {
+		message: "that's a bit... much... [=o x o=];",
+		title: "output too long",
+		description: "the output is too long (bots also have character limits!) please roll less dice."
 	},
-	tooManySides: {
-		message: "so... many... sides... [= @ x @ =]",
-		title: "too many sides!",
-		description: "please keep the number of sides on each die below 1000000 (ten million)."
+	generic: {
+		message: "something went wrong...! [=o x o=];",
+		title: "generic catch-all error",
+		description: "if you're seeing this, something went wrong while sending the message. maybe it's too long, in which case, try rolling less dice...?"
 	}
 };
 
@@ -75,14 +75,6 @@ class DiceRoll extends Command {
 			// counting number of die...
 			diceCount += values[0];
 
-			if (diceCount > 100) {
-				return returnError(message, e.tooManyDice);
-			}
-
-			if (values[1] > 100000) {
-				return returnError(message, e.tooManySides);
-			}
-
 			const min = 1;
 
 			const diceResults = [];
@@ -110,9 +102,15 @@ class DiceRoll extends Command {
 
 			totalRoll += total;
 
+			const body = rolls + " (total " + total + ")";
+
+			if (body.length > 1024) {
+				return returnError(message, e.outputTooLong);
+			}
+
 			embed.addField(
 				result.dice,
-				rolls + " (total " + total + ")",
+				body,
 				true
 			);
 		}
@@ -132,7 +130,10 @@ class DiceRoll extends Command {
 			}
 		}
 
-		return message.reply("the dice hath been rolled!", embed);
+		return message.reply("the dice hath been rolled!", embed)
+			.catch(() => {
+				return returnError(message, e.generic);
+			});
 	}
 }
 
