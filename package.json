@@ -23,7 +23,7 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "eslint": "7.29.0",
+    "eslint": "7.30.0",
     "eslint-config-xo": "0.37.0"
   },
   "renovate":{
