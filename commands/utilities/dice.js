@@ -93,8 +93,8 @@ class DiceRoll extends Command {
 		// formatting results
 
 		const embed = new MessageEmbed()
-			.setTitle("rolled " +
-                (diceCount === 1 ? "a die!" : diceCount + " dice!") + " :game_die:");
+			.setTitle("rolled "
+                + (diceCount === 1 ? "a die!" : diceCount + " dice!") + " :game_die:");
 
 		for (const result of results) {
 			const rolls = "`" + result.rolls.join("` `") + "`";
@@ -131,9 +131,7 @@ class DiceRoll extends Command {
 		}
 
 		return message.reply("the dice hath been rolled!", embed)
-			.catch(() => {
-				return returnError(message, e.generic);
-			});
+			.catch(() => returnError(message, e.generic));
 	}
 }
 

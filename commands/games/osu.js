@@ -71,13 +71,13 @@ const createProfileEmbed = function (json, modeRequested) {
 	const lastVisit = new Date(json.last_visit);
 	const sinceLastVisit = sToDhms((now - lastVisit) / 1000, "obj");
 
-	const joinDateString = wasHereSinceBeginning ?
-		"Here since the beginning (" + joinMonth + " " + joinYear + ")" :
-		"Joined " + joinMonth + " " + joinYear;
+	const joinDateString = wasHereSinceBeginning
+		? "Here since the beginning (" + joinMonth + " " + joinYear + ")"
+		: "Joined " + joinMonth + " " + joinYear;
 
-	const lastVisitString = json.is_online ?
-		"Currently online" :
-		"Last active " + (sinceLastVisit.d || sinceLastVisit.h || sinceLastVisit.m) + "ago";
+	const lastVisitString = json.is_online
+		? "Currently online"
+		: "Last active " + (sinceLastVisit.d || sinceLastVisit.h || sinceLastVisit.m) + "ago";
 
 	// same for all, regardless of user
 	const embed = new MessageEmbed()
@@ -149,11 +149,11 @@ const createProfileEmbed = function (json, modeRequested) {
 		}, {
 			name: "grades",
 			value: // the blank characters in the quotes are em spaces, U+2003.
-            "<:osu_SSH:828667457891860535> " + fNum(grades.ssh) + " " +
-            "<:osu_SS:828667457954775040> " + fNum(grades.ss) + " " +
-            "<:osu_SH:828667457915846656> " + fNum(grades.sh) + " " +
-            "<:osu_S:828667457719238667> " + fNum(grades.s) + " " +
-            "<:osu_A:828667457307672627> " + fNum(grades.a)
+            "<:osu_SSH:828667457891860535> " + fNum(grades.ssh) + " "
+            + "<:osu_SS:828667457954775040> " + fNum(grades.ss) + " "
+            + "<:osu_SH:828667457915846656> " + fNum(grades.sh) + " "
+            + "<:osu_S:828667457719238667> " + fNum(grades.s) + " "
+            + "<:osu_A:828667457307672627> " + fNum(grades.a)
 			// these emoji are in a private server - you can find copies of them in /images/emojis/osu_ranks
 		}
 	);
@@ -227,9 +227,9 @@ class OsuStats extends Command {
 		})
 			.then(res => res.json())
 			.then(json => { // doing stuff with the output
-				const modeRequested = message.util.parsed.alias === "osu" ?
-					null :
-					message.util.parsed.alias; // mode-specific alias used
+				const modeRequested = message.util.parsed.alias === "osu"
+					? null
+					: message.util.parsed.alias; // mode-specific alias used
 
 				const embed = createProfileEmbed(json, modeRequested);
 
