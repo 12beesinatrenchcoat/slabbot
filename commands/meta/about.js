@@ -2,6 +2,7 @@
 
 const {Command} = require("discord-akairo");
 const {MessageEmbed} = require("discord.js");
+const mongoose = require("mongoose");
 
 const info = require.main.require("./commandInfo.json");
 const statsModel = require.main.require("./model.globalStats.js");
@@ -36,9 +37,8 @@ class SlabbotAbout extends Command {
 	async exec(message) {
 		const {uptime} = this.client; // in seconds.
 
-		const stats = await statsModel.find();
-		const sortedStats = stats.sort((a, b) => b.value - a.value);
-		const totalCommands = stats.reduce((a, b) => a + b.value, 0);
+		// get command usage stats from database.
+		const stats = mongoose.connection.readyState ? await statsModel.find() : null;
 
 		const embed = new MessageEmbed()
 			.setColor(SLABBOT_ORANGE)
@@ -58,18 +58,39 @@ class SlabbotAbout extends Command {
 					name: "Current Uptime",
 					value: sToDhms(uptime / 1000),
 					inline: true
-				}, {
+				}
+			);
+
+		if (stats) {
+			const sortedStats = stats.sort((a, b) => b.value - a.value);
+			const totalCommands = stats.reduce((a, b) => a + b.value, 0);
+
+			let mostUsedString = "";
+
+			for (let i = 0; i < 5; i++) {
+				if (!sortedStats[i]) {
+					break;
+				}
+
+				mostUsedString += (i + 1)
+					+ ". `"
+					+ sortedStats[i]._id
+					+ "` (used "
+					+ sortedStats[i].value
+					+ " times) \n";
+			}
+
+			embed.addFields(
+				{
 					name: "Total Commands Run",
 					value: totalCommands,
 					inline: true
-				}, {
+				}, { // i hate this
 					name: "Most Used Commands",
-					value: `
-1. \`${sortedStats[0]._id}\` (used ${sortedStats[0].value} times)
-2. \`${sortedStats[1]._id}\` (used ${sortedStats[1].value} times)
-3. \`${sortedStats[2]._id}\` (used ${sortedStats[2].value} times)`,
+					value: mostUsedString,
 					inline: true
 				});
+		}
 
 		return message.reply("here's some information about me!", embed);
 	}
