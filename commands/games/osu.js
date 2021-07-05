@@ -2,6 +2,9 @@ const {Command} = require("discord-akairo");
 const {MessageEmbed} = require("discord.js");
 const fetch = require("node-fetch");
 
+const NodeCache = require("node-cache");
+const osuCache = new NodeCache({stdTTL: 180});
+
 const info = require.main.require("./commandInfo.json");
 const {osu} = require.main.require("./config.json");
 const {createExpBar, fNum, getLongMonth, sToDhms} = require.main.require("./things.functions.js");
@@ -214,35 +217,45 @@ class OsuStats extends Command {
 			default:
 		}
 
-		const url = "https://osu.ppy.sh/api/v2/users/" + args.user + "/" + GameMode;
+		// first, check the cache.
+		let data = osuCache.get(args.user);
+		// let cached = true;
 
-		// making the request
-		await fetch(url, {
-			method: "GET",
-			headers: {
-				Accept: "application/json",
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + token.access_token
-			}
-		})
-			.then(res => res.json())
-			.then(json => { // doing stuff with the output
-				const modeRequested = message.util.parsed.alias === "osu"
-					? null
-					: message.util.parsed.alias; // mode-specific alias used
-
-				const embed = createProfileEmbed(json, modeRequested);
-
-				return message.channel.send(`here you go, <@!${message.author.id}>!`, embed);
+		if (!data) {
+			// making the request
+			await fetch("https://osu.ppy.sh/api/v2/users/" + args.user + "/" + GameMode, {
+				method: "GET",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + token.access_token
+				}
 			})
-			.catch(error => {
-				console.log(LOG_COLOR.BG.RED, error);
-				const embed = new MessageEmbed()
-					.setTitle("error: something went wrong...")
-					.setColor("#FF0000")
-					.setDescription("make sure you spelled the username / typed the id correctly. otherwise, please [file an issue](https://github.com/AndyThePie/slabbot/issues) because *something* has gone catastrophically wrong.)");
-				return message.reply("sorry about this... [=^x^;=]", embed);
-			});
+				.then(res => res.json())
+				.then(json => { // doing stuff with the output
+					data = json;
+					// cached = false;
+					osuCache.set(args.user, json);
+				})
+				.catch(error => { // in case of error...
+					console.log(LOG_COLOR.BG.RED, error);
+					const embed = new MessageEmbed()
+						.setTitle("error: something went wrong...")
+						.setColor("#FF0000")
+						.setDescription("make sure you spelled the username / typed the id correctly. otherwise, please [file an issue](https://github.com/AndyThePie/slabbot/issues) because *something* has gone catastrophically wrong.)");
+					return message.reply("sorry about this... [=^x^;=]", embed);
+				});
+		}
+
+		// console.log(cached);
+
+		const modeRequested = message.util.parsed.alias === "osu"
+			? null
+			: message.util.parsed.alias; // mode-specific alias used
+
+		const embed = createProfileEmbed(data, modeRequested);
+
+		return message.channel.send(`here you go, <@!${message.author.id}>!`, embed);
 	}
 }
 
