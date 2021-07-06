@@ -20,7 +20,7 @@ class Decide extends Command {
 
 	exec(message, args) {
 		if (!args.items) {
-			return message.reply("you gave me nothing to work with here...");
+			return NoItems.reply(message);
 		}
 
 		const items = args.items.split(",");
@@ -30,3 +30,12 @@ class Decide extends Command {
 }
 
 module.exports = Decide;
+
+// errors
+const CommandError = require.main.require("./things.commandError.js");
+
+const NoItems = new CommandError({
+	embedTitle: "no items.",
+	embedDescription: "you need to specify something to choose between...",
+	messageText: "you gave me nothing to work with here..."
+});

@@ -3,32 +3,9 @@
 const {Command} = require("discord-akairo");
 const {MessageEmbed} = require("discord.js");
 const info = require.main.require("./commandInfo.json");
-const {returnError, hslToRgb} = require.main.require("./things.functions.js");
+const {hslToRgb} = require.main.require("./things.functions.js");
 
 // handled user(?) errors.
-const e = {
-	missingArguments: {
-		message: "roll... what? [= + x + =];",
-		title: "no dice.",
-		description: "you need to specify dice to roll. say, `d6` for a six-sided die. add a number before that if you want to roll multiple (e.g. `3d20` will roll three 20-sided dice.)"
-	},
-	malformedArguments: {
-		message: "i don't understand... [ > x < ]",
-		title: "malformed arguments.",
-		description: 'one or more of the arguments you gave aren\'t right. they must be in the format of `xdy`, where `x` is the number of dice, `y` is the sides of the dice, and `d` is the letter "d". \n for the nerds, here\'s some regex:\n```\n/^([0-9]+|)d[0-9]+/\n```'
-	},
-	outputTooLong: {
-		message: "that's a bit... much... [=o x o=];",
-		title: "output too long",
-		description: "the output is too long (bots also have character limits!) please roll less dice."
-	},
-	generic: {
-		message: "something went wrong...! [=o x o=];",
-		title: "generic catch-all error",
-		description: "if you're seeing this, something went wrong while sending the message. maybe it's too long, in which case, try rolling less dice...?"
-	}
-};
-
 class DiceRoll extends Command {
 	constructor() {
 		super("dice", {
@@ -46,7 +23,7 @@ class DiceRoll extends Command {
 
 	exec(message, args) {
 		if (!args.dice) {
-			return returnError(message, e.missingArguments);
+			return MissingArguments.reply(message);
 		}
 
 		const results = [];
@@ -61,7 +38,7 @@ class DiceRoll extends Command {
 		for (const die of args.dice) {
 			// does it fit the regex?
 			if (!regex.test(die)) {
-				return returnError(message, e.malformedArguments);
+				return MalformedArguments.reply(message);
 			}
 
 			const values = die.split("d");
@@ -105,7 +82,7 @@ class DiceRoll extends Command {
 			const body = rolls + " (total " + total + ")";
 
 			if (body.length > 1024) {
-				return returnError(message, e.outputTooLong);
+				return OutputTooLong.reply(message);
 			}
 
 			embed.addField(
@@ -131,8 +108,35 @@ class DiceRoll extends Command {
 		}
 
 		return message.reply("the dice hath been rolled!", embed)
-			.catch(() => returnError(message, e.generic));
+			.catch(() => Generic.reply(message));
 	}
 }
 
 module.exports = DiceRoll;
+
+// errors
+const CommandError = require.main.require("./things.commandError.js");
+
+const MissingArguments = new CommandError({
+	embedTitle: "no dice.",
+	embedDescription: "you need to specify dice to roll. say, `d6` for a six-sided die. add a number before that if you want to roll multiple (e.g. `3d20` will roll three 20-sided dice.)",
+	messageText: "roll... what? [= + x + =];"
+});
+
+const MalformedArguments = new CommandError({
+	embedTitle: "malformed arguments.",
+	embedDescription: 'one or more of the arguments you gave aren\'t right. they must be in the format of `xdy`, where `x` is the number of dice, `y` is the sides of the dice, and `d` is the letter "d". \n for the nerds, here\'s some regex:\n```\n/^([0-9]+|)d[0-9]+/\n```',
+	messageText: "i don't understand... [ > x < ]"
+});
+
+const OutputTooLong = new CommandError({
+	embedTitle: "output too long",
+	embedDescription: "the output is too long (bots also have character limits!) please roll less dice.",
+	messageText: "that's a bit... much... [=o x o=];"
+});
+
+const Generic = new CommandError({
+	embedTitle: "generic catch-all error",
+	embedDescription: "if you're seeing this, something went wrong while sending the message. the message was probably too long, in which case, try rolling less dice...?",
+	messageText: "something went wrong...! [=o x o=];"
+});

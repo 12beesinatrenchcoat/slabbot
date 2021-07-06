@@ -1,7 +1,5 @@
 // misc. things that would be used in more than one thing.
 
-const {MessageEmbed} = require("discord.js");
-
 exports.toBigNumber = function (number, prefix = ["# ", "# ", "# ", "# ", "# "]) {
 	/* array number corresponds with number. (bigNumbers[0] is zero)
 	   object id corresponds with line number (bigNumbers[0].2 is line 2 of zero.). */
@@ -142,24 +140,6 @@ exports.sToDhms = function (seconds, format = "str") {
 exports.getLongMonth = function (month) {
 	// eslint-disable-next-line new-cap
 	return Intl.DateTimeFormat("en-US", {month: "long"}).format(month);
-};
-
-/**
- * creates a MessageEmbed for response to a command error.
- * @param {Message} message the message that triggered the command.
- * @param {Object} error the error that occured.
- * @param {String} error.title a title for the embed.
- * @param {String} error.description description of the embed.
- * @param {String} error.message message that goes along with the embed.
- * @param {String} [descriptionOverride] override embed description with other text, if needed.
- */
-exports.returnError = function (message, error, descriptionOverride = null) {
-	const embed = new MessageEmbed()
-		.setTitle("error: " + error.title)
-		.setDescription(descriptionOverride ?? error.description)
-		.setColor("#FF0000");
-
-	return message.reply(error.message, embed);
 };
 
 // taken from https://gist.github.com/vahidk/05184faf3d92a0aa1b46aeaa93b07786, which was based on https://en.wikipedia.org/wiki/HSL_and_HSV.

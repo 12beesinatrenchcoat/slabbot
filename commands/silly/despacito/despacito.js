@@ -58,24 +58,14 @@ class Despacito extends Command {
 
 		// video number out of bounds
 		if (videoArrayPos > videoArray.length - 1 || videoArrayPos < 0) {
-			const embed = new MessageEmbed()
-				.setColor("#FF0000")
-				.setTitle("error: that video... doesn't exist")
-				.setDescription(`use a number from 0 to ${videoArray.length - 1} - or no number for something random. \nyou input \`${videoArrayPos}\`, which is an out of bounds value.`);
-
-			return message.reply("something... uhh...", embed);
+			return OutOfBounds.reply(message, ["max", videoArray.length - 1], ["input", videoArrayPos]);
 		}
 
 		const video = videoArray[videoArrayPos];
 
 		// when manually attempting to send an nsfw video in a non-nsfw channel
 		if (message.channel.nsfw === false && video.nsfw === true) {
-			const embed = new MessageEmbed()
-				.setColor("#FF0000")
-				.setDescription(`you attempted to send a video in position \`${videoArrayPos}\`, which is marked nsfw. \nthe video wasn't sent because this channel is a non-nsfw channel.`)
-				.setTitle("error: lewd! >_<");
-
-			return message.channel.send(`that's lewd, <@${message.author.id}>! >_<`, embed);
+			return TooLewd.reply(message, ["input", videoArrayPos]);
 		}
 
 		const embed = await (makeEmbed(video, videoArrayPos));
@@ -85,3 +75,18 @@ class Despacito extends Command {
 }
 
 module.exports = Despacito;
+
+// errors
+const CommandError = require.main.require("./things.commandError.js");
+
+const OutOfBounds = new CommandError({
+	embedTitle: "index out of bounds.",
+	embedDescription: "use a number from 0 to {{max}} - or no number for something random. \nyou input `{{input}}`, which is an out of bounds value",
+	messageText: "that video... doesn't exist..."
+});
+
+const TooLewd = new CommandError({
+	embedTitle: "lewd! >_<",
+	embedDescription: "you attempted to send a video in position `{{input}}`, which is marked nsfw. \nthe video wasn't sent because this channel is a non-nsfw channel.",
+	messageText: "that's lewd! >_<"
+});
