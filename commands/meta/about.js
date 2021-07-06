@@ -1,5 +1,4 @@
 // about slabbot.
-
 const {Command} = require("discord-akairo");
 const {MessageEmbed} = require("discord.js");
 const mongoose = require("mongoose");
@@ -37,7 +36,7 @@ class SlabbotAbout extends Command {
 	async exec(message) {
 		const {uptime} = this.client; // in seconds.
 
-		// get command usage stats from database.
+		// get command usage stats from database. null if not connected to database.
 		const stats = mongoose.connection.readyState ? await statsModel.find() : null;
 
 		const embed = new MessageEmbed()
@@ -52,7 +51,7 @@ class SlabbotAbout extends Command {
 					inline: false
 				}, {
 					name: "Powered by",
-					value: "[discord.js](https://discord.js.org) + [Akairo](https://discord-akairo.github.io/)\n[Stack Overflow](https://stackoverflow.com)",
+					value: "[discord.js](https://discord.js.org) + [Akairo](https://discord-akairo.github.io/)",
 					inline: true
 				}, {
 					name: "Current Uptime",

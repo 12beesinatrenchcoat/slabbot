@@ -1,3 +1,4 @@
+// whenever a ready event is emitted, print a thing to console. that's it.
 const {Listener} = require("discord-akairo");
 const {LOG_COLOR} = require.main.require("./things.constants.js");
 class ReadyListener extends Listener {

@@ -1,3 +1,4 @@
+// a long list of videos.
 class Video {
 	// eslint-disable-next-line max-params
 	constructor(title, description, creator, id, nsfw = false, thumbOverride = "") {
@@ -10,6 +11,7 @@ class Video {
 	}
 }
 
+// creators in a separate file, because why not.
 const creator = require("./creatorList.json");
 
 // an array containing all the current videos. updated manually [ = ' ^ ' = ]

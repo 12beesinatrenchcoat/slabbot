@@ -1,5 +1,5 @@
 // see also: me.js (in commands/meta).
-
+// the exp system! give users exp for messages.
 const {Listener} = require("discord-akairo");
 const UserModel = require("../model.user.js");
 
@@ -14,12 +14,13 @@ class ExperienceListener extends Listener {
 	}
 
 	async exec(message) {
+		// don't track bots
 		if (message.author.bot) {
 			return;
 		}
 
+		// new users.
 		if (await UserModel.findById(message.author.id, "exp lastMessageDate") === null) {
-			console.log("new user...");
 			const user = new UserModel({
 				_id: message.author.id,
 				exp: 0,
@@ -51,7 +52,6 @@ class ExperienceListener extends Listener {
 			}
 
 			await UserModel.findByIdAndUpdate(message.author.id, {exp: exp + addExp});
-			// console.log(`added ${addExp}exp to user ${message.author.username}!`);
 
 			// then check to see if the user has leveled up...
 			const expNextLevel = expNeededForLevel(level + 1);

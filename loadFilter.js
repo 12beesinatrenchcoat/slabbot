@@ -1,5 +1,5 @@
 // a LoadPredicate... thing? no idea how this works.
-
+// prevents loading of certain listeners and commands based on various criteria.
 const config = require("./config.json");
 const {LOG_COLOR} = require("./things.constants.js");
 const mongoose = require("mongoose");

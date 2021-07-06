@@ -1,5 +1,4 @@
 // give slabbot some things, and they'll choose one.
-
 const {Command} = require("discord-akairo");
 const info = require.main.require("./commandInfo.json");
 

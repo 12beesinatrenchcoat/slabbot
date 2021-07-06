@@ -1,8 +1,8 @@
+// count commands. used in `me` and `about`.
 const {Listener} = require("discord-akairo");
 
-// const userModel = require("../model.user.js");
-const StatsModel = require("../model.globalStats.js");
-const userModel = require("../model.user.js");
+const StatsModel = require.main.require("./model.globalStats.js");
+const userModel = require.main.require("./model.user.js");
 
 async function incrementValueInStatsModel(id, variableToIncrement) {
 	if (typeof (id) !== "string" || typeof (variableToIncrement) !== "string") {

@@ -1,5 +1,4 @@
 // this is so sad play despacito
-
 const {Command} = require("discord-akairo");
 const {MessageEmbed} = require("discord.js");
 

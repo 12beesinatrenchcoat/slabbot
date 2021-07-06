@@ -1,5 +1,4 @@
 // AAAAAAHHHHHH I NEEEEED A MEDIIC BAAAAG
-
 const {Command} = require("discord-akairo");
 const {MessageEmbed} = require("discord.js");
 const info = require.main.require("./commandInfo.json");

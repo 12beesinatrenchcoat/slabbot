@@ -1,10 +1,9 @@
 // stuff about the user
-
 const {Command} = require("discord-akairo");
 const {MessageEmbed} = require("discord.js");
 
 const info = require.main.require("./commandInfo.json");
-const userModel = require("../../model.user.js");
+const userModel = require.main.require("./model.user.js");
 
 const {expNeededForLevel, createExpBar, toBigNumber, fNum} = require.main.require("./things.functions.js");
 const {SLABBOT_ORANGE} = require.main.require("./things.constants.js");

@@ -1,3 +1,4 @@
+// global stats schema -- currently just command counting.
 const mongoose = require("mongoose");
 const {Schema} = mongoose;
 

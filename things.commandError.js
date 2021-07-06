@@ -1,5 +1,4 @@
 // handling command errors, or something.
-
 const {MessageEmbed} = require("discord.js");
 
 class CommandError {

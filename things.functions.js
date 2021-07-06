@@ -1,5 +1,4 @@
 // misc. things that would be used in more than one thing.
-
 exports.toBigNumber = function (number, prefix = ["# ", "# ", "# ", "# ", "# "]) {
 	/* array number corresponds with number. (bigNumbers[0] is zero)
 	   object id corresponds with line number (bigNumbers[0].2 is line 2 of zero.). */

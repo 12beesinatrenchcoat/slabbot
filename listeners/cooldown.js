@@ -1,3 +1,4 @@
+// tell a user that a command is on cooldown.
 const {Listener} = require("discord-akairo");
 
 class CommandCooldown extends Listener {

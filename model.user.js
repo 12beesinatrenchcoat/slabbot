@@ -1,3 +1,4 @@
+// user schema -- exp, and other user stuff.
 const mongoose = require("mongoose");
 const {Schema} = mongoose;
 
@@ -15,7 +16,7 @@ const userSchema = new Schema({
 		default: 0
 	},
 	lastMessageDate: Date,
-	stats: {
+	stats: { // command usage.
 		type: Object,
 		default: {}
 	}

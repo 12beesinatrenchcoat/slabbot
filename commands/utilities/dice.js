@@ -1,5 +1,4 @@
 // "i used to roll the dice" - coldplay man
-
 const {Command} = require("discord-akairo");
 const {MessageEmbed} = require("discord.js");
 const info = require.main.require("./commandInfo.json");

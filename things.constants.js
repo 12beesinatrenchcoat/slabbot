@@ -1,5 +1,4 @@
 // some constant values.
-
 exports.SLABBOT_ORANGE = "#F69321";
 
 exports.LOG_COLOR = {
