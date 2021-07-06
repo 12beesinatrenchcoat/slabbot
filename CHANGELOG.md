@@ -1,8 +1,10 @@
-# slabbot changelog
+## slabbot changelog
 
 [ = ' x ' = ] :clock3: in terms of versioning numbers, the first number increases on some major milestone, the second number increases on a new feature/command, and the last number increments on any bug-fixes or any other minor things.
 
 ## ~~table of~~ contents
+
+[0.4.2-indev "probably breaking"](#042-indev), released 6 july 2021
 
 [0.4.1-indev "whoops"](#041-indev), released 27 may 2021
 
@@ -18,20 +20,74 @@
 
 -----
 
-## unreleased
-> please hold!
+## 0.4.2-indev
+trying a different way of formatting this changelog, instead of just "additions" and "removals". so...
+
+### changes and improvements to `me`
+
+for a quick overview, here's a picture.
+
+![sl me [user] example, "not a tsundere" uses command "sl me @magic girl !!" ](https://www.dropbox.com/s/is5p6o92blxrq2g/sl%20me%20[user]%20example.png?dl=1)
+
+- **:warning: no more "compact ver." and "full ver."**, and a small redesign of the embed.
+  - this is quite broken on mobile, but... uhh... sorry? (i might add a user setting to have one or the other, we'll see.)
+  - merged "most used command" and "commands run".
+  - added nickname ("also known as `nickname`")
+- **you can now specify a user to see the stats of! `sl me [user]`**
+- slabbot handles new users a bit better. ([#23](https://github.com/AndyThePie/slabbot/issues/23))
+  - if a new user ran `sl me`, the bot would return nothing. now it returns a little welcome message and a mostly blank embed. it's better!
+- i expect to do quite a bit more to this in the next update... watch this space!
+
+### unorganized minor stuff
+
+- consistency in `help` - all fields now use square brackets.
+- `roll` embeds are now colored based on how high or low the roll was (compared to the maximum / minimum).
+- cooldown messages delete themselves once the cooldown expires. ([#33](https://github.com/AndyThePie/slabbot/issues/33))
+- the `osu` command now caches results for 180 seconds. ([#43](https://github.com/AndyThePie/slabbot/issues/43))
+- `admin.js` has been renamed to `shutdown.js`, and moved into an `admin` folder.
+  - admin commands get their own category, and are not shown in the help menu.
+- removed "stack overflow" from "powered by" section in `about`.
+  - it's not really "powered by" stack overflow, and i also don't use it as much anymore... thanks mdn <3
+- added `--exact-match` to the end of `git describe`, which should stop `about` from displaying `v#.#-[commit hash]` as its version.
+- the level up message is now orange.
+- cooldowns have been modified a bit, global default cooldown has been raised to 3000ms (up from 2000ms), but cooldowns for some other commands have been reduced.
+  - `help` uses the default cooldown (down from 10000ms).
+  - the cooldown for `me` has been lowered to 15000ms (down from 30000ms).
+  - the rate limit for `osu` has been raised to 4/30000ms (up from 3/30000ms).
 
 ### code stuff
-- **now using [xo](https://github.com/xojs/xo) code style.**
-  - with a few exceptions:
-    - strings still use double quotes (unless you have to use them in the string).
-    - comments don't have to be capitalized (too professional!)
-      - todo comments don't return warnings, we have a github bot for that.
-    - no radix needed in `randInt()` (i only use decimal numbers...)
+
+- **:warning: now using [xo](https://github.com/xojs/xo) code style.** at least, with a few exceptions.
+  - strings still use double quotes (unless you have to use them in the string).
+  - comments don't have to be capitalized (too professional!)
+    - todo comments don't return warnings, we have a github bot for that.
+  - no radix needed in `randInt()` (i only use decimal numbers...)
+- **slabbot can now properly start when an osu! api token is missing, and when it cannot connect to mongodb.** ([#36](https://github.com/AndyThePie/slabbot/issues/36))
+  - when an osu! api token is missing from `config.json`, the `osu` command will not be loaded.
+  - when slabbot cannot connect to mongodb (on startup), the exp system (and the `me` command) will not be loaded.
+    - command usage will also not be counted, and its related fields in `about` will be excluded.
 - functions in `things.functions.js` are no longer named
   - felt a tad redundant when they were called by their export names...
+- new method of handling command errors (`things.commandError.js`).
+  - `CommandError` is now a class. 
+    - takes in an object with properties `embedTitle`, `embedDescription`, and `messageText`. 
+    - `reply()`  method takes in a `Message` and placeholders (replace text in `embedDescription`, used in `despacito.js`).
+    - consistent color and footer for all errors, should be a bit better.
+    - replaces `returnError` function from v0.4.0.
+  - i should probably name this something else, or just consolidate a single "things.js". 
 - renamed `commandinfo.json` to `commandInfo.json`, and moved to root directory.
-  - and also using `require.main.require`, because it's cleaner.
+  - and also using `require.main.require`, because it's cleaner. although it's a bit broken in vscode. please see [microsoft/TypeScript#19117](https://github.com/Microsoft/TypeScript/issues/19117#issuecomment-336015659).
+- `console.log()` messages are a whole lot more colorful.
+- more READMEs.
+- more code cleanup and comments, as always.
+- updated dependencies.
+  - added renovate bot to help deal with them!
+
+for a version bump that adds practically nothing on the user-end, this is probably the longest changelog so far. finishing up this update and typing these notes while in an airport, waiting for a flight that was delayed by nearly 7 hours was… an experience.
+
+next update is proper game stuff, and a bunch of things that feel very long overdue. see ya then!
+
+------
 
 ## 0.4.1-indev
 
@@ -48,7 +104,7 @@ that's it. that's literally it.
 
 ## 0.4.0-indev
 
-> “I'll probably end up abandoning this again for another month.”  
+> “I'll probably end up abandoning this again for another month.”
 \- Me, 6 months ago
 
 **27 May 2021** / commit [`065ef89`](https://github.com/AndyThePie/slabbot/commit/065ef89e7493824246b07a8fe490dee297267d42)
@@ -66,7 +122,7 @@ this version focused on some game stuff, i guess. it's been so long that i don't
 - **roll some `dice`!**
   - because... why not?
 - fancier `about` command.
-  - links now exist, the description's been changed, and there's also a version thing. 
+  - links now exist, the description's been changed, and there's also a version thing.
     - current uptime is also fancier.
 - slabbot has a [website](https://andythepie.github.io/slabbot)?
   - well, not really. it's just the `README` for now. watch this space, though...
@@ -75,13 +131,13 @@ this version focused on some game stuff, i guess. it's been so long that i don't
 
 ### ~ other changes
 - **xp gain has been nerfed, and level thresholds are higher.**
-  - levels may have been lost as well, the exp/level calculation has also slightly changed. 
-  ```js 
+  - levels may have been lost as well, the exp/level calculation has also slightly changed.
+  ```js
   // const expNeededForLevel = level => 1024*(level**1.3)+(level/35)**4.5;
   const expNeededForLevel = level => 1024 * (level ** 1.3) + (256 *((level-1) / 8) ** 1.8);
   ```
   - exp per message is also lower.
-    - 2.4exp at 6000ms, increasing to 9exp at 30000ms. 
+    - 2.4exp at 6000ms, increasing to 9exp at 30000ms.
     - previously 5exp at 5000ms, increasing to 25exp at 60000ms.
     - see also: desmos graphs for the [old exp/message graph](https://www.desmos.com/calculator/pzw6sryjnm) and the [new one](https://www.desmos.com/calculator/pci07ccizk).
 - a new `things.functions.js` for functions that do things that i'll probably use in multiple commands.
@@ -93,7 +149,7 @@ this version focused on some game stuff, i guess. it's been so long that i don't
   - **`returnError` standardizes error embeds, I guess.**
     - not yet used everywhere else... yet.
 
-i think...? that's all. it's been fun to write these and get back into code and all the sort. it's summer as well... oh boy... 
+i think...? that's all. it's been fun to write these and get back into code and all the sort. it's summer as well... oh boy...
 
 next update will focus on refactors and code cleanups and documentation and all the sort. so... see you then! (^^)/
 
