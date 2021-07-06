@@ -27,6 +27,11 @@ class SlabbotHelp extends Command {
 				.setDescription("a list of things i can do. [ = ' x ' = ]\nuse `sl help [command]` for more information on each command.")
 				.setColor(SLABBOT_ORANGE);
 			for (const category of this.handler.categories.values()) {
+				// don't show admin commands...
+				if (category.id === "admin") {
+					continue;
+				}
+
 				embed.addField(
 					`${category}`,
 					`${category

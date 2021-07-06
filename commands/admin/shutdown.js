@@ -1,4 +1,4 @@
-// admin commands.
+// does what it says on the tin.
 
 const {Command} = require("discord-akairo");
 const info = require.main.require("./commandInfo.json");
@@ -7,7 +7,7 @@ class SlabbotShutdown extends Command {
 	constructor() {
 		super("shutdown", {
 			aliases: ["shutdown"],
-			category: "meta",
+			category: "admin",
 			description: info.shutdown,
 			ownerOnly: true
 		});
