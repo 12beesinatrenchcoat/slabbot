@@ -4,6 +4,8 @@
 
 ## ~~table of~~ contents
 
+[v0.4.2.1-indev "just an exp update"](#0421-indev), released 13 july 2021
+
 [0.4.2-indev "probably breaking"](#042-indev), released 6 july 2021
 
 [0.4.1-indev "whoops"](#041-indev), released 27 may 2021
@@ -19,6 +21,10 @@
 [0.1.0-indev "this is so sad play despacito"](#010-indev), released 9 july 2020
 
 -----
+
+## 0.4.2.1-indev
+
+fixed and modified the exp function a bit (`things.functions.js`). that's it.
 
 ## 0.4.2-indev
 trying a different way of formatting this changelog, instead of just "additions" and "removals". so...
@@ -69,12 +75,12 @@ for a quick overview, here's a picture.
 - functions in `things.functions.js` are no longer named
   - felt a tad redundant when they were called by their export names...
 - new method of handling command errors (`things.commandError.js`).
-  - `CommandError` is now a class. 
-    - takes in an object with properties `embedTitle`, `embedDescription`, and `messageText`. 
+  - `CommandError` is now a class.
+    - takes in an object with properties `embedTitle`, `embedDescription`, and `messageText`.
     - `reply()`  method takes in a `Message` and placeholders (replace text in `embedDescription`, used in `despacito.js`).
     - consistent color and footer for all errors, should be a bit better.
     - replaces `returnError` function from v0.4.0.
-  - i should probably name this something else, or just consolidate a single "things.js". 
+  - i should probably name this something else, or just consolidate a single "things.js".
 - renamed `commandinfo.json` to `commandInfo.json`, and moved to root directory.
   - and also using `require.main.require`, because it's cleaner. although it's a bit broken in vscode. please see [microsoft/TypeScript#19117](https://github.com/Microsoft/TypeScript/issues/19117#issuecomment-336015659).
 - `console.log()` messages are a whole lot more colorful.
