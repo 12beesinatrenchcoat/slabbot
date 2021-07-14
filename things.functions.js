@@ -81,8 +81,8 @@ exports.toBigNumber = function (number, prefix = ["# ", "# ", "# ", "# ", "# "])
 	return output;
 };
 
-// see also: https://www.desmos.com/calculator/kcrt4evjgg
-exports.expNeededForLevel = level => (1024 * (level ** 1.3)) + ((256 * ((level - 1)) / 8) ** 1.8) || 0;
+// see also: https://www.desmos.com/calculator/mqknl8u6hh
+exports.expNeededForLevel = level => (1024 * (level ** 1.3)) + (512 * (((level - 1) / 8) ** 1.8)) || 0;
 
 // creating an exp bar. (takes in a number >1 as percentage!)
 exports.createExpBar = function (percentage, maxLength) {
