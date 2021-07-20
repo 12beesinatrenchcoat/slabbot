@@ -4,7 +4,9 @@
 
 ## ~~table of~~ contents
 
-[v0.4.2.1-indev "just an exp update"](#0421-indev), released 13 july 2021
+[0.4.2.2-indev](#0422-indev), released 19 july 2021
+
+[0.4.2.1-indev "just an exp update"](#0421-indev), released 13 july 2021
 
 [0.4.2-indev "probably breaking"](#042-indev), released 6 july 2021
 
@@ -21,6 +23,10 @@
 [0.1.0-indev "this is so sad play despacito"](#010-indev), released 9 july 2020
 
 -----
+
+## 0.4.2.2-indev
+
+fixed an issue relating to caching of osu! profiles (see [#47](https://github.com/AndyThePie/slabbot/issues/47)).
 
 ## 0.4.2.1-indev
 
