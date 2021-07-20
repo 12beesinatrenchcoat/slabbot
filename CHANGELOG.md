@@ -26,7 +26,8 @@
 
 ## 0.4.2.2-indev
 
-fixed an issue relating to caching of osu! profiles (see [#47](https://github.com/AndyThePie/slabbot/issues/47)).
+- fixed an issue relating to caching of osu! profiles (see [#47](https://github.com/AndyThePie/slabbot/issues/47)).
+- fixed `about` not showing the correct version.
 
 ## 0.4.2.1-indev
 
