@@ -218,10 +218,10 @@ class OsuStats extends Command {
 		}
 
 		// first, check the cache.
-		let data = osuCache.get(args.user);
-		// let cached = true;
+		let data = osuCache.get(args.user + GameMode);
 
 		if (!data) {
+			console.log("fetching...");
 			// making the request
 			await fetch("https://osu.ppy.sh/api/v2/users/" + args.user + "/" + GameMode, {
 				method: "GET",
@@ -234,8 +234,8 @@ class OsuStats extends Command {
 				.then(res => res.json())
 				.then(json => { // doing stuff with the output
 					data = json;
-					// cached = false;
-					osuCache.set(args.user, json);
+					const key = args.user + (GameMode || json.playmode);
+					osuCache.set(key, json);
 				})
 				.catch(error => { // in case of error...
 					console.log(LOG_COLOR.BG.RED, error);
@@ -246,8 +246,6 @@ class OsuStats extends Command {
 					return message.reply("sorry about this... [=^x^;=]", embed);
 				});
 		}
-
-		// console.log(cached);
 
 		const modeRequested = message.util.parsed.alias === "osu"
 			? null
