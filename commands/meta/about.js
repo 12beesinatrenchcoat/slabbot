@@ -15,7 +15,7 @@ git.branch = execSync("git rev-parse --abbrev-ref HEAD").toString().trim();
 git.commitCount = execSync("git rev-list --count " + git.branch).toString().trim();
 git.currentCommit = execSync("git rev-parse HEAD").toString().trim();
 try {
-	git.tag = execSync("git describe --exact-match").toString().trim();
+	git.tag = execSync("git describe --exact-match --tags").toString().trim();
 } catch {
 	git.tag = false;
 }
