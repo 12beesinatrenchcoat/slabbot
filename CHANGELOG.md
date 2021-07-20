@@ -40,7 +40,7 @@ trying a different way of formatting this changelog, instead of just "additions"
 
 for a quick overview, here's a picture.
 
-![sl me [user] example, "not a tsundere" uses command "sl me @magic girl !!" ](https://www.dropbox.com/s/is5p6o92blxrq2g/sl%20me%20[user]%20example.png?dl=1)
+![sl me [user] example, "not a tsundere" uses command "sl me @magic girl !!" ](https://www.dropbox.com/s/is5p6o92blxrq2g/sl%20me%20%5Buser%5D%20example.png?raw=1)
 
 - **:warning: no more "compact ver." and "full ver."**, and a small redesign of the embed.
   - this is quite broken on mobile, but... uhh... sorry? (i might add a user setting to have one or the other, we'll see.)
