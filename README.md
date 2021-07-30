@@ -14,6 +14,12 @@ powered by [**discord.js**](https://github.com/discordjs/discord.js) and [**akai
 
 -----
 
+# important notice
+
+with discord [deprecating message content access](https://support-dev.discord.com/hc/en-us/articles/4404772028055) (it is becoming a privileged intent), this bot is being rewritten from the ground up. **this branch is an old branch from before the rewrite. it will not be further developed nor maintained, and exists here as an archive.**
+
+that's about all. original readme is as follows. <3
+
 ## features!
 
 - `roll` some dice...
