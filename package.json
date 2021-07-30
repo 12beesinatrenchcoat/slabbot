@@ -1,0 +1,63 @@
+{
+	"name": "slabbot",
+	"version": "0.0.0",
+	"description": "an experimental discord bot that no one asked for",
+	"main": "build/src/index.js",
+	"scripts": {
+		"build": "npx tsc"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/AndyThePie/slabbot.git"
+	},
+	"keywords": [
+		"discord-bot",
+		"discord-js"
+	],
+	"author": "AndyThePie",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/AndyThePie/slabbot/issues"
+	},
+	"homepage": "https://github.com/AndyThePie/slabbot#readme",
+	"dependencies": {
+		"discord.js": "^13.0.0-dev.2675b08.1627603447"
+	},
+	"devDependencies": {
+		"@tsconfig/node16": "^1.0.2",
+		"@typescript-eslint/eslint-plugin": "^4.28.5",
+		"@typescript-eslint/parser": "^4.28.5",
+		"eslint": "^7.31.0",
+		"eslint-config-xo": "^0.37.0",
+		"ts-node": "^10.1.0",
+		"typescript": "^4.3.5"
+	},
+	"eslintConfig": {
+		"env": {
+			"es2021": true,
+			"node": true
+		},
+		"extends": [
+			"xo"
+		],
+		"parser": "@typescript-eslint/parser",
+		"parserOptions": {
+			"ecmaVersion": 12,
+			"sourceType": "module"
+		},
+		"plugins": [
+			"@typescript-eslint"
+		],
+		"rules": {
+			"capitalized-comments": 0,
+			"quotes": [
+				1,
+				"double",
+				{
+					"avoidEscape": true,
+					"allowTemplateLiterals": true
+				}
+			]
+		}
+	}
+}
