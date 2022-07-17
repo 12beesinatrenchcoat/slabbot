@@ -20,8 +20,10 @@
   "author": "12beesinatrenchcoat <12beesinatrenchcoat+removethisbitifyouarenotspam@protonmail.com>",
   "license": "MIT",
   "engines": {
-    "node": "18.x"
+    "node": ">=18",
+		"pnpm": ">=7"
   },
+	"packageManager": "pnpm@7.5.0",
   "dependencies": {
     "@barelyhuman/tocolor": "^0.0.9",
     "@discordjs/builders": "^0.15.0",
