@@ -20,7 +20,7 @@
   "author": "12beesinatrenchcoat <12beesinatrenchcoat+removethisbitifyouarenotspam@protonmail.com>",
   "license": "MIT",
   "engines": {
-    "node": ">=18.4.0"
+    "node": "18.x"
   },
   "dependencies": {
     "@barelyhuman/tocolor": "^0.0.9",
