@@ -8,33 +8,6 @@ import {formatNum, generateCommandProblemEmbed, generateProgressBar, msToDuratio
 import {newUser} from "../Utilities.Db.js";
 import {CommandUsageModel, SlabbotCommand, SlabbotUser, UsersModel} from "../models.js";
 import {expNeededForLevel, generateLargeNumber} from "../Utilities.exp.js";
-/* Last commit, in about/version */
-import {getLastCommit} from "git-last-commit";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime.js";
-import duration from "dayjs/plugin/duration.js";
-dayjs.extend(relativeTime);
-dayjs.extend(duration);
-
-/* Getting last commit. Used in version field. */
-const githubUrl = "https://github.com/12beesinatrenchcoat/slabbot/";
-let commitString = "";
-
-getLastCommit((err, commit) => {
-	if (err) {
-		logger.error(err);
-	}
-
-	commitString = `Commit [\`${commit.shortHash}\`](${githubUrl}${commit.hash})`
-		+ `, ${dayjs.unix(Number(commit.committedOn)).fromNow()}`;
-
-	if (commit.tags && commit.tags.length > 0) {
-		commitString += "\nTags:";
-		for (const tag of commit.tags) {
-			commitString += ` [\`${tag}\`](${githubUrl}releases/tag/${tag})`;
-		}
-	}
-});
 
 export default class implements Command {
 	data = new SlashCommandBuilder()
@@ -75,10 +48,6 @@ export default class implements Command {
 				.setThumbnail("https://raw.githubusercontent.com/AndyThePie/slabbot/master/images/slabbot-icon.png")
 				.addFields(
 					{
-						name: "Version",
-						value: commitString,
-						inline: false,
-					}, {
 						name: "Uptime",
 						value: msToDuration(client.uptime) as string,
 						inline: true,
