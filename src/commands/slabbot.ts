@@ -42,17 +42,12 @@ export default class implements Command {
 				.setTitle("[= ^ x ^ =] hello!")
 				.setDescription(
 					"Hello! I'm slabbot (<@" + client.user.id + ">)!\n"
-					+ "I was created by @12beesinatrenchcoat#7664 (<@231899170716385280>).\n",
+					+ "I was created by @12beesinatrenchcoat#7664 (<@231899170716385280>).\n"
+					+ "You can find my source code [here](https://github.com/12beesinatrenchcoat/slabbot).",
 				)
 			// TODO: Replace this image.
 				.setThumbnail("https://raw.githubusercontent.com/AndyThePie/slabbot/master/images/slabbot-icon.png")
-				.addFields(
-					{
-						name: "Uptime",
-						value: msToDuration(client.uptime) as string,
-						inline: true,
-					},
-				);
+				.addField("Uptime", msToDuration(client.uptime) as string, true);
 
 			const commandUsage = await CommandUsageModel.find() as SlabbotCommand[];
 			if (commandUsage) {
@@ -71,11 +66,11 @@ export default class implements Command {
 				embed.addFields(
 					{
 						name: "Commands Run",
-						value: formatNum(totalCommandsUsed),
+						value: formatNum(totalCommandsUsed) || "None yet…",
 						inline: true,
 					}, {
 						name: "Most Used Commands",
-						value: mostUsedCommandsString,
+						value: mostUsedCommandsString || "Nothing yet…",
 						inline: false,
 					},
 				);
