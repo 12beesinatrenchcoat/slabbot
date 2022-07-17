@@ -24,7 +24,10 @@ Fill out the .env file:
 # Discord (https://discord.com/developers)
 DISCORD_TOKEN="Your bot's token goes here"
 CLIENT_ID="Application ID"
-GUILD_ID="The ID of the server you test commands in"
+GUILD_ID="The ID of the server you test commands in" # optional
+
+# MongoDB
+MONGO_URL="The MongoDB URL to connect to." # defaults to mongodb://localhost:27017
 
 # osu! (https://osu.ppy.sh)
 OSU_ID="Client ID"

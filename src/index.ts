@@ -8,7 +8,6 @@ import {Client, ClientOptions, Collection, Intents} from "discord.js";
 import {Command, DJSEvent} from "./Interfaces";
 // Database
 import mongoose from "mongoose";
-const dbURL = "mongodb://localhost:27017";
 const db = mongoose.connection;
 // Logger
 import logger from "./logger.js";
@@ -17,7 +16,7 @@ import "dotenv/config";
 
 /* Database connecting */
 logger.info("connecting to database…");
-await mongoose.connect(dbURL, {})
+await mongoose.connect(process.env.MONGO_URL || "mongodb://localhost:27017", {})
 	.then(() => {
 		logger.info("connected to database!");
 	})

@@ -25,11 +25,11 @@ if (!process.env.DISCORD_TOKEN || !process.env.CLIENT_ID) {
 }
 
 const commands = [];
-const commandFiles = fs.readdirSync(fileURLToPath(new URL("./commands", import.meta.url))).filter(file => file.endsWith(".js"));
+const commandFiles = fs.readdirSync(fileURLToPath(new URL("../commands", import.meta.url))).filter(file => file.endsWith(".js"));
 
 for await (const file of commandFiles) {
 	logger.debug("Loading command file " + file);
-	const command = container.resolve<Command>((await import(new URL("./commands/" + file, import.meta.url).href)).default);
+	const command = container.resolve<Command>((await import(new URL("../commands/" + file, import.meta.url).href)).default);
 
 	commands.push(command.data.toJSON());
 }
@@ -53,7 +53,10 @@ if (args.includes.length > 0) {
 				currentCount++;
 				tryToExit();
 			})
-			.catch(logger.error);
+			.catch(error => {
+				logger.error(error);
+				process.exit(1);
+			});
 	}
 
 	if (args.includes("global")) {
@@ -64,7 +67,10 @@ if (args.includes.length > 0) {
 				currentCount++;
 				tryToExit();
 			})
-			.catch(logger.error);
+			.catch(error => {
+				logger.error(error);
+				process.exit(1);
+			});
 	}
 
 	if (!args.includes("guild") && !args.includes("global")) {
