@@ -1,5 +1,4 @@
-import {SlashCommandBuilder} from "@discordjs/builders";
-import {Client, CommandInteraction, MessageEmbed} from "discord.js";
+import {SlashCommandBuilder, EmbedBuilder, Client, ChatInputCommandInteraction} from "discord.js";
 import {Command} from "../Interfaces";
 import {colors} from "../Constants.js";
 import logger from "../logger.js";
@@ -28,7 +27,7 @@ export default class implements Command {
 		);
 		/* eslint-enable comma-dangle */
 
-	execute = async function (interaction: CommandInteraction, client: Client) {
+	execute = async function (interaction: ChatInputCommandInteraction, client: Client) {
 		const subcommand = interaction.options.getSubcommand();
 
 		/* /slabbot about */
@@ -37,7 +36,7 @@ export default class implements Command {
 				return logger.error("client.user or client.uptime is null… which really shouldn't happen.");
 			}
 
-			const embed = new MessageEmbed()
+			const embed = new EmbedBuilder()
 				.setColor(colors.orange)
 				.setTitle("[= ^ x ^ =] hello!")
 				.setDescription(
@@ -47,7 +46,11 @@ export default class implements Command {
 				)
 			// TODO: Replace this image.
 				.setThumbnail("https://raw.githubusercontent.com/AndyThePie/slabbot/master/images/slabbot-icon.png")
-				.addField("Uptime", msToDuration(client.uptime) as string, true);
+				.addFields({
+					name: "Uptime",
+					value: msToDuration(client.uptime) as string,
+					inline: true,
+				});
 
 			const commandUsage = await CommandUsageModel.find() as SlabbotCommand[];
 			if (commandUsage) {
@@ -113,7 +116,7 @@ export default class implements Command {
 				stats = new Map<string, number>(), // TODO: Do something with this?
 			} = databaseUser;
 
-			const embed = new MessageEmbed()
+			const embed = new EmbedBuilder()
 				.setTitle(user.tag)
 				.setDescription(levelProgress(level, exp))
 				.setThumbnail(user.avatarURL() || user.defaultAvatarURL)
@@ -122,15 +125,15 @@ export default class implements Command {
 			if ([...commandUsage.entries()].length > 0) {
 				const mostUsedCommand = [...commandUsage.entries()].reduce((a, b) => b[1] > a[1] ? b : a);
 				const totalCommands = [...commandUsage.values()].reduce((a, b) => a + b);
-				embed.addField(
-					"Commands Run",
-					`${totalCommands} (mostly /${mostUsedCommand[0]}, ${mostUsedCommand[1]}x)`,
-					true,
-				);
+				embed.addFields({
+					name: "Commands Run",
+					value: `${totalCommands} (mostly /${mostUsedCommand[0]}, ${mostUsedCommand[1]}x)`,
+					inline: true,
+				});
 			}
 
 			return interaction.editReply({
-				content: "wip",
+				content: "here you go!",
 				embeds: [embed],
 			});
 		}

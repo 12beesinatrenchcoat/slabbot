@@ -1,5 +1,5 @@
 /* Speak as the Discord bot, I guess. */
-import {Client, Intents, TextChannel} from "discord.js";
+import {ChannelType, Client, GatewayIntentBits, TextChannel} from "discord.js";
 import "dotenv/config";
 import * as readline from "readline";
 import {stdin as input, stdout as output} from "process";
@@ -18,7 +18,7 @@ if (!args || args.length !== 1) {
 	process.exit(1);
 }
 
-const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
+const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]});
 
 client.login(process.env.DISCORD_TOKEN);
 
@@ -35,7 +35,7 @@ client.once("ready", () => {
 				process.exit(1);
 			}
 
-			if (!fetchedChannel.isText) {
+			if (fetchedChannel.type !== ChannelType.GuildText) {
 				logger.fatal("Got a channel, but it isn't a text channel.");
 				process.exit(1);
 			}

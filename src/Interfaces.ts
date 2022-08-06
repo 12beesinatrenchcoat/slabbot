@@ -1,9 +1,10 @@
-import {SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder} from "@discordjs/builders";
-import {Client, CommandInteraction} from "discord.js";
+import {SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder, Client, ChatInputCommandInteraction} from "discord.js";
 
 export interface Command {
-	data: SlashCommandBuilder | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup"> | SlashCommandSubcommandsOnlyBuilder;
-	execute: (arg0: CommandInteraction, arg1: Client) => void;
+	data: SlashCommandBuilder |
+		SlashCommandSubcommandsOnlyBuilder |
+		Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">
+	execute: (arg0: ChatInputCommandInteraction, arg1: Client) => void;
 }
 
 export interface DJSEvent {

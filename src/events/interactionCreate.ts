@@ -1,4 +1,4 @@
-import {CommandInteraction} from "discord.js";
+import {ChatInputCommandInteraction} from "discord.js";
 import {Command, DJSEvent} from "../Interfaces.js";
 import logger from "../logger.js";
 import {CommandUsageModel, UsersModel} from "../models.js";
@@ -8,7 +8,7 @@ import {grantExp} from "../Utilities.exp.js";
 export default class implements DJSEvent {
 	name = "interactionCreate";
 	once = false;
-	execute = async function (interaction: CommandInteraction) {
+	execute = async function (interaction: ChatInputCommandInteraction) {
 		if (!interaction.isCommand()) {
 			return;
 		}

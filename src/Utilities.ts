@@ -1,6 +1,6 @@
 /* Functions reused in places */
 
-import {MessageEmbed} from "discord.js";
+import {EmbedBuilder} from "discord.js";
 import {colors} from "./Constants.js";
 import logger from "./logger.js";
 
@@ -34,7 +34,7 @@ export function generateCommandProblemEmbed(title: string, description: string, 
 			break;
 	}
 
-	return new MessageEmbed()
+	return new EmbedBuilder()
 		.setTitle(level + ": " + title)
 		.setDescription(description)
 		.setColor(color)

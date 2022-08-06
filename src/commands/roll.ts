@@ -1,5 +1,4 @@
-import {SlashCommandBuilder} from "@discordjs/builders";
-import {CommandInteraction, HexColorString, MessageEmbed} from "discord.js";
+import {ChatInputCommandInteraction, EmbedBuilder, HexColorString, SlashCommandBuilder} from "discord.js";
 import {Command} from "../Interfaces";
 import {generateCommandProblemEmbed} from "../Utilities.js";
 import {hslToHex} from "@barelyhuman/tocolor";
@@ -18,7 +17,7 @@ export default class implements Command {
 		);
 		/* eslint-enable comma-dangle */
 
-	execute = async (interaction: CommandInteraction) => {
+	execute = async (interaction: ChatInputCommandInteraction) => {
 		const embeds = [];
 		const diceString = interaction.options.getString("dice", true);
 
@@ -85,7 +84,7 @@ export default class implements Command {
 
 		const average = (total / diceCount).toFixed(2);
 
-		embeds.push(new MessageEmbed()
+		embeds.push(new EmbedBuilder()
 			.setTitle(`rolled ${diceCount} d${diceSides}!`)
 			.setDescription("`" + diceRolls.join("` `") + "`")
 			.setColor(color)

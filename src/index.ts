@@ -4,7 +4,7 @@ import {fileURLToPath} from "node:url";
 import "reflect-metadata"; // Required by tsyringe
 import {container} from "tsyringe";
 // Discord.js
-import {Client, ClientOptions, Collection, Intents} from "discord.js";
+import {Client, ClientOptions, Collection, GatewayIntentBits} from "discord.js";
 import {Command, DJSEvent} from "./Interfaces";
 // Database
 import mongoose from "mongoose";
@@ -42,7 +42,7 @@ declare global {
 	var client: ExtendedClient;
 }
 
-globalThis.client = new ExtendedClient({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
+globalThis.client = new ExtendedClient({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]});
 
 /* Loading commands */
 client.commands = new Collection();

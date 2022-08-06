@@ -1,6 +1,6 @@
 /* Functions relating to the EXP system. */
 
-import {CommandInteraction, Message, MessageEmbed, User} from "discord.js";
+import {ChatInputCommandInteraction, EmbedBuilder, Message, User} from "discord.js";
 import {UsersModel} from "./models.js";
 import {newUser} from "./Utilities.Db.js";
 
@@ -11,7 +11,7 @@ import {newUser} from "./Utilities.Db.js";
  */
 export const expNeededForLevel = (level: number): number => level * (2500 + ((level - 1) * 100));
 
-export async function grantExp(user: User, event: Message | CommandInteraction) {
+export async function grantExp(user: User, event: Message | ChatInputCommandInteraction) {
 	if (!user.bot) {
 		const userInDb = await UsersModel.findById(user.id);
 
@@ -35,7 +35,7 @@ export async function grantExp(user: User, event: Message | CommandInteraction) 
 			userInDb.level++;
 			event.reply({
 				content: "ding!",
-				embeds: [new MessageEmbed()
+				embeds: [new EmbedBuilder()
 					.setTitle("level up!")
 					.setDescription("```glsl\n# YOU ARE NOW LEVEL\n" + generateLargeNumber(userInDb.level, "# ") + "```")],
 			});

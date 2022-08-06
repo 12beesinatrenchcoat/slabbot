@@ -1,5 +1,4 @@
-import {SlashCommandBuilder} from "@discordjs/builders";
-import {CommandInteraction} from "discord.js";
+import {ChatInputCommandInteraction, SlashCommandBuilder} from "discord.js";
 import {Command} from "../Interfaces";
 
 const data = new SlashCommandBuilder()
@@ -33,7 +32,7 @@ for (let i = 4; i <= 25; i++) {
 
 export default class implements Command {
 	data = data;
-	execute = async (interaction: CommandInteraction) => {
+	execute = async (interaction: ChatInputCommandInteraction) => {
 		const itemsArray: string[] = [];
 
 		for (let i = 1; i <= 25; i++) {

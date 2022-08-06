@@ -1,5 +1,4 @@
-import {SlashCommandBuilder} from "@discordjs/builders";
-import {CommandInteraction, MessageEmbed} from "discord.js";
+import {ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder} from "discord.js";
 import {Command} from "../Interfaces";
 import fetch from "node-fetch";
 import logger from "../logger.js";
@@ -50,7 +49,7 @@ export default class implements Command {
 						)
 						.setRequired(false)
 				)
-		); /* WIP!!!
+		); /* TODO: vs!
 		.addSubcommand(subcommand =>
 			subcommand.setName("vs")
 				.setDescription("compare two osu! players")
@@ -78,7 +77,7 @@ export default class implements Command {
 		); */
 	/* eslint-enable comma-dangle */
 
-	execute = async (interaction: CommandInteraction) => {
+	execute = async (interaction: ChatInputCommandInteraction) => {
 		const subcommand = interaction.options.getSubcommand();
 
 		if (subcommand === "user") {
@@ -131,7 +130,7 @@ export default class implements Command {
 				? "https://a.ppy.sh/"
 				: data.avatar_url;
 
-			const embed = new MessageEmbed()
+			const embed = new EmbedBuilder()
 				.setTitle(title)
 				.setURL("https://osu.ppy.sh/users/" + data.id)
 				.setColor("#ff66aa")

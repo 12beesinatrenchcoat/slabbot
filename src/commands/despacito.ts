@@ -1,5 +1,4 @@
-import {SlashCommandBuilder} from "@discordjs/builders";
-import {CommandInteraction, MessageEmbed} from "discord.js";
+import {ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder} from "discord.js";
 import {Command} from "../Interfaces";
 
 export default class implements Command {
@@ -15,13 +14,13 @@ export default class implements Command {
 		);
 		/* eslint-enable comma-dangle */
 
-	execute = async (interaction: CommandInteraction) => {
+	execute = async (interaction: ChatInputCommandInteraction) => {
 		const position: number = interaction.options.getInteger("position", false)
 			?? Math.floor(Math.random() * videos.length);
 
 		const video: Video = videos[position];
 
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setColor("#FF0000")
 			.setTitle(video.title)
 			.setDescription(video.description)
