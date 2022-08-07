@@ -77,6 +77,8 @@ export default class implements Command {
 		); */
 	/* eslint-enable comma-dangle */
 
+	cooldown = 30000;
+
 	execute = async (interaction: ChatInputCommandInteraction) => {
 		const subcommand = interaction.options.getSubcommand();
 

@@ -4,7 +4,8 @@ export interface Command {
 	data: SlashCommandBuilder |
 		SlashCommandSubcommandsOnlyBuilder |
 		Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">
-	execute: (arg0: ChatInputCommandInteraction, arg1: Client) => void;
+	cooldown?: number
+	execute: (arg0: ChatInputCommandInteraction, arg1: Client) => void
 }
 
 export interface DJSEvent {

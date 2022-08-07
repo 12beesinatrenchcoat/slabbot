@@ -1,9 +1,17 @@
-import {ChatInputCommandInteraction} from "discord.js";
+import {ChatInputCommandInteraction, Snowflake} from "discord.js";
 import {Command, DJSEvent} from "../Interfaces.js";
 import logger from "../logger.js";
 import {CommandUsageModel, UsersModel} from "../models.js";
 import {newUser} from "../Utilities.Db.js";
 import {grantExp} from "../Utilities.exp.js";
+import {generateCommandProblemEmbed} from "../Utilities.js";
+
+// Object of when user last used any command.
+const lastUseTimes: {[key: Snowflake]: number | undefined} = {};
+const cooldownLength = 5000; // Global cooldown in milliseconds.
+
+// Object of when any user last used a specific command.
+const lastCommandUseTimes: {[key: string]: {[key: Snowflake]: number | undefined}} = {};
 
 export default class implements DJSEvent {
 	name = "interactionCreate";
@@ -17,6 +25,43 @@ export default class implements DJSEvent {
 
 		if (!command) {
 			return;
+		}
+
+		// Check global cooldown.
+		const lastUseTime = lastUseTimes[interaction.user.id];
+		if (lastUseTime && lastUseTime + cooldownLength > interaction.createdTimestamp) {
+			console.log("on cooldown!");
+			interaction.reply({
+				content: "chill out! [>_<]",
+				embeds: [generateCommandProblemEmbed(
+					"you're on cooldown!",
+					`To keep the bot from overloading, every user has a cooldown on how often they can send a command — once every ${cooldownLength}ms, to be exact. **Your cooldown ends in ${cooldownLength - (interaction.createdTimestamp - lastUseTime)}ms.**`,
+					"error",
+				)],
+				ephemeral: true,
+			});
+			return;
+		}
+
+		// Check command cooldown.
+		if (command.cooldown) {
+			if (lastCommandUseTimes[command.data.name]) {
+				const lastCommandUseTime = lastCommandUseTimes[command.data.name][interaction.user.id];
+				if (lastCommandUseTime && lastCommandUseTime + command.cooldown > interaction.createdTimestamp) {
+					interaction.reply({
+						content: "chill out! [>_<]",
+						embeds: [generateCommandProblemEmbed(
+							"this command is on cooldown!",
+							`Some commands have longer cooldowns, due to querying other services, or due to processing power usage, or whenever I feel like it. This command in particular has a ${command.cooldown}ms cooldown. **The command's cooldown ends in ${command.cooldown - (interaction.createdTimestamp - lastCommandUseTime)}ms.**`,
+							"error",
+						)],
+						ephemeral: true,
+					});
+					return;
+				}
+			} else {
+				lastCommandUseTimes[command.data.name] = {};
+			}
 		}
 
 		try {
@@ -60,6 +105,11 @@ export default class implements DJSEvent {
 			}
 
 			grantExp(interaction.user, interaction);
+			lastUseTimes[interaction.user.id] = interaction.createdTimestamp;
+
+			if (command.cooldown) {
+				lastCommandUseTimes[command.data.name][interaction.user.id] = interaction.createdTimestamp;
+			}
 		} catch (error) {
 			logger.error(error);
 			await interaction.reply({content: "There was an error while executing this command!", ephemeral: true});
