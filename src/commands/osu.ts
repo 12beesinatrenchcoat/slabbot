@@ -107,9 +107,6 @@ export default class implements Command {
 				title += " [" + group.short_name + "]";
 			}
 
-			let description = "";
-			description += data.title ?? "";
-
 			/* Footer <- [join_date, last_visit, playstyle] */
 			let footer = "";
 
@@ -134,7 +131,6 @@ export default class implements Command {
 				.setTitle(title)
 				.setURL("https://osu.ppy.sh/users/" + data.id)
 				.setColor("#ff66aa")
-				.setDescription(description)
 				.setThumbnail(avatar)
 				.setFooter({
 					text: footer,
@@ -142,6 +138,10 @@ export default class implements Command {
 
 			if (data.cover_url) {
 				embed.setImage(data.cover_url);
+			}
+
+			if (data.title) {
+				embed.setDescription(data.title);
 			}
 
 			if (!data.is_bot) {
@@ -227,6 +227,7 @@ async function auth() {
 			const timeout = json.expires_in * 1000;
 			token = json.access_token;
 			setTimeout(auth, timeout);
+			logger.info("Obtained a token from the osu!api!");
 		})
 		.catch(error => {
 			logger.error(error);
