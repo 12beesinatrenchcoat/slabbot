@@ -45,7 +45,7 @@ client.once("ready", () => {
 			channel = fetchedChannel as TextChannel;
 			logger.info(`Fetched channel #${channel.name}!`);
 		})
-		.catch(logger.error);
+		.catch(error => logger.error(error));
 });
 
 const rl = readline.createInterface({input, output});
@@ -57,7 +57,7 @@ rl.on("line", input => {
 		.then(() => {
 			logger.info(`Successfully sent message "${input}"!`);
 		})
-		.catch(logger.error);
+		.catch(error => logger.error(error));
 });
 
 rl.on("close", () => {
