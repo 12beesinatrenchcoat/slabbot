@@ -1,4 +1,4 @@
-import {SlashCommandBuilder, EmbedBuilder, Client, ChatInputCommandInteraction} from "discord.js";
+import {SlashCommandBuilder, EmbedBuilder, Client, ChatInputCommandInteraction, GuildMember, User} from "discord.js";
 import {Command} from "../Interfaces";
 import {colors} from "../Constants.js";
 import logger from "../logger.js";
@@ -87,12 +87,21 @@ export default class implements Command {
 
 		/* /slabbot profile */
 		if (subcommand === "profile") {
-			const user = interaction.options.getUser("user", false) || interaction.user;
-			const {id} = user;
+			let member: GuildMember | null = null;
+			let user: User;
+
+			if (interaction.inGuild()) {
+				member = interaction.options.getMember("user") as GuildMember || interaction.member;
+				user = member.user;
+			} else {
+				user = interaction.options.getUser("user", false) || interaction.user;
+			}
 
 			if (!user) {
 				return false;
 			}
+
+			const {id} = user;
 
 			if (user.bot) {
 				return interaction.reply({
@@ -116,9 +125,17 @@ export default class implements Command {
 				stats = new Map<string, number>(), // TODO: Do something with this?
 			} = databaseUser;
 
+			let description = "";
+
+			if (member?.nickname) {
+				description += "also known as `" + member.nickname + "`\n";
+			}
+
+			description += levelProgress(level, exp);
+
 			const embed = new EmbedBuilder()
 				.setTitle(user.tag)
-				.setDescription(levelProgress(level, exp))
+				.setDescription(description)
 				.setThumbnail(user.avatarURL() || user.defaultAvatarURL)
 				.setTimestamp(new Date());
 
