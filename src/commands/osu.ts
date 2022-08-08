@@ -6,9 +6,15 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js";
 import duration from "dayjs/plugin/duration.js";
 import {formatNum, generateProgressBar, msToDuration} from "../Utilities.js";
+import NodeCache from "node-cache";
 
 dayjs.extend(relativeTime);
 dayjs.extend(duration);
+
+const osuUserCache = new NodeCache({
+	stdTTL: 600,
+	checkperiod: 60,
+});
 
 const {OSU_ID, OSU_SECRET} = process.env;
 const baseURL = "https://osu.ppy.sh/api/v2";
@@ -328,12 +334,19 @@ interface User {
 	website?: string
 }
 
-async function getUser<User>(username: string, mode?: GameMode): Promise<User> {
-	let url = baseURL + "/users/" + username;
-	url += mode ? `/${mode}` : "";
-	url += "?key=username";
+async function getUser(username: string, mode?: GameMode): Promise<User> {
+	const userString = username + (mode ? `/${mode}` : "");
 
-	return fetch(url, {
+	logger.debug(userString);
+
+	if (osuUserCache.has(userString)) {
+		logger.debug(`${userString} found in cache!`);
+		return osuUserCache.get(userString) as User;
+	}
+
+	const url = baseURL + "/users/" + userString + "?key=username";
+
+	const response = await fetch(url, {
 		method: "get",
 		headers: {
 			Accept: "application/json",
@@ -342,4 +355,7 @@ async function getUser<User>(username: string, mode?: GameMode): Promise<User> {
 		},
 	})
 		.then(res => res.json() as Promise<User>);
+
+	osuUserCache.set(userString, response);
+	return response;
 }
