@@ -17,7 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/12beesinatrenchcoat/slabbot.git"
   },
-  "author": "12beesinatrenchcoat <12beesinatrenchcoat+removethisbitifyouarenotspam@protonmail.com>",
+  "author": "Andy Chan (12beesinatrenchcoat) <andy@12beesinatrenchco.at>",
   "license": "MIT",
   "engines": {
     "node": ">=18",
@@ -25,29 +25,29 @@
   },
   "packageManager": "pnpm@7.5.0",
   "dependencies": {
-    "@barelyhuman/tocolor": "^0.0.9",
-    "@discordjs/rest": "^1.0.1",
-    "dayjs": "^1.11.4",
-    "discord-api-types": "^0.36.3",
-    "discord.js": "^14.1.2",
-    "dotenv": "^16.0.1",
-    "mongoose": "^6.5.1",
+    "@barelyhuman/tocolor": "0.0.8",
+    "@discordjs/rest": "^1.7.1",
+    "dayjs": "^1.11.7",
+    "discord-api-types": "^0.37.42",
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.0.3",
+    "mongoose": "^7.1.1",
     "node-cache": "^5.1.2",
-    "node-fetch": "^3.2.10",
-    "pino": "^8.4.0",
+    "node-fetch": "^3.3.1",
+    "pino": "^8.14.1",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.7.0"
   },
   "devDependencies": {
-    "@types/node": "^18.6.4",
-    "@typescript-eslint/eslint-plugin": "^5.32.0",
-    "@typescript-eslint/parser": "^5.32.0",
-    "eslint": "^8.21.0",
-    "eslint-config-xo": "^0.41.0",
-    "nodemon": "^2.0.19",
-    "pino-pretty": "^8.1.0",
-    "rimraf": "^3.0.2",
+    "@types/node": "^20.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "eslint": "^8.40.0",
+    "eslint-config-xo": "^0.43.1",
+    "nodemon": "^2.0.22",
+    "pino-pretty": "^10.0.0",
+    "rimraf": "^5.0.1",
     "ts-node": "^10.9.1",
-    "typescript": "^4.7.4"
+    "typescript": "^5.0.4"
   }
 }

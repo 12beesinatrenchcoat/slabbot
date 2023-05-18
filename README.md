@@ -27,7 +27,7 @@ CLIENT_ID="Application ID"
 GUILD_ID="The ID of the server you test commands in" # optional
 
 # MongoDB
-MONGO_URL="The MongoDB URL to connect to." # defaults to mongodb://localhost:27017
+MONGO_URL="The MongoDB URL to connect to." # defaults to mongodb://127.0.0.1:27017
 
 # osu! (https://osu.ppy.sh)
 OSU_ID="Client ID"
