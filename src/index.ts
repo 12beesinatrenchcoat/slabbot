@@ -49,16 +49,21 @@ globalThis.client = new ExtendedClient({intents: [GatewayIntentBits.Guilds, Gate
 client.commands = new Collection();
 const commandFiles = fs.readdirSync(fileURLToPath(new URL("./commands", import.meta.url))).filter(file => file.endsWith(".js"));
 
+let commandCount = 0;
 for await (const file of commandFiles) {
 	logger.debug("Loading command file " + file);
 	const command = container.resolve<Command>((await import(new URL("./commands/" + file, import.meta.url).href)).default);
 
 	client.commands.set(command.data.name, command);
+	commandCount++;
 }
+
+logger.info(`Loaded ${commandCount} commands!`);
 
 /* Loading events */
 const eventFiles = fs.readdirSync(fileURLToPath(new URL("./events", import.meta.url))).filter(file => file.endsWith(".js"));
 
+let eventCount = 0;
 for await (const file of eventFiles) {
 	logger.debug("Loading event watcher file " + file);
 	const event = container.resolve<DJSEvent>((await import(new URL("./events/" + file, import.meta.url).href)).default);
@@ -68,7 +73,11 @@ for await (const file of eventFiles) {
 	} else {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
+
+	eventCount++;
 }
+
+logger.info(`Loaded ${eventCount} events!`);
 
 client.login(process.env.DISCORD_TOKEN)
 	.catch(error => {

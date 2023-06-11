@@ -8,6 +8,10 @@ const msInSec = 1000;
 const msInMin = 1000 * 60;
 const msInHor = 1000 * 60 * 60; // "hor" instead of "hr" to make things line up >_<
 const msInDay = 1000 * 60 * 60 * 24;
+/**
+ * Converts milliseconds to duration.
+ * @param asObject - Whether to return as an object {d, h, m, s} instead of a string
+ */
 export function msToDuration(ms: number, asObject = false): object | string {
 	const units = {
 		d: ms > msInDay ? String(Math.floor(ms / msInDay)) + "d " : "",
@@ -21,6 +25,7 @@ export function msToDuration(ms: number, asObject = false): object | string {
 		: units.d + units.h + units.m + units.s;
 }
 
+/** Creates a slabbot problem embed. */
 export function generateCommandProblemEmbed(title: string, description: string, level: "error" | "warning") {
 	let color;
 
@@ -43,13 +48,14 @@ export function generateCommandProblemEmbed(title: string, description: string, 
 		});
 }
 
+/** Creates a text progress bar [||   ]. Percentage in [0, 1]. */
 export function generateProgressBar(percentage: number, length: number) {
 	if (percentage < 0) {
 		logger.error("Percentage out of bounds. Value must be positive.");
 		return null;
 	}
 
-	if (length < 3) {
+	if (length <= 3) {
 		logger.error("Length of progress bar not long enough (minimum 4).");
 		return null;
 	}
