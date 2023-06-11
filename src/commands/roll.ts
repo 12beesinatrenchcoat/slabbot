@@ -1,7 +1,8 @@
 import {ChatInputCommandInteraction, EmbedBuilder, HexColorString, SlashCommandBuilder} from "discord.js";
+import {colord} from "colord";
 import {Command} from "../Interfaces";
 import {generateCommandProblemEmbed} from "../Utilities.js";
-import {hslToHex} from "@barelyhuman/tocolor";
+import logger from "../logger.js";
 
 const regex = /^([0-9]+|)d([0-9]+)$/;
 
@@ -80,7 +81,8 @@ export default class implements Command {
 
 		const percent = (total - minPossible) / (maxPossible - minPossible);
 
-		const color: HexColorString = `#${hslToHex(120 * percent, 90, 60)}`;
+		const color: HexColorString = colord({h: 120 * percent, s: 100, l: 60}).toHex() as HexColorString;
+		logger.debug(color.toString());
 
 		const average = (total / diceCount).toFixed(2);
 

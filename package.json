@@ -25,8 +25,8 @@
     "pnpm": ">=8"
   },
   "dependencies": {
-    "@barelyhuman/tocolor": "^0.2.2",
     "@discordjs/rest": "^1.7.1",
+    "colord": "^2.9.3",
     "dayjs": "^1.11.8",
     "discord-api-types": "^0.37.43",
     "discord.js": "^14.11.0",
