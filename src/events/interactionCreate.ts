@@ -27,22 +27,6 @@ export default class implements DJSEvent {
 			return;
 		}
 
-		// Check global cooldown.
-		const lastUseTime = lastUseTimes[interaction.user.id];
-		if (lastUseTime && lastUseTime + cooldownLength > interaction.createdTimestamp) {
-			console.log("on cooldown!");
-			interaction.reply({
-				content: "chill out! [>_<]",
-				embeds: [generateCommandProblemEmbed(
-					"you're on cooldown!",
-					`To keep the bot from overloading, every user has a cooldown on how often they can send a command — once every ${cooldownLength}ms, to be exact. **Your cooldown ends in ${cooldownLength - (interaction.createdTimestamp - lastUseTime)}ms.**`,
-					"error",
-				)],
-				ephemeral: true,
-			});
-			return;
-		}
-
 		// Check command cooldown.
 		if (command.cooldown) {
 			if (lastCommandUseTimes[command.data.name]) {
@@ -52,7 +36,7 @@ export default class implements DJSEvent {
 						content: "chill out! [>_<]",
 						embeds: [generateCommandProblemEmbed(
 							"this command is on cooldown!",
-							`Some commands have longer cooldowns, due to querying other services, or due to processing power usage, or whenever I feel like it. This command in particular has a ${command.cooldown}ms cooldown. **The command's cooldown ends in ${command.cooldown - (interaction.createdTimestamp - lastCommandUseTime)}ms.**`,
+							`Some commands have longer cooldowns, due to querying other services, or due to processing power usage, or whenever I feel like it. This command in particular has a ${(command.cooldown / 1000).toFixed(1)}s cooldown. **The command's cooldown ends in ${((command.cooldown - (interaction.createdTimestamp - lastCommandUseTime)) / 1000).toFixed(1)}s.**`,
 							"error",
 						)],
 						ephemeral: true,
@@ -61,6 +45,22 @@ export default class implements DJSEvent {
 				}
 			} else {
 				lastCommandUseTimes[command.data.name] = {};
+			}
+
+			// Check global cooldown.
+			const lastUseTime = lastUseTimes[interaction.user.id];
+			if (lastUseTime && lastUseTime + cooldownLength > interaction.createdTimestamp) {
+				console.log("on cooldown!");
+				interaction.reply({
+					content: "chill out! [>_<]",
+					embeds: [generateCommandProblemEmbed(
+						"you're on cooldown!",
+						`To keep the bot from overloading, every user has a cooldown on how often they can send a command — once every ${(cooldownLength / 1000).toFixed(1)}s, to be exact. **Your cooldown ends in ${((cooldownLength - (interaction.createdTimestamp - lastUseTime)) / 1000).toFixed(1)}s.**`,
+						"error",
+					)],
+					ephemeral: true,
+				});
+				return;
 			}
 		}
 
