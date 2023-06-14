@@ -241,9 +241,6 @@ interface User {
 
 async function getUser(username: string, mode?: GameMode): Promise<User> {
 	const userString = username + (mode ? `/${mode}` : "");
-
-	logger.debug(userString);
-
 	if (osuUserCache.has(userString)) {
 		logger.debug(`${userString} found in cache!`);
 		return osuUserCache.get(userString) as User;

@@ -11,3 +11,7 @@ tsconfig.tsbuildinfo
 # database
 db/**
 !db/.gitkeep
+
+# logs
+logs/**
+!logs/.gitkeep
