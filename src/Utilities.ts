@@ -17,7 +17,7 @@ export function msToDuration(ms: number, asObject = false): object | string {
 		d: ms > msInDay ? String(Math.floor(ms / msInDay)) + "d " : "",
 		h: ms > msInHor ? String(Math.floor(ms % msInDay / msInHor)) + "h " : "",
 		m: ms > msInMin ? String(Math.floor(ms % msInHor / msInMin)) + "m " : "",
-		s: ms > msInSec ? (ms % msInMin / msInSec).toFixed(3) + "s" : "",
+		s: ms > msInSec ? (ms % msInMin / msInSec) + "s" : "",
 	};
 
 	return asObject

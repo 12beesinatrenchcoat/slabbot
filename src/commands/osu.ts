@@ -5,7 +5,7 @@ import logger from "../logger.js";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js";
 import duration from "dayjs/plugin/duration.js";
-import {formatNum, generateProgressBar, msToDuration} from "../Utilities.js";
+import {formatNum, generateCommandProblemEmbed, generateProgressBar, msToDuration} from "../Utilities.js";
 import NodeCache from "node-cache";
 
 dayjs.extend(relativeTime);
@@ -83,126 +83,29 @@ export default class implements Command {
 		); */
 	/* eslint-enable comma-dangle */
 
-	cooldown = 30000;
+	cooldown = 15000;
 
 	execute = async (interaction: ChatInputCommandInteraction) => {
 		const subcommand = interaction.options.getSubcommand();
+		let embed;
 
 		if (subcommand === "user") {
 			const user = interaction.options.getString("user", true);
 			const mode = interaction.options.getString("mode", false) as GameMode || undefined;
 
-			const data = await getUser(user, mode) as User;
-			const {statistics} = data;
-
-			/* Title */
-			let title = "";
-			// Flag + Username
-			title += `:flag_${data.country_code.toLowerCase()}: `;
-			title += data.username;
-
-			// Supporter level - hollow heart if supported in the past
-			if (data.has_supported) {
-				const hearts = data.support_level > 0
-					? ":heart:".repeat(data.support_level)
-					: "♡";
-
-				title += ` [${hearts}]`;
-			}
-
-			// Groups
-			for (const group of data.groups) {
-				title += " [" + group.short_name + "]";
-			}
-
-			/* Footer <- [join_date, last_visit, playstyle] */
-			let footer = "";
-
-			const joined = dayjs(data.join_date);
-			footer += joined.year() < 2008 // https://osu.ppy.sh/community/forums/posts/6766770
-				? "Here since the beginning"
-				: joined.format("MMMM YYYY");
-
-			footer += data.last_visit
-				? " / Last seen " + dayjs(data.last_visit).fromNow()
-				: "";
-
-			if (data.playstyle && data.playstyle.length > 0) {
-				footer += " / Plays with " + data.playstyle.join(", ");
-			}
-
-			const avatar = data.avatar_url === "/images/layout/avatar-guest.png"
-				? "https://a.ppy.sh/"
-				: data.avatar_url;
-
-			const embed = new EmbedBuilder()
-				.setTitle(title)
-				.setURL("https://osu.ppy.sh/users/" + data.id)
-				.setColor("#ff66aa")
-				.setThumbnail(avatar)
-				.setFooter({
-					text: footer,
-				});
-
-			if (data.cover_url) {
-				embed.setImage(data.cover_url);
-			}
-
-			if (data.title) {
-				embed.setDescription(data.title);
-			}
-
-			if (!data.is_bot) {
-				embed.setAuthor({
-					// Using rank_history.mode — playmode returns user's default
-					name: GameModeHumanReadable[data.rank_history.mode],
-				})
-					.addFields({
-						name: " rank",
-						value: statistics.global_rank
-							? "#" + formatNum(statistics.global_rank)
-							: "unranked",
-						inline: true,
-					}, {
-						name: "pp",
-						value: formatNum(statistics.pp, 2),
-						inline: true,
-					}, {
-						name: "hit accuracy",
-						value: statistics.hit_accuracy.toFixed(2) + "%",
-						inline: true,
-					}, {
-						name: "grades",
-						value: // The blank characters at the end are em spaces, U+2003.       ↓↓
-							rankEmojis.SSH + " " + formatNum(statistics.grade_counts.ssh) + " "
-							+ rankEmojis.SS + " " + formatNum(statistics.grade_counts.ss) + " "
-							+ rankEmojis.SH + " " + formatNum(statistics.grade_counts.sh) + " "
-							+ rankEmojis.S + " " + formatNum(statistics.grade_counts.s) + " "
-							+ rankEmojis.A + " " + formatNum(statistics.grade_counts.a),
-						inline: false,
-					}, {
-						name: "level",
-						value: statistics.level.current
-							+ " `" + generateProgressBar(statistics.level.progress / 100, 32) + "` "
-							+ statistics.level.progress + "%",
-						inline: false,
-					}, {
-						name: "plays",
-						value: `${formatNum(statistics.play_count)} plays over ${msToDuration(statistics.play_time * 1000)}`
-						+ "\n" + formatNum(data.beatmap_playcounts_count) + " beatmaps played (across all modes)",
-						inline: false,
-					});
-			}
-
-			return interaction.reply({
-				content: "got it!",
-				embeds: [embed],
-			});
+			embed = await makeUserEmbed(user, mode);
 		}
 
 		if (subcommand === "vs") {
 			// TODO: Add vs command. Release v0.7.0.
 			return interaction.reply("vs");
+		}
+
+		if(embed) {
+			return interaction.reply({
+				content: "here's what i found:",
+				embeds: [embed],
+			});
 		}
 	};
 }
@@ -268,6 +171,8 @@ interface User {
 	country_code: string
 	default_group: string
 	discord?: string
+	/** If this is here, user not found. */
+	error: null
 	/** The groups the user is in. May be empty. */
 	groups: {
 		has_listing: boolean
@@ -358,4 +263,117 @@ async function getUser(username: string, mode?: GameMode): Promise<User> {
 
 	osuUserCache.set(userString, response);
 	return response;
+}
+
+async function makeUserEmbed(user: string, mode: GameMode | undefined){
+	// Fetch from osu!api
+	const data = await getUser(user, mode) as User;
+
+	if (data.error === null) {
+		return generateCommandProblemEmbed(
+			"user not found!",
+			`The osu!api returned an error when looking for user \`${user}\`. The user may have changed their username, their account may be unavailable due to security issues or a restriction, or you may have made a typo!`,
+			"error"
+		);
+	}
+
+	const {statistics} = data;
+
+	/* Title */
+	let title = "";
+	// Flag + Username
+	title += `:flag_${data.country_code.toLowerCase()}: `;
+	title += data.username;
+
+	// Supporter level
+	if (data.is_supporter) {
+		const hearts = ":heart:".repeat(data.support_level);
+		title += ` [${hearts}]`;
+	}
+
+	// Groups
+	for (const group of data.groups) {
+		title += " [" + group.short_name + "]";
+	}
+
+	/* Footer <- [join_date, last_visit, playstyle] */
+	let footer = "";
+
+	const joined = dayjs(data.join_date);
+	footer += joined.year() < 2008 // https://osu.ppy.sh/community/forums/posts/6766770
+		? "Here since the beginning"
+		: joined.format("MMMM YYYY");
+
+	footer += data.last_visit
+		? " / Last seen " + dayjs(data.last_visit).fromNow()
+		: "";
+
+	if (data.playstyle && data.playstyle.length > 0) {
+		footer += " / Plays with " + data.playstyle.join(", ");
+	}
+
+	const avatar = data.avatar_url === "/images/layout/avatar-guest.png"
+		? "https://a.ppy.sh/"
+		: data.avatar_url;
+
+	const embed = new EmbedBuilder()
+		.setTitle(title)
+		.setURL("https://osu.ppy.sh/users/" + data.id)
+		.setColor("#ff66aa")
+		.setThumbnail(avatar)
+		.setFooter({
+			text: footer,
+		});
+
+	if (data.cover_url) {
+		embed.setImage(data.cover_url);
+	}
+
+	if (data.title) {
+		embed.setDescription(data.title);
+	}
+
+	if (!data.is_bot) {
+		embed.setAuthor({
+			// Using rank_history.mode — playmode returns user's default
+			name: GameModeHumanReadable[data.rank_history.mode],
+		})
+			.addFields({
+				name: " rank",
+				value: statistics.global_rank
+					? "#" + formatNum(statistics.global_rank)
+					: "unranked",
+				inline: true,
+			}, {
+				name: "pp",
+				value: formatNum(statistics.pp, 2),
+				inline: true,
+			}, {
+				name: "hit accuracy",
+				value: statistics.hit_accuracy.toFixed(2) + "%",
+				inline: true,
+			}, {
+				name: "grades",
+				value: // The blank characters at the end are em spaces, U+2003.       ↓↓
+					rankEmojis.SSH + " " + formatNum(statistics.grade_counts.ssh) + " "
+					+ rankEmojis.SS + " " + formatNum(statistics.grade_counts.ss) + " "
+					+ rankEmojis.SH + " " + formatNum(statistics.grade_counts.sh) + " "
+					+ rankEmojis.S + " " + formatNum(statistics.grade_counts.s) + " "
+					+ rankEmojis.A + " " + formatNum(statistics.grade_counts.a),
+				inline: false,
+			}, {
+				name: "level",
+				value: statistics.level.current
+					+ " `" + generateProgressBar(statistics.level.progress / 100, 32) + "` "
+					+ statistics.level.progress + "%",
+				inline: false,
+			}, {
+				name: "plays",
+				value: `${formatNum(statistics.play_count)} plays over ${msToDuration(statistics.play_time * 1000)}`
+				+ "\n" + formatNum(data.beatmap_playcounts_count) + " beatmaps played (across all modes)",
+				inline: false,
+			});
+	}
+
+	return embed;
 }
