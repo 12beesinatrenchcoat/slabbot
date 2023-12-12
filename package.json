@@ -25,29 +25,29 @@
     "pnpm": ">=8"
   },
   "dependencies": {
-    "@discordjs/rest": "^1.7.1",
+    "@discordjs/rest": "^2.2.0",
     "colord": "^2.9.3",
-    "dayjs": "^1.11.9",
-    "discord-api-types": "^0.37.49",
-    "discord.js": "^14.11.0",
+    "dayjs": "^1.11.10",
+    "discord-api-types": "^0.37.66",
+    "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
-    "mongoose": "^7.4.0",
+    "mongoose": "^8.0.3",
     "node-cache": "^5.1.2",
-    "node-fetch": "^3.3.1",
-    "pino": "^8.14.1",
-    "reflect-metadata": "^0.1.13",
+    "node-fetch": "^3.3.2",
+    "pino": "^8.16.2",
+    "reflect-metadata": "^0.1.14",
     "tsyringe": "^4.8.0"
   },
   "devDependencies": {
-    "@types/node": "^20.4.2",
-    "@typescript-eslint/eslint-plugin": "^6.1.0",
-    "@typescript-eslint/parser": "^6.1.0",
-    "eslint": "^8.45.0",
+    "@types/node": "^20.10.4",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "eslint": "^8.55.0",
     "eslint-config-xo": "^0.43.1",
-    "nodemon": "^3.0.1",
-    "pino-pretty": "^10.0.1",
-    "rimraf": "^5.0.1",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
+    "nodemon": "^3.0.2",
+    "pino-pretty": "^10.2.3",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }
