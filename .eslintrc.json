@@ -16,7 +16,7 @@
     "plugins": [
         "@typescript-eslint"
     ],
-	"ignorePatterns": ["*.js", "*.d.ts"],
+	"ignorePatterns": ["dist/*", "*.d.ts"],
     "rules": {
 		"quotes": [
 			"warn",

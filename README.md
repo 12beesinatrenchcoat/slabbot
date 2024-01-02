@@ -19,22 +19,9 @@ slabbot is also built on [node.js](https://nodejs.org) v18.x (v18.4.0 as of writ
 
 Install dependencies with `pnpm i` and then build with `pnpm build` (or `pnpm tsc`).
 
-Fill out the .env file:
-```ini
-# Discord (https://discord.com/developers)
-DISCORD_TOKEN="Your bot's token goes here"
-CLIENT_ID="Application ID"
-GUILD_ID="The ID of the server you test commands in" # optional
+Create a .env file with `pnpm run setup` (see [setup.js](/setup.js)).
 
-# MongoDB
-MONGO_URL="The MongoDB URL to connect to." # defaults to mongodb://127.0.0.1:27017
-
-# osu! (https://osu.ppy.sh)
-OSU_ID="Client ID"
-OSU_SECRET="Client Secret"
-```
-
-Run with `pnpm dev`.
+Run with `pnpm dev` or `pnpm start`.
 
 ## old version
 There is an old version of slabbot in the [`shattered-memories`](https://github.com/12beesinatrenchcoat/slabbot/tree/shattered-memories) branch that used the Akairo Framework. This has been abandoned since [Discord announced they would make message content a Privileged Intent](https://support-dev.discord.com/hc/en-us/articles/4404772028055-Message-Content-Privileged-Intent-FAQ#:~:text=On%20August%2031%2C%202022%2C%20access%20to%20message%20content,than%2075%20servers%20are%20not%20affected%20at%20all.) (see [#48](https://github.com/12beesinatrenchcoat/slabbot/issues/48)).

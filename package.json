@@ -5,7 +5,8 @@
   "private": "true",
   "type": "module",
   "scripts": {
-    "lint": "eslint src --ext .ts",
+    "lint": "eslint src",
+		"setup": "node src/setup.js",
     "build": "tsc",
     "clean": "rimraf dist tsconfig.tsbuildinfo",
     "start": "node dist/index.js | pino-pretty -i pid,hostname -t 'yyyy-mm-dd HH:MM:ss' -L info",
@@ -26,6 +27,7 @@
   },
   "dependencies": {
     "@discordjs/rest": "^2.2.0",
+    "@inquirer/prompts": "^3.3.0",
     "colord": "^2.9.3",
     "dayjs": "^1.11.10",
     "discord-api-types": "^0.37.66",
