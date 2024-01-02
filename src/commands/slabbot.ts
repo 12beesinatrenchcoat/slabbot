@@ -41,7 +41,7 @@ export default class implements Command {
 				.setTitle("[= ^ x ^ =] hello!")
 				.setDescription(
 					"Hello! I'm slabbot (<@" + client.user.id + ">)!\n"
-					+ "I was created by @12beesinatrenchcoat#7664 (<@231899170716385280>).\n"
+					+ "I was created by @12beesinatrenchcoat (<@231899170716385280>).\n"
 					+ "You can find my source code [here](https://github.com/12beesinatrenchcoat/slabbot).",
 				)
 			// TODO: Replace this image.
@@ -134,7 +134,7 @@ export default class implements Command {
 			description += levelProgress(level, exp);
 
 			const embed = new EmbedBuilder()
-				.setTitle(user.tag)
+				.setTitle(user.tag.replace("#0", ""))
 				.setDescription(description)
 				.setThumbnail(user.avatarURL() || user.defaultAvatarURL)
 				.setTimestamp(new Date());
