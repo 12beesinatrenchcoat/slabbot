@@ -6,7 +6,7 @@ dist
 tsconfig.tsbuildinfo
 
 # secret tokens
-*.env
+*.env*
 
 # database
 db/**

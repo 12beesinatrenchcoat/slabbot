@@ -26,9 +26,9 @@ const DISCORD_TOKEN = await password({
 });
 
 const CLIENT_ID = await input({
-	message: "Discord Application ID (required):",
+	message: "Discord Application ID (required to deploy commands):",
 	validate(id) {
-		return (id.length >= 17 && id.length <= 20) || "That doesn't seem like a valid client ID.";
+		return (!id || (id.length >= 17 && id.length <= 20)) || "That doesn't seem like a valid client ID.";
 	},
 });
 
@@ -56,11 +56,11 @@ const OSU_SECRET = await password({
 
 const output = `
 # Discord (https://discord.com/developers/applications)
-DISCORD_TOKEN=${DISCORD_TOKEN}
-CLIENT_ID=${CLIENT_ID}
-GUILD_ID=${GUILD_ID}
+DISCORD_TOKEN=${DISCORD_TOKEN} # required for bot to function
+CLIENT_ID=${CLIENT_ID} # required to deploy commands
+GUILD_ID=${GUILD_ID} # used to deploy commands to specific guilds
 
-# MongoDB
+# MongoDB - used for stats (/slabbot and exp)
 MONGO_URL=${MONGO_URL}
 
 # osu! (https://osu.ppy.sh/home/account/edit#oauth)

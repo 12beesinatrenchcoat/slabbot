@@ -7,6 +7,7 @@ import {formatNum, generateCommandProblemEmbed, generateProgressBar, msToDuratio
 import {newUser} from "../Utilities.Db.js";
 import {CommandUsageModel, SlabbotCommand, SlabbotUser, UsersModel} from "../models.js";
 import {expNeededForLevel, generateLargeNumber} from "../Utilities.exp.js";
+import mongoose from "mongoose";
 
 export default class implements Command {
 	data = new SlashCommandBuilder()
@@ -36,6 +37,8 @@ export default class implements Command {
 				return logger.error("client.user or client.uptime is null… which really shouldn't happen.");
 			}
 
+			const slabbotStats = await getSlabbotStats();
+
 			const embed = new EmbedBuilder()
 				.setColor(colors.orange)
 				.setTitle("[= ^ x ^ =] hello!")
@@ -52,44 +55,44 @@ export default class implements Command {
 					inline: true,
 				});
 
-			const commandUsage = await CommandUsageModel.find() as SlabbotCommand[];
-			if (commandUsage) {
-				const totalCommandsUsed = commandUsage.reduce((total, i) => total + i.value, 0);
-				const mostUsedCommands = commandUsage.sort((a, b) => b.value - a.value);
-				let mostUsedCommandsString = "";
-				for (let i = 0; i < 5; i++) {
-					if (mostUsedCommands[i]) {
-						mostUsedCommandsString += `${i + 1}. /${mostUsedCommands[i]._id} (used ${formatNum(mostUsedCommands[i].value)} times)`;
-						mostUsedCommandsString += "\n";
-					} else {
-						break;
-					}
-				}
-
-				embed.addFields(
-					{
-						name: "Commands Run",
-						value: formatNum(totalCommandsUsed) || "None yet…",
-						inline: true,
-					}, {
-						name: "Most Used Commands",
-						value: mostUsedCommandsString || "Nothing yet…",
-						inline: false,
-					},
-				);
+			if (slabbotStats) {
+				embed.addFields({
+					name: "Commands Run",
+					value: slabbotStats.commandsRun,
+					inline: true,
+				}, {
+					name: "Most Used Commands",
+					value: slabbotStats.mostUsedCommands,
+					inline: false,
+				});
 			}
 
 			return interaction.reply({
-				content: "hi am slabbot [= ^ x ^ =]",
+				content: "oh hi! [= ^ x ^ =]",
 				embeds: [embed],
 			});
 		}
 
 		/* /slabbot profile */
 		if (subcommand === "profile") {
+			if (mongoose.connection.readyState !== 1) {
+				logger.trace("no database, no stats");
+				return interaction.reply({
+					content: "database missing…",
+					embeds: [
+						generateCommandProblemEmbed(
+							"database not connected",
+							"there's no database connected, and therefore no stats to get. contact the person running the bot.",
+							"error",
+						),
+					],
+				});
+			}
+
 			let member: GuildMember | null = null;
 			let user: User;
 
+			// In server or in DMs
 			if (interaction.inGuild()) {
 				member = interaction.options.getMember("user") as GuildMember || interaction.member;
 				user = member.user;
@@ -186,3 +189,33 @@ const botProfileError = generateCommandProblemEmbed(
 	"See title.",
 	"error",
 );
+
+async function getSlabbotStats(): Promise<{commandsRun: string, mostUsedCommands: string} | null> {
+	if (mongoose.connection.readyState !== 1) {
+		logger.trace("no database, no stats");
+		return null;
+	}
+
+	const commandUsage = await CommandUsageModel.find() as SlabbotCommand[];
+	if (!commandUsage) {
+		logger.error("no commandUsage???");
+		return null;
+	}
+
+	const totalCommandsUsed = commandUsage.reduce((total, i) => total + i.value, 0);
+	const mostUsedCommands = commandUsage.sort((a, b) => b.value - a.value);
+	let mostUsedCommandsString = "";
+	for (let i = 0; i < 5; i++) {
+		if (mostUsedCommands[i]) {
+			mostUsedCommandsString += `${i + 1}. /${mostUsedCommands[i]._id} (used ${formatNum(mostUsedCommands[i].value)} times)`;
+			mostUsedCommandsString += "\n";
+		} else {
+			break;
+		}
+	}
+
+	return {
+		commandsRun: formatNum(totalCommandsUsed) || "None yet…",
+		mostUsedCommands: mostUsedCommandsString || "Nothing yet…",
+	};
+}

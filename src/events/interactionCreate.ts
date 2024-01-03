@@ -5,6 +5,7 @@ import {CommandUsageModel, UsersModel} from "../models.js";
 import {newUser} from "../Utilities.Db.js";
 import {grantExp} from "../Utilities.exp.js";
 import {generateCommandProblemEmbed} from "../Utilities.js";
+import mongoose from "mongoose";
 
 // Object of when user last used any command.
 const lastUseTimes: {[key: Snowflake]: number | undefined} = {};
@@ -16,6 +17,7 @@ const lastCommandUseTimes: {[key: string]: {[key: Snowflake]: number | undefined
 export default class implements DJSEvent {
 	name = "interactionCreate";
 	once = false;
+
 	execute = async function (interaction: ChatInputCommandInteraction) {
 		if (!interaction.isCommand()) {
 			return;
@@ -68,44 +70,48 @@ export default class implements DJSEvent {
 			// Run the command…
 			command.execute(interaction, client);
 
-			// Database name…
-			const subcommand = interaction.options.getSubcommand(false) ?? "";
-			const commandNameInDb = (command.data.name + " " + subcommand).trim();
+			if (mongoose.connection.readyState === 1) {
+				// Database name…
+				const subcommand = interaction.options.getSubcommand(false) ?? "";
+				const commandNameInDb = (command.data.name + " " + subcommand).trim();
 
-			// Global command usage.
-			const commandUsage = await CommandUsageModel.findById(commandNameInDb);
-			if (commandUsage) {
-				const {value} = commandUsage;
-				commandUsage.set("value", value + 1);
-				commandUsage.save();
-			} else {
-				const usage = new CommandUsageModel({
-					_id: commandNameInDb,
-					value: 1,
-				});
-				await usage.save();
-				logger.debug(`Added command ${commandNameInDb} to usage database.`);
-			}
-
-			// User command usage.
-			const slabbotUser = await UsersModel.findById(interaction.user.id);
-			if (slabbotUser && slabbotUser.commandUsage) {
-				const {commandUsage} = slabbotUser;
-				const commandUsageTimes = commandUsage.get(commandNameInDb);
-
-				if (commandUsageTimes) {
-					commandUsage.set(commandNameInDb, commandUsageTimes + 1);
+				// Global command usage.
+				const commandUsage = await CommandUsageModel.findById(commandNameInDb);
+				if (commandUsage) {
+					const {value} = commandUsage;
+					commandUsage.set("value", value + 1);
+					commandUsage.save();
 				} else {
-					commandUsage.set(commandNameInDb, 1);
+					const usage = new CommandUsageModel({
+						_id: commandNameInDb,
+						value: 1,
+					});
+					await usage.save();
+					logger.debug(`Added command ${commandNameInDb} to usage database.`);
 				}
 
-				slabbotUser.save();
-			} else {
-				newUser(interaction.user.id);
-			}
+				// User command usage.
+				const slabbotUser = await UsersModel.findById(interaction.user.id);
+				if (slabbotUser && slabbotUser.commandUsage) {
+					const {commandUsage} = slabbotUser;
+					const commandUsageTimes = commandUsage.get(commandNameInDb);
 
-			grantExp(interaction.user, interaction);
-			lastUseTimes[interaction.user.id] = interaction.createdTimestamp;
+					if (commandUsageTimes) {
+						commandUsage.set(commandNameInDb, commandUsageTimes + 1);
+					} else {
+						commandUsage.set(commandNameInDb, 1);
+					}
+
+					slabbotUser.save();
+				} else {
+					newUser(interaction.user.id);
+				}
+
+				grantExp(interaction.user, interaction);
+				lastUseTimes[interaction.user.id] = interaction.createdTimestamp;
+			} else {
+				logger.trace("no database, skipping stats");
+			}
 
 			if (command.cooldown) {
 				lastCommandUseTimes[command.data.name][interaction.user.id] = interaction.createdTimestamp;

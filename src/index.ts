@@ -1,33 +1,30 @@
-// Imports for loading commands
 import fs from "node:fs";
 import {fileURLToPath} from "node:url";
 import "reflect-metadata"; // Required by tsyringe
 import {container} from "tsyringe";
-// Discord.js
 import {Client, ClientOptions, Collection, GatewayIntentBits} from "discord.js";
 import {Command, DJSEvent} from "./Interfaces";
-// Database
 import mongoose from "mongoose";
 const db = mongoose.connection;
-// Logger
 import logger from "./logger.js";
-// Environment variables
 import "dotenv/config";
 
-/* Database connecting */
-logger.info("connecting to database…");
-logger.info(process.env.MONGO_URL || "mongodb://127.0.0.1:27017");
-await mongoose.connect(process.env.MONGO_URL || "mongodb://127.0.0.1:27017", {})
-	.then(() => {
-		logger.info("connected to database!");
-	})
-	.catch(error => {
+if (process.env.MONGO_URL) {
+	logger.info(`connecting to database… (${process.env.MONGO_URL})`);
+	await mongoose.connect(process.env.MONGO_URL, {})
+		.then(() => {
+			logger.info("connected to database!");
+		})
+		.catch(error => {
+			logger.error(error);
+		});
+
+	db.on("error", error => {
 		logger.error(error);
 	});
-
-db.on("error", error => {
-	logger.error(error);
-});
+} else {
+	logger.warn("missing MONGO_URL, skipping database connection; exp, stats, and profile will not work");
+}
 
 class ExtendedClient extends Client {
 	constructor(options: ClientOptions) {
@@ -51,7 +48,7 @@ const commandFiles = fs.readdirSync(fileURLToPath(new URL("./commands", import.m
 
 let commandCount = 0;
 for await (const file of commandFiles) {
-	logger.debug("Loading command file " + file);
+	logger.debug("Loading command file: " + file);
 	const command = container.resolve<Command>((await import(new URL("./commands/" + file, import.meta.url).href)).default);
 
 	client.commands.set(command.data.name, command);
@@ -65,7 +62,7 @@ const eventFiles = fs.readdirSync(fileURLToPath(new URL("./events", import.meta.
 
 let eventCount = 0;
 for await (const file of eventFiles) {
-	logger.debug("Loading event watcher file " + file);
+	logger.debug("Loading event watcher file: " + file);
 	const event = container.resolve<DJSEvent>((await import(new URL("./events/" + file, import.meta.url).href)).default);
 
 	if (event.once) {

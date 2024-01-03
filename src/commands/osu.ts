@@ -29,7 +29,11 @@ const rankEmojis = {
 	SSH: "<:osu_SSH:994113327481499728>",
 } as const;
 
-auth();
+if (OSU_ID && OSU_SECRET) {
+	auth();
+} else {
+	logger.warn("missing osu!api credentials, skipping authentication; osu command will not work.");
+}
 
 export default class implements Command {
 	data = new SlashCommandBuilder()
@@ -89,6 +93,13 @@ export default class implements Command {
 		const subcommand = interaction.options.getSubcommand();
 		let embed;
 
+		if (!token) {
+			return interaction.reply({
+				content: "this command isn't available.",
+				embeds: [generateCommandProblemEmbed("missing credentials", "there's no token available to log into the osu!api. contact the person who runs this bot.", "error")],
+			});
+		}
+
 		if (subcommand === "user") {
 			const user = interaction.options.getString("user", true);
 			const mode = interaction.options.getString("mode", false) as GameMode || undefined;
@@ -101,7 +112,7 @@ export default class implements Command {
 			return interaction.reply("vs");
 		}
 
-		if(embed) {
+		if (embed) {
 			return interaction.reply({
 				content: "here's what i found:",
 				embeds: [embed],
@@ -242,7 +253,7 @@ interface User {
 async function getUser(username: string, mode?: GameMode): Promise<User> {
 	const userString = username + (mode ? `/${mode}` : "");
 	if (osuUserCache.has(userString)) {
-		logger.debug(`${userString} found in cache!`);
+		logger.trace(`${userString} found in cache!`);
 		return osuUserCache.get(userString) as User;
 	}
 
@@ -262,7 +273,7 @@ async function getUser(username: string, mode?: GameMode): Promise<User> {
 	return response;
 }
 
-async function makeUserEmbed(user: string, mode: GameMode | undefined){
+async function makeUserEmbed(user: string, mode: GameMode | undefined) {
 	// Fetch from osu!api
 	const data = await getUser(user, mode) as User;
 
@@ -270,7 +281,7 @@ async function makeUserEmbed(user: string, mode: GameMode | undefined){
 		return generateCommandProblemEmbed(
 			"user not found!",
 			`The osu!api returned an error when looking for user \`${user}\`. The user may have changed their username, their account may be unavailable due to security issues or a restriction, or you may have made a typo!`,
-			"error"
+			"error",
 		);
 	}
 

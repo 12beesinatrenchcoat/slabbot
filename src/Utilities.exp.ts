@@ -3,6 +3,8 @@
 import {ChatInputCommandInteraction, EmbedBuilder, Message, User} from "discord.js";
 import {UsersModel} from "./models.js";
 import {newUser} from "./Utilities.Db.js";
+import logger from "./logger.js";
+import mongoose from "mongoose";
 
 /**
  * Gets the required Total EXP required to reach a specified level.
@@ -12,6 +14,11 @@ import {newUser} from "./Utilities.Db.js";
 export const expNeededForLevel = (level: number): number => level * (2500 + ((level - 1) * 100));
 
 export async function grantExp(user: User, event: Message | ChatInputCommandInteraction) {
+	if (mongoose.connection.readyState !== 1) {
+		logger.trace("no database, not granting exp");
+		return;
+	}
+
 	if (!user.bot) {
 		const userInDb = await UsersModel.findById(user.id);
 

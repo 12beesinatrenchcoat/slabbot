@@ -19,7 +19,20 @@ slabbot is also built on [node.js](https://nodejs.org) v18.x (v18.4.0 as of writ
 
 Install dependencies with `pnpm i` and then build with `pnpm build` (or `pnpm tsc`).
 
-Create a .env file with `pnpm run setup` (see [setup.js](/setup.js)).
+Create a .env file with `pnpm run setup` (see [setup.js](/setup.js)). You can also fill this out if you'd like:
+```sh
+# Discord (https://discord.com/developers/applications)
+DISCORD_TOKEN= # required for bot to functi:won
+CLIENT_ID= # required to deploy commands
+GUILD_ID= # deploying commands to testing guild
+
+# MongoDB - used for stats (/slabbot and exp)
+MONGO_URL=
+
+# osu! (https://osu.ppy.sh/home/account/edit#oauth) -
+OSU_ID=
+OSU_SECRET=
+```
 
 Run with `pnpm dev` or `pnpm start`.
 
