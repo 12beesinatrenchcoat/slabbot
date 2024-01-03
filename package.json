@@ -6,11 +6,11 @@
   "type": "module",
   "scripts": {
     "lint": "eslint src",
-		"setup": "node src/setup.js",
+    "setup": "node src/setup.js",
     "build": "tsc",
     "clean": "rimraf dist tsconfig.tsbuildinfo",
-    "start": "node dist/index.js | pino-pretty -i pid,hostname -t 'yyyy-mm-dd HH:MM:ss' -L info",
-    "dev": "nodemon dist/index.js | pino-pretty -i pid,hostname -t HH:MM:ss.l",
+    "start": "node dist/index.js",
+    "dev": "NODE_ENV=dev nodemon dist/index.js",
     "mongo": "mongod --dbpath ./db",
     "deploy": "node dist/manual/deploy-commands.js",
     "speak": "node dist/manual/speak.js"
