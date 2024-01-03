@@ -1,0 +1,12 @@
+{
+	"$schema": "https://unpkg.com/knip@3/schema.json",
+	"entry": [
+		"src/index.ts",
+		"src/setup.js",
+		"src/manual/deploy-commands.ts",
+		"src/{commands,events}/*.ts"
+	],
+	"project": ["**/*.{js,ts}"],
+	"ignoreDependencies": ["pino-pretty"],
+	"ignoreBinaries": ["mongod"]
+}
