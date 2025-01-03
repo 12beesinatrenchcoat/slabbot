@@ -5,15 +5,12 @@ export default class implements Command {
 	data = new SlashCommandBuilder()
 		.setName("despacito")
 		.setDescription("this is so sad play despacito")
-		/* eslint-disable comma-dangle */
+
 		.addIntegerOption(option =>
 			option.setName("position")
 				.setDescription("position in the video list")
 				.setMinValue(0)
-				.setMaxValue(videos.length - 1)
-		);
-		/* eslint-enable comma-dangle */
-
+				.setMaxValue(videos.length - 1));
 	execute = async (interaction: ChatInputCommandInteraction) => {
 		const position: number = interaction.options.getInteger("position", false)
 			?? Math.floor(Math.random() * videos.length);
@@ -25,10 +22,8 @@ export default class implements Command {
 			.setTitle(video.title)
 			.setDescription(video.description)
 			.setURL("https://youtu.be/" + video.id)
-			.setThumbnail(
-				video.options?.thumbOverride
-				?? `https://i3.ytimg.com/vi/${video.id}/maxresdefault.jpg`,
-			)
+			.setThumbnail(video.options?.thumbOverride
+				?? `https://i3.ytimg.com/vi/${video.id}/maxresdefault.jpg`)
 			.setAuthor({
 				name: video.creator.name,
 				url: "https://youtube.com/channel/" + video.creator.id,

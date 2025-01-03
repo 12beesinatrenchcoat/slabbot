@@ -60,4 +60,6 @@ const usersSchema = new Schema<SlabbotUser>({
 const usersDb = mongoose.connection.useDb("slabbot");
 const UsersModel = usersDb.model<SlabbotUser>("users", usersSchema);
 
-export {CommandUsageModel, UsersModel, SlabbotCommand, SlabbotUser};
+export {
+	CommandUsageModel, UsersModel, SlabbotCommand, SlabbotUser,
+};

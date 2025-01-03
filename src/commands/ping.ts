@@ -5,7 +5,6 @@ export default class implements Command {
 	data = new SlashCommandBuilder()
 		.setName("ping")
 		.setDescription("pong!");
-
 	execute = async function (interaction: ChatInputCommandInteraction, client: Client) {
 		return interaction.reply({
 			content: `pong! ${client.ws.ping}ms to discord…`,

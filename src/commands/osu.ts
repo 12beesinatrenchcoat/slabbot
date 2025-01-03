@@ -5,7 +5,9 @@ import logger from "../logger.js";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js";
 import duration from "dayjs/plugin/duration.js";
-import {formatNum, generateCommandProblemEmbed, generateProgressBar, msToDuration} from "../Utilities.js";
+import {
+	formatNum, generateCommandProblemEmbed, generateProgressBar, msToDuration,
+} from "../Utilities.js";
 import NodeCache from "node-cache";
 
 dayjs.extend(relativeTime);
@@ -39,15 +41,14 @@ export default class implements Command {
 	data = new SlashCommandBuilder()
 		.setName("osu")
 		.setDescription("get info about osu! stuffs.")
-		/* eslint-disable comma-dangle */
+
 		.addSubcommand(subcommand =>
 			subcommand.setName("user")
 				.setDescription("get info on an osu! player")
 				.addStringOption(option =>
 					option.setName("user")
 						.setDescription("the username of the player.")
-						.setRequired(true)
-				)
+						.setRequired(true))
 				.addStringOption(option =>
 					option.setName("mode")
 						.setDescription("which mode to fetch data for. will default to user's default mode if not specified.")
@@ -55,11 +56,9 @@ export default class implements Command {
 							{name: "osu!standard", value: "osu"},
 							{name: "osu!taiko", value: "taiko"},
 							{name: "osu!catch", value: "fruits"},
-							{name: "osu!mania", value: "mania"}
+							{name: "osu!mania", value: "mania"},
 						)
-						.setRequired(false)
-				)
-		); /* TODO: vs!
+						.setRequired(false))); /* TODO: vs!
 		.addSubcommand(subcommand =>
 			subcommand.setName("vs")
 				.setDescription("compare two osu! players")
@@ -85,10 +84,7 @@ export default class implements Command {
 						.setRequired(false)
 				)b
 		); */
-	/* eslint-enable comma-dangle */
-
 	cooldown = 15000;
-
 	execute = async (interaction: ChatInputCommandInteraction) => {
 		const subcommand = interaction.options.getSubcommand();
 		let embed;
@@ -158,7 +154,7 @@ async function auth() {
 }
 
 /* See: https://osu.ppy.sh/docs/index.html#gamemode */
-type GameMode = "osu" | "taiko" | "fruits" | "mania"
+type GameMode = "osu" | "taiko" | "fruits" | "mania";
 
 const GameModeHumanReadable: {[K in GameMode]: string} = {
 	osu: "osu!standard",
@@ -280,7 +276,8 @@ async function makeUserEmbed(user: string, mode: GameMode | undefined) {
 	if (data.error === null) {
 		return generateCommandProblemEmbed(
 			"user not found!",
-			`The osu!api returned an error when looking for user \`${user}\`. The user may have changed their username, their account may be unavailable due to security issues or a restriction, or you may have made a typo!`,
+			`The osu!api returned an error when looking for user \`${user}\`. `
+			+ "The user may have changed their username, their account may be unavailable due to security issues or a restriction, or you may have made a typo!",
 			"error",
 		);
 	}
@@ -378,7 +375,7 @@ async function makeUserEmbed(user: string, mode: GameMode | undefined) {
 			}, {
 				name: "plays",
 				value: `${formatNum(statistics.play_count)} plays over ${msToDuration(statistics.play_time * 1000)}`
-				+ "\n" + formatNum(data.beatmap_playcounts_count) + " beatmaps played (across all modes)",
+					+ "\n" + formatNum(data.beatmap_playcounts_count) + " beatmaps played (across all modes)",
 				inline: false,
 			});
 	}

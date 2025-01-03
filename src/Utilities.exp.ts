@@ -1,6 +1,8 @@
 /* Functions relating to the EXP system. */
 
-import {ChatInputCommandInteraction, EmbedBuilder, Message, User} from "discord.js";
+import {
+	ChatInputCommandInteraction, EmbedBuilder, Message, User,
+} from "discord.js";
 import {UsersModel} from "./models.js";
 import {newUser} from "./Utilities.Db.js";
 import logger from "./logger.js";
@@ -27,9 +29,7 @@ export async function grantExp(user: User, event: Message | ChatInputCommandInte
 			return 1;
 		}
 
-		if (!userInDb.lastEventDate) {
-			userInDb.lastEventDate = event.createdAt;
-		}
+		userInDb.lastEventDate ||= event.createdAt;
 
 		const difference = event.createdAt.valueOf() - userInDb.lastEventDate.valueOf();
 		userInDb.lastEventDate = event.createdAt;

@@ -4,31 +4,26 @@ import {Command} from "../Interfaces";
 const data = new SlashCommandBuilder()
 	.setName("decide")
 	.setDescription("have slabbot decide between some things for you!")
-	/* eslint-disable comma-dangle */
+
 	.addStringOption(option =>
 		option.setName("item1")
 			.setDescription("the 1st thing.")
-			.setRequired(true)
-	)
+			.setRequired(true))
 	.addStringOption(option =>
 		option.setName("item2")
 			.setDescription("the 2nd thing.")
-			.setRequired(false)
-	)
+			.setRequired(false))
 	.addStringOption(option =>
 		option.setName("item3")
 			.setDescription("the 3rd thing.")
-			.setRequired(false)
-	);
+			.setRequired(false));
 
 for (let i = 4; i <= 25; i++) {
 	data.addStringOption(option =>
 		option.setName("item" + String(i))
 			.setDescription(`the ${i}th thing.`)
-			.setRequired(false)
-	);
+			.setRequired(false));
 }
-/* eslint-enable comma-dangle */
 
 export default class implements Command {
 	data = data;

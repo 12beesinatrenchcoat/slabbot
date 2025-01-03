@@ -2,7 +2,7 @@
 (Command Usage, Users) */
 
 import {Snowflake} from "discord.js";
-import {CommandUsageModel, SlabbotUser, UsersModel} from "./models.js";
+import {SlabbotUser, UsersModel} from "./models.js";
 
 export async function newUser(id: Snowflake): Promise<SlabbotUser> {
 	const user = new UsersModel({

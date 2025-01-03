@@ -2,7 +2,9 @@ import fs from "node:fs";
 import {fileURLToPath} from "node:url";
 import "reflect-metadata"; // Required by tsyringe
 import {container} from "tsyringe";
-import {Client, ClientOptions, Collection, GatewayIntentBits} from "discord.js";
+import {
+	Client, ClientOptions, Collection, GatewayIntentBits,
+} from "discord.js";
 import {Command, DJSEvent} from "./Interfaces";
 import mongoose from "mongoose";
 const db = mongoose.connection;

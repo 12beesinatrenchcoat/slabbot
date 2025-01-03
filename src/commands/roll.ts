@@ -1,4 +1,6 @@
-import {ChatInputCommandInteraction, EmbedBuilder, HexColorString, SlashCommandBuilder} from "discord.js";
+import {
+	ChatInputCommandInteraction, EmbedBuilder, HexColorString, SlashCommandBuilder,
+} from "discord.js";
 import {colord} from "colord";
 import {Command} from "../Interfaces";
 import {generateCommandProblemEmbed} from "../Utilities.js";
@@ -10,14 +12,11 @@ export default class implements Command {
 	data = new SlashCommandBuilder()
 		.setName("roll")
 		.setDescription("roll some dice!")
-		/* eslint-disable comma-dangle */
+
 		.addStringOption(option =>
 			option.setName("dice")
 				.setDescription("dice notation. AdX, where A is the amount of dice, and X for the number of sides.")
-				.setRequired(true)
-		);
-		/* eslint-enable comma-dangle */
-
+				.setRequired(true));
 	execute = async (interaction: ChatInputCommandInteraction) => {
 		const embeds = [];
 		const diceString = interaction.options.getString("dice", true);
@@ -32,7 +31,7 @@ export default class implements Command {
 		}
 
 		let [diceCount, diceSides] = diceString.split("d").map(a => Number(a));
-		diceCount = diceCount || 1;
+		diceCount ||= 1;
 
 		/* Too many dice */
 		if (diceCount > 100) {
@@ -82,7 +81,7 @@ export default class implements Command {
 		const percent = (total - minPossible) / (maxPossible - minPossible);
 
 		const color: HexColorString = colord({h: 120 * percent, s: 100, l: 60}).toHex() as HexColorString;
-		logger.debug(color.toString());
+		logger.trace(`roll color: ${color.toString()} (minPossible: ${minPossible}, total: ${total}, maxPossible: ${maxPossible}, percent: ${percent})`);
 
 		const average = (total / diceCount).toFixed(2);
 
@@ -93,8 +92,7 @@ export default class implements Command {
 			.setFooter({
 				text: `total: ${total}, average ${average}`,
 			})
-			.setTimestamp(Date.now()),
-		);
+			.setTimestamp(Date.now()));
 
 		return interaction.editReply({
 			content: "may the dice be ever in your favor…",
@@ -114,7 +112,7 @@ const invalidStringError = generateCommandProblemEmbed(
 
 const tooManyDiceError = generateCommandProblemEmbed(
 	"too many dice!",
-	"Please limit yourself to rolling **at most 100 dice at a time**. Yes, it's a bit arbitrary, but still.",
+	"Please limit yourself to rolling **at most 100 dice at a time**. Yes, that's an arbitrary limit.",
 	"error",
 );
 

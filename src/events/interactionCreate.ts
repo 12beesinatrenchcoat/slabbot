@@ -17,7 +17,6 @@ const lastCommandUseTimes: {[key: string]: {[key: Snowflake]: number | undefined
 export default class implements DJSEvent {
 	name = "interactionCreate";
 	once = false;
-
 	execute = async function (interaction: ChatInputCommandInteraction) {
 		if (!interaction.isCommand()) {
 			return;
@@ -38,7 +37,9 @@ export default class implements DJSEvent {
 						content: "chill out! [>_<]",
 						embeds: [generateCommandProblemEmbed(
 							"this command is on cooldown!",
-							`Some commands have longer cooldowns, due to querying other services, or due to processing power usage, or whenever I feel like it. This command in particular has a ${(command.cooldown / 1000).toFixed(1)}s cooldown. **The command's cooldown ends in ${((command.cooldown - (interaction.createdTimestamp - lastCommandUseTime)) / 1000).toFixed(1)}s.**`,
+							"Some commands have longer cooldowns, due to querying other services, or due to processing power usage, or whenever I feel like it."
+							+ `\nThis command in particular has a ${(command.cooldown / 1000).toFixed(1)}s cooldown.`
+							+ `\n**The command's cooldown ends in ${((command.cooldown - (interaction.createdTimestamp - lastCommandUseTime)) / 1000).toFixed(1)}s.**`,
 							"error",
 						)],
 						ephemeral: true,
@@ -57,7 +58,8 @@ export default class implements DJSEvent {
 					content: "chill out! [>_<]",
 					embeds: [generateCommandProblemEmbed(
 						"you're on cooldown!",
-						`To keep the bot from overloading, every user has a cooldown on how often they can send a command — once every ${(cooldownLength / 1000).toFixed(1)}s, to be exact. **Your cooldown ends in ${((cooldownLength - (interaction.createdTimestamp - lastUseTime)) / 1000).toFixed(1)}s.**`,
+						`To keep the bot from overloading, every user has a cooldown on how often they can send a command, once every ${(cooldownLength / 1000).toFixed(1)}s, to be exact.`
+						+ `\n**Your cooldown ends in ${((cooldownLength - (interaction.createdTimestamp - lastUseTime)) / 1000).toFixed(1)}s.**`,
 						"error",
 					)],
 					ephemeral: true,

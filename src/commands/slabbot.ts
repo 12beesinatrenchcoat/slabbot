@@ -1,11 +1,17 @@
-import {SlashCommandBuilder, EmbedBuilder, Client, ChatInputCommandInteraction, GuildMember, User} from "discord.js";
+import {
+	SlashCommandBuilder, EmbedBuilder, Client, ChatInputCommandInteraction, GuildMember, User,
+} from "discord.js";
 import {Command} from "../Interfaces";
 import {colors} from "../Constants.js";
 import logger from "../logger.js";
-import {formatNum, generateCommandProblemEmbed, generateProgressBar, msToDuration} from "../Utilities.js";
+import {
+	formatNum, generateCommandProblemEmbed, generateProgressBar, msToDuration,
+} from "../Utilities.js";
 /* For the exp system / slabbot / user */
 import {newUser} from "../Utilities.Db.js";
-import {CommandUsageModel, SlabbotCommand, SlabbotUser, UsersModel} from "../models.js";
+import {
+	CommandUsageModel, SlabbotCommand, SlabbotUser, UsersModel,
+} from "../models.js";
 import {expNeededForLevel, generateLargeNumber} from "../Utilities.exp.js";
 import mongoose from "mongoose";
 
@@ -13,21 +19,16 @@ export default class implements Command {
 	data = new SlashCommandBuilder()
 		.setName("slabbot")
 		.setDescription("commands related to slabbot.")
-		/* eslint-disable comma-dangle */
+
 		.addSubcommand(subcommand =>
 			subcommand.setName("about")
-				.setDescription("get some information about slabbot.")
-		)
+				.setDescription("get some information about slabbot."))
 		.addSubcommand(subcommand =>
 			subcommand.setName("profile")
 				.setDescription("get information about a user (xp, most used commands, etc.)")
 				.addUserOption(option =>
 					option.setName("user")
-						.setDescription("the user to fetch the profile of. leave blank for yourself.")
-				)
-		);
-		/* eslint-enable comma-dangle */
-
+						.setDescription("the user to fetch the profile of. leave blank for yourself.")));
 	execute = async function (interaction: ChatInputCommandInteraction, client: Client) {
 		const subcommand = interaction.options.getSubcommand();
 
@@ -42,11 +43,9 @@ export default class implements Command {
 			const embed = new EmbedBuilder()
 				.setColor(colors.orange)
 				.setTitle("[= ^ x ^ =] hello!")
-				.setDescription(
-					"Hello! I'm slabbot (<@" + client.user.id + ">)!\n"
+				.setDescription("Hello! I'm slabbot (<@" + client.user.id + ">)!\n"
 					+ "I was created by @12beesinatrenchcoat (<@231899170716385280>).\n"
-					+ "You can find my source code [here](https://github.com/12beesinatrenchcoat/slabbot).",
-				)
+					+ "You can find my source code [here](https://github.com/12beesinatrenchcoat/slabbot).")
 			// TODO: Replace this image.
 				.setThumbnail("https://raw.githubusercontent.com/AndyThePie/slabbot/master/images/slabbot-icon.png")
 				.addFields({
@@ -118,11 +117,10 @@ export default class implements Command {
 
 			let databaseUser = await UsersModel.findById(id) as SlabbotUser;
 
-			if (!databaseUser) {
-				databaseUser = await newUser(id);
-			}
+			databaseUser ||= await newUser(id);
 
-			const {exp = 0,
+			const {
+				exp = 0,
 				level = 0,
 				commandUsage = new Map<string, number>(),
 				stats = new Map<string, number>(), // TODO: Do something with this?
