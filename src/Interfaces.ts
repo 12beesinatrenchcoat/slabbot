@@ -1,11 +1,10 @@
 import {
 	SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder, Client, ChatInputCommandInteraction,
+	SlashCommandOptionsOnlyBuilder,
 } from "discord.js";
 
 export interface Command {
-	data: SlashCommandBuilder |
-		SlashCommandSubcommandsOnlyBuilder |
-		Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">
+	data: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder | SlashCommandOptionsOnlyBuilder | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">
 	cooldown?: number
 	execute: (arg0: ChatInputCommandInteraction, arg1: Client) => void
 }
